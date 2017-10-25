@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link rel="stylesheet" type="text/css" href="style.css" media="screen">
+		 <link rel="stylesheet" type="text/css" href="css/style.css" />
 		<title>SISound</title>
 	</head>
 	
@@ -36,7 +36,7 @@
 							<img class="songsPRPic" alt="profilePic" src="${user.profilPicture }">
 						</c:if>
 						<c:if test="${song.user.profilPicture == null}">
-							<img class="songsPRPic" alt="defaultProfilPic" src="defaultProfile.png">
+							<img class="songsPRPic" alt="defaultProfilPic" src="img/defaultProfile.png">
 						</c:if>
 						<c:out value="${ song.user.username }"></c:out>
 					</td>

@@ -4,7 +4,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link rel="stylesheet" type="text/css" href="style.css">
+		 <link rel="stylesheet" type="text/css" href="css/style.css" />
 		<title>SISound</title>
 	</head>
 	<body id="indexBody">
@@ -12,12 +12,12 @@
 		
 			<input id="indexSearchBar" type="text" placeholder="search artists, songs, playlists" placeholder-style: font>
 			
-			<form action="login.jsp" method="GET">
-				<input id="loginButton" type="submit" value="" style="background-image: url('login.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
+			<form action="access" method="GET">
+				<input id="loginButton" type="submit" value="" style="background-image: url('img/login.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
 			</form>
 			
 			<form action="register.jsp" method="GET">
-				<input id="signupButton" type="submit" value="" style="background-image: url('signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
+				<input id="signupButton" type="submit" value="" style="background-image: url('img/signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
 			</form>
 			
 		</header>

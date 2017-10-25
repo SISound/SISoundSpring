@@ -20,18 +20,16 @@ import com.sisound.model.User;
 public class PlaylistDao {
 	
 	@Autowired
-	private UserDao userDao;
+	public UserDao userDao;
 
 	@Autowired
-	private ActionsDao actionsDao;
+	public ActionsDao actionsDao;
 	
 	@Autowired
-	private SongDao songDao;
+	public SongDao songDao;
 	
 	@Autowired
-	private CommentDao commentDao;
-	
-	private PlaylistDao(){}
+	public CommentDao commentDao;
 	
 	//OK
 	public synchronized void createPlaylist(Playlist playlist) throws SQLException{

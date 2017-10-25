@@ -18,9 +18,7 @@ import com.sisound.model.Comment;
 public class CommentDao {
 
 	@Autowired
-	private UserDao userDao;
-	
-	private CommentDao(){}
+	public UserDao userDao;
 	
 	public synchronized void insertComment(Comment comment, Actionable commented) throws SQLException{
 		Connection con = DBManager.getInstance().getConnection();

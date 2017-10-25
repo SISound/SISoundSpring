@@ -21,18 +21,16 @@ import java.time.LocalDateTime;
 public class SongDao {
 
 	@Autowired
-	private UserDao userDao;
+	public UserDao userDao;
 	
 	@Autowired
-	private ActionsDao actionsDao;
+	public ActionsDao actionsDao;
 	
 	@Autowired
-	private CommentDao commentDao;
+	public CommentDao commentDao;
 	
 	@Autowired
-	private GenresDao genresDao;
-	
-	private SongDao(){}
+	public GenresDao genresDao;
 	
 	//OK
 	public synchronized void uploadSong(Song song) throws SQLException{

@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Insert title here</title>
-<link rel="stylesheet" type="text/css" href="styles.css">
+ <link rel="stylesheet" type="text/css" href="css/style.css" />
 </head>
 <body>
 	<header>
@@ -23,7 +23,7 @@
 					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
 				</c:if>
 				<c:if test="${user.profilPicture == null}">
-					<img class="profilePic" alt="defaultProfilPic" src="defaultProfile.png">
+					<img class="profilePic" alt="defaultProfilPic" src="img/defaultProfile.png">
 					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
 				</c:if>
 			  </button>

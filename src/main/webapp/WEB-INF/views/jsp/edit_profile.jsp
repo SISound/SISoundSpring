@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link rel="stylesheet" type="text/css" href="styles.css">
+		 <link rel="stylesheet" type="text/css" href="css/style.css" />
 		<title>SISound</title>
 	</head>
 	<body>
@@ -49,7 +49,7 @@
 					<input class="edit" type="email"  placeholder="Repeat new e-mail" name="newEmail2"><br>
 					
 					
-					<input id="rb" type="submit" value="" style="background-image: url('signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
+					<input id="rb" type="submit" value="" style="background-image: url('img/signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
 				</div>
 			</form>	
 		</div>

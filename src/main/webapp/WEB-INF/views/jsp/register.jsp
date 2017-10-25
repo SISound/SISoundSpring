@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link rel="stylesheet" type="text/css" href="style.css">
+		 <link rel="stylesheet" type="text/css" href="css/style.css" />
 		<title>SISound</title>
 	</head>
 	
@@ -27,7 +27,7 @@
 					<input class="login" type="password" placeholder="Password" name="password"><br>
 					<input class="login" type="password" placeholder="Repeat password" name="password2"><br>
 					<input class="login" type="email" name="email" placeholder="e-mail"><br>
-					<input id="rb" type="submit" value="" style="background-image: url('signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
+					<input id="rb" type="submit" value="" style="background-image: url('img/signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
 				</div>
 			</form>	
 			<a class="logLink" href="login.jsp" name="regLink">Already have an account? Please login here.</a>

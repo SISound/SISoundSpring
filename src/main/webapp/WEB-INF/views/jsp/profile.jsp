@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		<link rel="stylesheet" type="text/css" href="style.css">
+		 <link rel="stylesheet" type="text/css" href="css/style.css" />
 		<title>SISound</title>
 	</head>
 <body>
@@ -23,13 +23,13 @@
 			<img class="coverPhoto" alt="defaultCoverPic" src="${ user.CoverPhoto }">	
 		</c:if>
 		<c:if test="${user.coverPhoto == null}">
-			<img class="coverPhoto" alt="defaultCoverPic" src="cover.jpg">
+			<img class="coverPhoto" alt="defaultCoverPic" src="img/cover.jpg">
 		</c:if>
 		<c:if test="${user.profilPicture != null}">
 			<img class="profilePicProfile" alt="profilePic" src="${ user.profilPicture }">
 		</c:if>
 		<c:if test="${user.profilPicture == null}">
-			<img class="profilePicProfile" alt="defaultProfilPic" src="defaultProfile.png">
+			<img class="profilePicProfile" alt="defaultProfilPic" src="img/defaultProfile.png">
 		</c:if>
 
 		<p>		

@@ -20,6 +20,7 @@ public class User {
 	private TreeSet<Playlist> playlists;
 	private LinkedHashSet<User> followers;
 	
+	public User(){}
 	//constructor for registering user
 	public User(String username, String password, String email) {
 		this.username = username;
