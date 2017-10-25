@@ -6,13 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
-
-<<<<<<< HEAD
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
->>>>>>> 455dddda779868272cd875eb4102acdc138de439
 import com.sisound.model.Actionable;
 import com.sisound.model.Actions;
 import com.sisound.model.User;

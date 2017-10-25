@@ -7,13 +7,6 @@ import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-
-<<<<<<< HEAD
-
-public class GenresDao {
-
-	private static GenresDao instance;
-=======
 import org.springframework.stereotype.Component;
 
 @Component

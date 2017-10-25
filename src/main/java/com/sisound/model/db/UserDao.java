@@ -7,27 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedHashSet;
-
-<<<<<<< HEAD
 import com.google.common.hash.Hashing;
 import com.sisound.model.User;
-
-
-public class UserDao {
-
-	private static UserDao instance;
-	
-	private UserDao(){}
-	
-	public static synchronized UserDao getInstance(){
-		if(instance==null){
-			instance=new UserDao();
-		}
-		
-		return instance;
-	}
-	
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -38,7 +19,7 @@ import com.sisound.model.User;
 public class UserDao {
 
 	@Autowired
-	CountryDao countryDao;
+	private CountryDao countryDao;
 	
 	private UserDao(){}
 	
