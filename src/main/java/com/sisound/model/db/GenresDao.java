@@ -8,22 +8,23 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+<<<<<<< HEAD
 
 public class GenresDao {
 
 	private static GenresDao instance;
+=======
+import org.springframework.stereotype.Component;
+
+@Component
+public class GenresDao {
+
+
 	private final static Map<String, Long> GENRES = new HashMap<>();
 	
 	private GenresDao() throws SQLException {
 		System.out.println("asdf");
 		getAllGenres();
-	}
-	
-	public static synchronized GenresDao getInstance() throws SQLException {
-		if(instance == null){
-			instance = new GenresDao();
-		}
-		return instance;
 	}
 	
 	public long getGenreId(String genre) throws SQLException {

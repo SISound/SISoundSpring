@@ -9,25 +9,33 @@ import java.time.LocalDateTime;
 
 import java.util.TreeSet;
 
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+>>>>>>> 455dddda779868272cd875eb4102acdc138de439
 import com.sisound.model.Comment;
 import com.sisound.model.Playlist;
 import com.sisound.model.Song;
 import com.sisound.model.User;
 
-
+@Component
 public class PlaylistDao {
+	
+	@Autowired
+	private UserDao userDao;
 
-	private static PlaylistDao instance;
+	@Autowired
+	private ActionsDao actionsDao;
+	
+	@Autowired
+	private SongDao songDao;
+	
+	@Autowired
+	private CommentDao commentDao;
 	
 	private PlaylistDao(){}
-	
-	public static synchronized PlaylistDao getInstance(){
-		if(instance==null){
-			instance=new PlaylistDao();
-		}
-		
-		return instance;
-	}
 	
 	//OK
 	public synchronized void createPlaylist(Playlist playlist) throws SQLException{
@@ -63,8 +71,8 @@ public class PlaylistDao {
 		TreeSet<Playlist> playlists=new TreeSet<>();
 		
 		while(rs.next()){
-			playlists.add(new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), u, ActionsDao.getInstance().getActions(false, rs.getLong(1)),
-					CommentDao.getInstance().getComments(rs.getLong(1), false), rs.getBoolean(4), SongDao.getInstance().getSongsForPlaylist(rs.getLong(1))));
+			playlists.add(new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), u, actionsDao.getActions(false, rs.getLong(1)),
+					commentDao.getComments(rs.getLong(1), false), rs.getBoolean(4), songDao.getSongsForPlaylist(rs.getLong(1))));
 		}
 		
 		return playlists;
@@ -78,9 +86,10 @@ public class PlaylistDao {
 		stmt.setString(1, playlistName);
 		ResultSet rs=stmt.executeQuery();
 		rs.next();
-		Playlist p=new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), UserDao.getInstance().getUser(rs.getString(3)),
-				                ActionsDao.getInstance().getActions(false, rs.getLong(1)), CommentDao.getInstance().getComments(rs.getLong(1), false), 
-				                rs.getBoolean(5), SongDao.getInstance().getSongsForPlaylist(rs.getLong(1)));
+		
+		Playlist p=new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), userDao.getUser(rs.getString(3)),
+				                actionsDao.getActions(false, rs.getLong(1)), commentDao.getComments(rs.getLong(1), false), 
+				                rs.getBoolean(5),songDao.getSongsForPlaylist(rs.getLong(1)));
 		
 		return p;
 	}
@@ -93,19 +102,19 @@ public class PlaylistDao {
 		try {
 			//delete comment-likes
 
-			for (Comment comment : CommentDao.getInstance().getComments(playlist.getId(), false)) {
-				ActionsDao.getInstance().deleteCommentLikes(comment.getId());
+			for (Comment comment : commentDao.getComments(playlist.getId(), false)) {
+				actionsDao.deleteCommentLikes(comment.getId());
 			}
 			
 			//delete comments
-			CommentDao.getInstance().deleteComments(playlist.getId(), false);
+			commentDao.deleteComments(playlist.getId(), false);
 			
 			//delete likes
-			ActionsDao.getInstance().deleteLikes(false, playlist.getId());
+			actionsDao.deleteLikes(false, playlist.getId());
 			//delete dislikes
-			ActionsDao.getInstance().deleteDislikes(false, playlist.getId());
+			actionsDao.deleteDislikes(false, playlist.getId());
 			//delete shares
-			ActionsDao.getInstance().deleteShares(false, playlist.getId());
+			actionsDao.deleteShares(false, playlist.getId());
 			
 			
 			//delete from playlist_songs
@@ -130,7 +139,8 @@ public class PlaylistDao {
 	}
 	
 	public synchronized void addSongToPlaylist(long userId, String playlistName, Song s) throws SQLException{
-		SongDao.getInstance().uploadSong(s);
+
+		songDao.uploadSong(s);
 		
 		//getting the ID of the playlist to which we want to add song 
 		Connection con=DBManager.getInstance().getConnection();

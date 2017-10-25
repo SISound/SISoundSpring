@@ -7,26 +7,26 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 
+<<<<<<< HEAD
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+>>>>>>> 455dddda779868272cd875eb4102acdc138de439
 import com.sisound.model.Actionable;
 import com.sisound.model.Actions;
 import com.sisound.model.User;
 
 
-
+@Component
 public class ActionsDao {
 
-	private static ActionsDao instance;
+	@Autowired
+	private UserDao userDao;
+	
 	private String deleteQuery = "DELETE FROM ? WHERE ? = ?";
 	
 	private ActionsDao(){}
-	
-	public static synchronized ActionsDao getInstance(){
-		if(instance == null){
-			instance = new ActionsDao();
-		}
-		
-		return instance;
-	}
 	
 	public synchronized void addAction(Actionable a, Actions action, User user) throws SQLException {
 		
@@ -100,7 +100,7 @@ public class ActionsDao {
 			
 		    rs = stmt.executeQuery();
 			while (rs.next()) {
-				actions.get(Actions.LIKE).add(UserDao.getInstance().getUser(rs.getString(1)));
+				actions.get(Actions.LIKE).add(userDao.getUser(rs.getString(1)));
 			}
 			
 			//getting song dislikes
@@ -109,7 +109,7 @@ public class ActionsDao {
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				actions.get(Actions.DISLIKE).add(UserDao.getInstance().getUser(rs.getString(1)));
+				actions.get(Actions.DISLIKE).add(userDao.getUser(rs.getString(1)));
 			}
 			
 			//getting song shares
@@ -118,7 +118,7 @@ public class ActionsDao {
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				actions.get(Actions.SHARE).add(UserDao.getInstance().getUser(rs.getString(1))); 
+				actions.get(Actions.SHARE).add(userDao.getUser(rs.getString(1))); 
 			}
 		}
 		else{
@@ -128,7 +128,7 @@ public class ActionsDao {
 			
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				actions.get(Actions.LIKE).add(UserDao.getInstance().getUser(rs.getString(1)));
+				actions.get(Actions.LIKE).add(userDao.getUser(rs.getString(1)));
 			}
 			
 			//getting playlist dislikes
@@ -137,7 +137,7 @@ public class ActionsDao {
             rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				actions.get(Actions.DISLIKE).add(UserDao.getInstance().getUser(rs.getString(1)));
+				actions.get(Actions.DISLIKE).add(userDao.getUser(rs.getString(1)));
 			}
 			
 			//getting playlist shares
@@ -146,7 +146,7 @@ public class ActionsDao {
 		    rs = stmt.executeQuery();
 		
 		    while (rs.next()) {
-			    actions.get(Actions.SHARE).add(UserDao.getInstance().getUser(rs.getString(1))); 
+			    actions.get(Actions.SHARE).add(userDao.getUser(rs.getString(1))); 
 		    }
 		}
 		
@@ -165,7 +165,7 @@ public class ActionsDao {
 		ResultSet rs=stmt.executeQuery();
 		
 		while(rs.next()){
-			commentLikes.get(Actions.LIKE).add(UserDao.getInstance().getUser(rs.getString(1)));
+			commentLikes.get(Actions.LIKE).add(userDao.getUser(rs.getString(1)));
 		}
 		
 		return commentLikes;

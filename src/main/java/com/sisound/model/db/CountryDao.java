@@ -7,20 +7,20 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
+<<<<<<< HEAD
 public class CountryDao {
 
 	private static CountryDao instance;
+=======
+import org.springframework.stereotype.Component;
+
+@Component
+public class CountryDao {
+
 	private final static Map<String, Long> COUNTRIES = new HashMap<>();
 	
 	private CountryDao() throws SQLException {
 		getAllCountries();
-	}
-	
-	public static synchronized CountryDao getInstance() throws SQLException {
-		if(instance == null){
-			instance = new CountryDao();
-		}
-		return instance;
 	}
 	
 	public long getCountryId(String genre) throws SQLException {

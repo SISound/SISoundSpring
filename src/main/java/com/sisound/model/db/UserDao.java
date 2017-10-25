@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.LinkedHashSet;
 
+<<<<<<< HEAD
 import com.google.common.hash.Hashing;
 import com.sisound.model.User;
 
@@ -25,6 +26,21 @@ public class UserDao {
 		
 		return instance;
 	}
+	
+=======
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.google.common.hash.Hashing;
+import com.sisound.model.User;
+
+@Component
+public class UserDao {
+
+	@Autowired
+	CountryDao countryDao;
+	
+	private UserDao(){}
 	
 	public synchronized void insertUser(User u) throws SQLException{
 		Connection con = DBManager.getInstance().getConnection();
@@ -170,7 +186,7 @@ public class UserDao {
 		stmt.setString(4, user.getFirstName());
 		stmt.setString(5, user.getLastName());
 		stmt.setString(6, user.getCoverPhoto());
-		stmt.setLong(7, CountryDao.getInstance().getCountryId(user.getCountry()));
+		stmt.setLong(7, countryDao.getCountryId(user.getCountry()));
 		stmt.setString(8, user.getUsername());
 		
 		stmt.execute();
