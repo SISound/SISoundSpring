@@ -6,16 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
-
 import java.util.HashMap;
 import java.util.TreeSet;
-
-<<<<<<< HEAD
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
->>>>>>> 455dddda779868272cd875eb4102acdc138de439
 import com.sisound.model.Actionable;
 import com.sisound.model.Comment;
 
@@ -72,11 +66,7 @@ public class CommentDao {
 		HashMap<Long, Comment> mainComments = new HashMap<>();
 		
 		while (rs.next()) {
-<<<<<<< HEAD
-			mainComments.put(rs.getLong(1), new Comment(rs.getLong(1), UserDao.getInstance().getUser(rs.getString(2)), 
-=======
 			mainComments.put(rs.getLong(1), new Comment(rs.getLong(1), userDao.getUser(rs.getString(2)), 
->>>>>>> 455dddda779868272cd875eb4102acdc138de439
 					rs.getString(3), rs.getTimestamp(4).toLocalDateTime(), null, new TreeSet())); 
 		}
 		
@@ -100,11 +90,7 @@ public class CommentDao {
 		}
 		
 		while (rs.next()) {
-<<<<<<< HEAD
-			mainComments.get(rs.getLong(5)).addSubcomment(new Comment(rs.getLong(1), UserDao.getInstance().getUser(rs.getString(2)), 
-=======
 			mainComments.get(rs.getLong(5)).addSubcomment(new Comment(rs.getLong(1), userDao.getUser(rs.getString(2)), 
->>>>>>> 455dddda779868272cd875eb4102acdc138de439
 					rs.getString(3), rs.getTimestamp(4).toLocalDateTime(), mainComments.get(rs.getLong(5)), new TreeSet()));
 		}
 

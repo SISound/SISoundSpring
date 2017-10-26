@@ -6,12 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-
-<<<<<<< HEAD
-public class CountryDao {
-
-	private static CountryDao instance;
-=======
 import org.springframework.stereotype.Component;
 
 @Component

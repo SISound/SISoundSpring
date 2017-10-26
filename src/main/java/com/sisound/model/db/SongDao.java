@@ -9,17 +9,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
-
-<<<<<<< HEAD
-=======
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
->>>>>>> 455dddda779868272cd875eb4102acdc138de439
 import com.sisound.model.Comment;
 import com.sisound.model.Song;
 import com.sisound.model.User;
-
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
