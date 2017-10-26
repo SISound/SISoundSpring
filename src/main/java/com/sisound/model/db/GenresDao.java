@@ -15,11 +15,6 @@ public class GenresDao {
 
 	private final static Map<String, Long> GENRES = new HashMap<>();
 	
-	private GenresDao() throws SQLException {
-		System.out.println("asdf");
-		getAllGenres();
-	}
-	
 	public long getGenreId(String genre) throws SQLException {
 		return GENRES.get(genre);
 	}

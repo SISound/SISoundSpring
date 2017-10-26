@@ -17,11 +17,9 @@ import com.sisound.model.User;
 public class ActionsDao {
 
 	@Autowired
-	private UserDao userDao;
+	public UserDao userDao;
 	
 	private String deleteQuery = "DELETE FROM ? WHERE ? = ?";
-	
-	private ActionsDao(){}
 	
 	public synchronized void addAction(Actionable a, Actions action, User user) throws SQLException {
 		

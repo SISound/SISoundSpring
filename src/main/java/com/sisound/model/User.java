@@ -20,6 +20,7 @@ public class User {
 	private TreeSet<Playlist> playlists;
 	private LinkedHashSet<User> followers;
 	
+	public User(){}
 	//constructor for registering user
 	public User(String username, String password, String email) {
 		this.username = username;
@@ -156,6 +157,17 @@ public class User {
 		return result;
 	}
 	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
 	@Override
 	public boolean equals(Object obj) {

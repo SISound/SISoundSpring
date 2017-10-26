@@ -19,9 +19,7 @@ import com.sisound.model.User;
 public class UserDao {
 
 	@Autowired
-	private CountryDao countryDao;
-	
-	private UserDao(){}
+	public CountryDao countryDao;
 	
 	public synchronized void insertUser(User u) throws SQLException{
 		Connection con = DBManager.getInstance().getConnection();

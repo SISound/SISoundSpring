@@ -13,10 +13,6 @@ public class CountryDao {
 
 	private final static Map<String, Long> COUNTRIES = new HashMap<>();
 	
-	private CountryDao() throws SQLException {
-		getAllCountries();
-	}
-	
 	public long getCountryId(String genre) throws SQLException {
 		return COUNTRIES.get(genre);
 	}
