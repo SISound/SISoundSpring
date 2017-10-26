@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping(value="welcome")
 public class WelcomeController {
 
-	@RequestMapping(value="hello", method=RequestMethod.GET)
+	@RequestMapping(value="index", method=RequestMethod.GET)
 	public String welcome(HttpSession session){
 		if(session.isNew()){
 			return "index";

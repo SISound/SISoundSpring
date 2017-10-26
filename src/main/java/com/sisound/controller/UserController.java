@@ -23,7 +23,6 @@ import com.sisound.model.db.SongDao;
 import com.sisound.model.db.UserDao;
 
 @Controller
-@RequestMapping(value="access")
 public class UserController {
 
 	@Autowired
@@ -34,7 +33,7 @@ public class UserController {
 	GenresDao genresDao;
 	
 	//register
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="regPage", method = RequestMethod.GET)
 	public String addUser(Model m){
 		User u = new User();
 		m.addAttribute("user", u);
@@ -55,7 +54,7 @@ public class UserController {
 	//login user
 	@RequestMapping(value="loginPage", method=RequestMethod.GET)
 	public String loginPage(){
-		return "login.jsp";
+		return "login";
 	}
 	
 	@RequestMapping(value="logUser", method=RequestMethod.POST)
@@ -78,15 +77,15 @@ public class UserController {
 						application.setAttribute("genres", genres);
 					}
 				}
-				return "main.jsp";
+				return "main";
 			}
 			else{
 				request.setAttribute("error", "User does not exist!");
-				return "login.jsp";
+				return "login";
 			}
 		} catch (SQLException e) {
 			request.setAttribute("error", "database problem : " + e.getMessage());
-			return "index.jsp";
+			return "index";
 		}
 	}
 }

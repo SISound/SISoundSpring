@@ -12,11 +12,11 @@
 		
 			<input id="indexSearchBar" type="text" placeholder="search artists, songs, playlists" placeholder-style: font>
 			
-			<form action="access" method="GET">
+			<form action="loginPage" method="GET">
 				<input id="loginButton" type="submit" value="" style="background-image: url('img/login.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
 			</form>
 			
-			<form action="register.jsp" method="GET">
+			<form action="regPage" method="GET">
 				<input id="signupButton" type="submit" value="" style="background-image: url('img/signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
 			</form>
 			
