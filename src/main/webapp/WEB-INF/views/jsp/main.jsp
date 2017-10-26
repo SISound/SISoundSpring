@@ -5,17 +5,17 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		 <link rel="stylesheet" type="text/css" href="css/style.css" />
+		 <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>" />
 		<title>SISound</title>
 	</head>
 	
 	<body id="mainBody">
 	
-		<c:if test="${ sessionScope.user == null }">
-				<c:redirect url="login.jsp"></c:redirect>
+		<c:if test="${ user == null }">
+				<c:redirect url="loginPage"></c:redirect>
 		</c:if>
 		
-		<c:set value="${ sessionScope.user}" var="user"></c:set>
+		<c:set value="${ user }" var="user"></c:set>
 		 
 		<jsp:include page="header.jsp"></jsp:include>
 		
@@ -28,7 +28,7 @@
 		<a style="display:block" href="SortingServlet?sorter=listenings"><div id="sortByListenings">Listenings|</div></a>
 		
 		<table class="songs">
-			<c:forEach items="${applicationScope.songs}" var="song">
+			<c:forEach items="${songs}" var="song">
 				<tr class="songTr">
 					<!-- SONG'S USER -->
 					<td class="songTd">

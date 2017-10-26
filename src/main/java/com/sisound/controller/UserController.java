@@ -40,7 +40,7 @@ public class UserController {
 		return "register";
 	}
 	
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(value="registerUser", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute User newUser){
 		try {
 			userDao.insertUser(newUser);
@@ -57,8 +57,8 @@ public class UserController {
 		return "login";
 	}
 	
-	@RequestMapping(value="logUser", method=RequestMethod.POST)
-	public String loginUser(HttpServletRequest request, ServletContext application){
+	@RequestMapping(value="loginUser", method=RequestMethod.POST)
+	public String loginUser(HttpServletRequest request, Model model){
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		
@@ -67,14 +67,14 @@ public class UserController {
 			if(exist){
 				User u=userDao.getUser(username);
 				request.getSession().setAttribute("user", u);
-				synchronized (application) {
-					if(application.getAttribute("songs") == null){
+				synchronized (model) {
+					if(!model.containsAttribute("songs")){
 						TreeSet<Song> songs = songDao.getAllSongs();
-						application.setAttribute("songs", songs);
+						model.addAttribute("songs", songs);
 					}
-					if(application.getAttribute("genres") == null){
+					if(!model.containsAttribute("genres")){
 						Map genres=genresDao.getAllGenres();
-						application.setAttribute("genres", genres);
+						model.addAttribute("genres", genres);
 					}
 				}
 				return "main";

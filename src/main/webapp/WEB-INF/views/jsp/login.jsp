@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
- <link rel="stylesheet" type="text/css" href="css/style.css"/>
+ <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>"/>
 	<title>SISound</title>
 </head>
 	<body>
@@ -17,7 +17,7 @@
 		</c:if>
 		
 		<div id="loginDiv">
-			<form action="login" method="POST">
+			<form action="loginUser" method="POST">
 				<div id="liDiv">
 					<h1 id="loginHead">Login</h1>
 					<input class="login" type="text" placeholder="Username" name="username"><br>

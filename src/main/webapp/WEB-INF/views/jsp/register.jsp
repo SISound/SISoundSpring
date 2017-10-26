@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		 <link rel="stylesheet" type="text/css" href="css/style.css" />
+		 <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>" />
 		<title>SISound</title>
 	</head>
 	
@@ -15,7 +15,7 @@
 		</header>
 		
 		<div id="registerDiv">
-			<form action="register" method="POST">
+			<form action="registerUser" method="POST">
 				<div id="regDiv">
 					<c:if test="${ requestScope.error == null }">
 						<a class=regMessage>Please register an account</a>
@@ -30,7 +30,7 @@
 					<input id="rb" type="submit" value="" style="background-image: url('img/signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
 				</div>
 			</form>	
-			<a class="logLink" href="login.jsp" name="regLink">Already have an account? Please login here.</a>
+			<a class="logLink" href="loginPage" name="regLink">Already have an account? Please login here.</a>
 		</div>
 	</body>
 </html>

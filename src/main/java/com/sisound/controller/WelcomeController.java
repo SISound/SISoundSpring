@@ -10,11 +10,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class WelcomeController {
 
-	@RequestMapping(value="index", method=RequestMethod.GET)
+	@RequestMapping(value="/index")
 	public String welcome(HttpSession session){
-		if(session.isNew()){
+		Object o = session.getAttribute("logged");
+		boolean logged =  (o != null && ((boolean) o ));
+		if(session.isNew() || !logged){
 			return "index";
 		}
-		return "main";
+		else{
+			return "main";
+		}
 	}
 }
