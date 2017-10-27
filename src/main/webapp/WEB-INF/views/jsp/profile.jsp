@@ -17,7 +17,7 @@
 	
 	<c:set value="${ sessionScope.user}" var="user"></c:set>
 		
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="headerNotLogged.jsp"></jsp:include>
 	
 		<c:if test="${user.coverPhoto != null}">
 			<img class="coverPhoto" alt="defaultCoverPic" src="${ user.CoverPhoto }">	

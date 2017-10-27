@@ -9,7 +9,7 @@
 	<title>SISound</title>
 </head>
 	<body>
-		<jsp:include page="header.jsp"></jsp:include>
+		<jsp:include page="headerNotLogged.jsp"></jsp:include>
 		
 		<c:if test="${ sessionScope.user == null }">
 			<c:redirect url="login.jsp"></c:redirect>

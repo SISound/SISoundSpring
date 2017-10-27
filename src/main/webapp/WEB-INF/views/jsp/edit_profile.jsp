@@ -15,7 +15,7 @@
 	
 	<c:set value="${ sessionScope.user}" var="user"></c:set>
 		
-	<jsp:include page="header.jsp"></jsp:include>
+	<jsp:include page="headerNotLogged.jsp"></jsp:include>
 		
 		<div id="editProfileDiv">
 			<form action="edit_profile" method="POST">

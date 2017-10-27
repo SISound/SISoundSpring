@@ -5,22 +5,12 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		 <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>"/>
+		 <link rel="stylesheet" type="text/css" href="<c:url value="css/header.css"/>"/>
 		<title>SISound</title>
 	</head>
-	<body id="indexBody">
-		<header>
+	
+	<body>
+		<jsp:include page="headerNotLogged.jsp"></jsp:include>
 		
-			<input id="indexSearchBar" type="text" placeholder="search artists, songs, playlists" placeholder-style: font>
-			
-			<form action="loginPage" method="GET">
-				<input id="loginButton" type="submit" value="" style="background-image: url('img/login.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
-			</form>
-			
-			<form action="regPage" method="GET">
-				<input id="signupButton" type="submit" value="" style="background-image: url('img/signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
-			</form>
-			
-		</header>
 	</body>
 </html>
