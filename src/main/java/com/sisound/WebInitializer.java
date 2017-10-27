@@ -1,5 +1,7 @@
 package com.sisound;
 
+import javax.servlet.ServletRegistration.Dynamic;
+
 import org.springframework.web.servlet.support.
 AbstractAnnotationConfigDispatcherServletInitializer;
  
@@ -19,4 +21,11 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected String[] getServletMappings() {
         return new String[] { "/", "*.html", "*.pdf" };
     }
+    
+    @Override
+    protected void customizeRegistration(Dynamic registration) {
+    	registration.setMultipartConfig(getMultipartConfig());
+    }
+    
+    private 
 }

@@ -10,7 +10,7 @@
 	</head>
 	<body>
 		<c:if test="${ sessionScope.user == null }">
-		<c:redirect url="login.jsp"></c:redirect>
+		<c:redirect url="loginPage"></c:redirect>
 	</c:if>
 	
 	<c:set value="${ sessionScope.user}" var="user"></c:set>

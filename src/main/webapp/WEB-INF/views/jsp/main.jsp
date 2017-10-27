@@ -12,7 +12,7 @@
 	<body id="mainBody">
 	
 		<c:if test="${ user == null }">
-				<c:redirect url="loginPage"></c:redirect>
+				<c:redirect url="index"></c:redirect>
 		</c:if>
 		
 		<c:set value="${ user }" var="user"></c:set>

@@ -12,7 +12,7 @@
 	<header>
 		<input id="searchBar" type="text" placeholder="search artists, songs, playlists" placeholder-style: font>
 		
-			<a href="main.jsp" id="homeLink">
+			<a href="homeButton" id="homeLink">
 				<div id="homeButton">Home</div>
 			</a>
 			
@@ -30,7 +30,7 @@
 			  <div class="dropdown-content">
 			    <a href="profile.jsp">Profile</a>
 			    <a href="upload.jsp">Upload</a>
-			    <form action="LogOutServlet" method="post">
+			    <form action="logout" method="post">
 			    	<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
 			    </form>
 			  </div>
