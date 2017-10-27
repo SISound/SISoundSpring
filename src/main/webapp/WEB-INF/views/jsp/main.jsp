@@ -50,7 +50,7 @@
 					<!-- PLAYER -->
 					<td id="playerTd">
 					    <audio id="player" controls>
-						    <source src="SongServlet?songName=${song.title}" type="audio/mpeg">
+						    <source src="getSong/songUrl=${song.url}" type="audio/mpeg">
 						</audio>
 					</td>
 					

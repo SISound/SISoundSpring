@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class WelcomeController {
 
-	@RequestMapping(value="/index")
+	@RequestMapping(value="/")
 	public String welcome(HttpSession session){
 		Object o = session.getAttribute("logged");
 		boolean logged =  (o != null && ((boolean) o ));

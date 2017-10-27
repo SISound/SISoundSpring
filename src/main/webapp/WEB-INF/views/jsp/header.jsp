@@ -29,7 +29,7 @@
 			  </button>
 			  <div class="dropdown-content">
 			    <a href="profile.jsp">Profile</a>
-			    <a href="upload.jsp">Upload</a>
+			    <a href="uploadPage">Upload</a>
 			    <form action="logout" method="post">
 			    	<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
 			    </form>
