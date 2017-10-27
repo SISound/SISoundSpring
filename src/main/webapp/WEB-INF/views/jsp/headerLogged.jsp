@@ -11,7 +11,6 @@
 </head>
 <body>
 	<nav class = "nav">
-		
 		<a href="index">
  			<img class = "logoHeader"src="<c:url value="img/logo.png"/>">
 		</a>
@@ -23,6 +22,13 @@
 	
 	<div class="dropdown">
 		<button class="dropbtn">
+			<a href="homeButton" id="homeLink">
+				<div id="homeButton">Home</div>
+			</a>
+			
+			<div class="dropdown">
+			  <button class="dropbtn">
+
 			  	<c:if test="${user.profilPicture != null}">
 					<img class="profilePic" alt="profilePic" src="${user.profilPicture }">
 					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
@@ -33,11 +39,17 @@
 				</c:if>
 			  </button>
 			  <div class="dropdown-content">
+
 			    <a href="profile">Profile</a>
 			    <a href="upload">Upload</a>
 			    <form action="logout" method="post">
 			    	<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out">
 			    	</div>
+			    <a href="profile.jsp">Profile</a>
+			    <a href="upload.jsp">Upload</a>
+			    <form action="logout" method="post">
+			    	<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
+
 			    </form>
 			  </div>
 		</div>

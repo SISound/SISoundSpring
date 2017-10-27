@@ -11,8 +11,8 @@
 	<body>
 		<jsp:include page="headerNotLogged.jsp"></jsp:include>
 		
-		<c:if test="${ sessionScope.user == null }">
-			<c:redirect url="login.jsp"></c:redirect>
+		<c:if test="${ user == null }">
+				<c:redirect url="index"></c:redirect>
 		</c:if>
 		
 		<div id="uploadDiv">

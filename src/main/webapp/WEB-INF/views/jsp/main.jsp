@@ -15,6 +15,7 @@
 <%-- 				<c:redirect url="loginPage"></c:redirect> --%>
 <%-- 		</c:if> --%>
 				
+
 		<c:set value="${ user }" var="user"></c:set>
 		
 		<jsp:include page="headerLogged.jsp"></jsp:include>

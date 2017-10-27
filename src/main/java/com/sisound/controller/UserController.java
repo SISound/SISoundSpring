@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sisound.model.Song;
 import com.sisound.model.User;
@@ -21,6 +22,7 @@ import com.sisound.model.db.SongDao;
 import com.sisound.model.db.UserDao;
 
 @Controller
+@SessionAttributes("user")
 public class UserController {
 
 	@Autowired
@@ -30,6 +32,7 @@ public class UserController {
 	@Autowired
 	GenresDao genresDao;
 	
+
 	//register
 //	@RequestMapping(value="regPage", method = RequestMethod.GET)
 //	public String addUser(Model m){
@@ -37,6 +40,7 @@ public class UserController {
 //		m.addAttribute("user", u);
 //		return "register";
 //	}
+
 	
 	@RequestMapping(value="registerUser", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute User u, HttpServletRequest request){
@@ -62,7 +66,7 @@ public class UserController {
 		}		
 	}
 
-	//login user
+	//LOGIN USER
 	@RequestMapping(value="loginPage", method=RequestMethod.GET)
 	public String loginPage(Model m){
 		User u = new User();
@@ -72,17 +76,19 @@ public class UserController {
 	
 	//TODO CHECK LOGIN
 	@RequestMapping(value="loginUser", method=RequestMethod.POST)
-	public String loginUser(HttpServletRequest request, Model model, HttpSession session){
+	public String loginUser(HttpSession session, HttpServletRequest request, Model model){
+
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		
 		try {
 			boolean exist = userDao.existsUser(username, password);
 			if(exist){
+				
 				User u = userDao.getUser(username);
 				System.out.println(u.getUsername());
 				session.setAttribute("user", u);
-				request.getSession().setAttribute("logged", true);
+				session.setAttribute("logged", true);
 				//request.getSession().setAttribute("user1", u);
 				
 				synchronized (model) {
@@ -108,10 +114,24 @@ public class UserController {
 		}
 	}
 	
+
 	//profile
 	@RequestMapping(value="profile", method=RequestMethod.GET)
 	public String profilePage(HttpServletRequest request, Model model){
 		
 		return "profile";
+	}
+	
+	//ON CLICKING THE HOME BUTTON THIS METHOD RETURNS THE USER TO HIS MAIN PAGE
+	@RequestMapping(value="homeButton", method=RequestMethod.GET)
+	public String backToMain(){
+		return "main";
+	}
+	
+	//LOGGIN OUT AN USER
+	@RequestMapping(value="logout", method=RequestMethod.POST)
+	public String logoutUser(HttpSession session){
+		session.invalidate();
+		return "index";
 	}
 }
