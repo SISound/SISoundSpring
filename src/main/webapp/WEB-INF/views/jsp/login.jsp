@@ -25,6 +25,7 @@
 					<input id="lb" type="submit" value="" style="background-image: url('img/login.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
 				</div>
 			</form>
+
 			<a class="forgotPass" href="forgotPass.jsp" name="forgotPass">Forgot password?</a>
 			<a class="regLink" href="register.jsp" name="regLink">You don't have account? Register here!</a>
 		</div>

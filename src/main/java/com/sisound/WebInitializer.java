@@ -1,13 +1,14 @@
 package com.sisound;
 
+
 import java.nio.file.LinkOption;
 
 import javax.servlet.MultipartConfigElement;
+
 import javax.servlet.ServletRegistration;
 import javax.servlet.ServletRegistration.Dynamic;
 
-import org.springframework.web.servlet.support.
-AbstractAnnotationConfigDispatcherServletInitializer;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
  
 public class WebInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
  
@@ -25,7 +26,6 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     protected String[] getServletMappings() {
         return new String[] { "/", "*.html", "*.pdf" };
     }
-    
 
 	protected void customizeRegistration(ServletRegistration.Dynamic registration) {
 		registration.setMultipartConfig(getMultipartConfigElement());
@@ -44,4 +44,5 @@ public class WebInitializer extends AbstractAnnotationConfigDispatcherServletIni
     private static final long MAX_REQUEST_SIZE = 20971520; // 20MB : Total request size containing Multi part.
      
     private static final int FILE_SIZE_THRESHOLD = 0; // Size threshold after which files will be written to disk
+
 }

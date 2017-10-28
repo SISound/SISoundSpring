@@ -5,36 +5,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
- <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css" />" />
+<title>SISound</title>
+ <link rel="stylesheet" type="text/css" href="<c:url value="css/header.css" />" />
+<%--  <link rel="stylesheet" type="text/css" href = "<c:url value="css/logReg.css" />" /> --%>
 </head>
 <body>
-	<header>
-		<input id="searchBar" type="text" placeholder="search artists, songs, playlists" placeholder-style: font>
+	<nav class = "nav">
+		<a href="index">
+ 			<img class = "logoHeader"src="<c:url value="img/logo.png"/>">
+		</a>
 		
-			<a href="homeButton" id="homeLink">
-				<div id="homeButton">Home</div>
-			</a>
-			
-			<div class="dropdown">
+		<!--<div class="dropdown">
 			  <button class="dropbtn">
 			  	<c:if test="${user.profilPicture != null}">
 					<img class="profilePic" alt="profilePic" src="${user.profilPicture }">
 					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
 				</c:if>
 				<c:if test="${user.profilPicture == null}">
-					<img class="profilePic" alt="defaultProfilPic" src="img/defaultProfile.png">
+					<img class="profilePic" alt="defaultProfilPic" src="defaultProfile.png">
 					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
 				</c:if>
 			  </button>
 			  <div class="dropdown-content">
 			    <a href="profile.jsp">Profile</a>
-			    <a href="uploadPage">Upload</a>
-			    <form action="logout" method="post">
+			    <a href="upload.jsp">Upload</a>
+			    <form action="LogOutServlet" method="post">
 			    	<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
 			    </form>
 			  </div>
-			</div>
-	</header>		
+			</div>-->
+		<input id="input" type="text" placeholder="Search" class="header-input desktop-only" />
+<!-- 		<a class = headerText href="loginPage">Profile</a> -->
+		<a class = headerText href="index">Home</a>
+
+	</nav>
+	
+	
+  <div class="fullscreen-bg"></div>
 </body>
 </html>

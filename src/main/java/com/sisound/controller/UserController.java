@@ -32,26 +32,19 @@ public class UserController {
 	@Autowired
 	GenresDao genresDao;
 	
-	//REGISTERING USER
-	@RequestMapping(value="regPage", method = RequestMethod.GET)
-	public String addUser(Model m){
-		User u = new User();
-		m.addAttribute("user", u);
-		return "register";
-	}
+
+	//register
+//	@RequestMapping(value="regPage", method = RequestMethod.GET)
+//	public String addUser(Model m){
+//		User u = new User();
+//		m.addAttribute("user", u);
+//		return "register";
+//	}
+
 	
 	@RequestMapping(value="registerUser", method = RequestMethod.POST)
 	public String saveUser(@ModelAttribute User u, HttpServletRequest request){
-		
-		String password2 = request.getParameter("password2");
-		
-		System.out.println(u.getPassword());
-		System.out.println(password2);
-		if(!u.getPassword().equals(password2)){
-			request.setAttribute("error", "passwords missmatch");
-			return "regPage";
-		}
-		
+				
 		try {
 			if(!userDao.usernameExists(u.getUsername()) && !userDao.emailExists(u.getEmail())){
 				userDao.insertUser(u);
@@ -61,11 +54,11 @@ public class UserController {
 			} 
 			else if(userDao.usernameExists(u.getUsername())){
 				request.setAttribute("error", "username is taken");
-				return "regPage";
+				return "logReg";
 			} 
 			else {
 				request.setAttribute("error", "e-mail already in use");
-				return "regPage";
+				return "logReg";
 			}
 		} catch (SQLException e) {
 			request.setAttribute("error", "database problem : " + e.getMessage());
@@ -75,21 +68,29 @@ public class UserController {
 
 	//LOGIN USER
 	@RequestMapping(value="loginPage", method=RequestMethod.GET)
-	public String loginPage(){
-		return "login";
+	public String loginPage(Model m){
+		User u = new User();
+		m.addAttribute("user", u);
+		return "logReg";
 	}
 	
+	//TODO CHECK LOGIN
 	@RequestMapping(value="loginUser", method=RequestMethod.POST)
 	public String loginUser(HttpSession session, HttpServletRequest request, Model model){
+
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
 		
 		try {
-			boolean exist=userDao.existsUser(username, password);
+			boolean exist = userDao.existsUser(username, password);
 			if(exist){
-				User u=userDao.getUser(username);
+				
+				User u = userDao.getUser(username);
+				System.out.println(u.getUsername());
 				session.setAttribute("user", u);
 				session.setAttribute("logged", true);
+				//request.getSession().setAttribute("user1", u);
+				
 				synchronized (model) {
 					if(!model.containsAttribute("songs")){
 						TreeSet<Song> songs = songDao.getAllSongs();
@@ -100,6 +101,7 @@ public class UserController {
 						model.addAttribute("genres", genres);
 					}
 				}
+				
 				return "main";
 			}
 			else{
@@ -110,6 +112,14 @@ public class UserController {
 			request.setAttribute("error", "database problem : " + e.getMessage());
 			return "index";
 		}
+	}
+	
+
+	//profile
+	@RequestMapping(value="profile", method=RequestMethod.GET)
+	public String profilePage(HttpServletRequest request, Model model){
+		
+		return "profile";
 	}
 	
 	//ON CLICKING THE HOME BUTTON THIS METHOD RETURNS THE USER TO HIS MAIN PAGE

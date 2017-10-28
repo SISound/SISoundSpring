@@ -11,13 +11,14 @@
 	
 	<body id="mainBody">
 	
-		<c:if test="${ user == null }">
-				<c:redirect url="index"></c:redirect>
-		</c:if>
-		
+<%-- 		<c:if test="${ user == null }"> --%>
+<%-- 				<c:redirect url="loginPage"></c:redirect> --%>
+<%-- 		</c:if> --%>
+				
+
 		<c:set value="${ user }" var="user"></c:set>
-		 
-		<jsp:include page="header.jsp"></jsp:include>
+		
+		<jsp:include page="headerLogged.jsp"></jsp:include>
 		
 		<h2 id="topH">TOP10 CHART</h2>
 		
