@@ -68,6 +68,14 @@ public class User {
 		return firstName;
 	}
 
+	public String getName() {
+		return firstName + " " + lastName;
+	}
+	
+	public String getAdress() {
+		return city + " " + country;
+	}
+	
 	public String getLastName() {
 		return lastName;
 	}
@@ -169,6 +177,7 @@ public class User {
 		this.username = username;
 	}
 
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

@@ -156,8 +156,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .button-primary {
-	background-color: #ac1a2f;
-	border-color: #ac1a2f;
+	background-color: rgba(92,168,214,0.9);
+	border-color: #8289df;
 	color: #ffffff;
 	
 	&:hover {
@@ -310,7 +310,7 @@ a {
 	}
 }
 
-a.tab-active {
+.tab-active {
 	background: @white;
 	color: @black;
 	margin-top: -5px;

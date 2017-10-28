@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.sisound.model.Song;
@@ -119,8 +121,23 @@ public class UserController {
 	
 
 	//profile
-	@RequestMapping(value="profile", method=RequestMethod.GET)
-	public String profilePage(HttpServletRequest request, Model model){
+	@RequestMapping(value="profile{x}", method=RequestMethod.GET)
+	public String profilePage(@PathVariable String x, Model model, HttpSession session){
+		
+		User currentUser = (User)session.getAttribute("sessionUser");
+		
+		if(x == "user") {
+			model.addAttribute("modelUser", currentUser);
+		}
+		else {			
+			try {
+				model.addAttribute("modelUser", userDao.getUser(x));
+			} catch (SQLException e) {
+				// TODO create error page
+				return "errorPage";
+			}
+		}
+		
 		
 		return "profile2";
 	}
