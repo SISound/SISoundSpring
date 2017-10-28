@@ -24,7 +24,7 @@
 			<table>
 				<tr>
 					<c:if test="${user.profilPicture != null}">
-						<td><img class="profilePic" alt="profilePic" src="${sessionUser.profilPicture }"></td>
+						<td><img class="profilePic" alt="profilePic" src="${sessionUser.profilPicture != null}"></td>
 						<td class="usernameTd"><span class="profileButton"><c:out value="${ sessionUser.username }"></c:out></span></td>
 			 		</c:if>
 				</tr>
@@ -39,10 +39,9 @@
 			</table>
 			 <div class="dropdown-content">
 			    <a href="profile">Profile</a>
-			    <a href="uploadPage">Upload</a>
+			    <a href="songCtrl/uploadPage">Upload</a>
 			    <form action="logout" method="post">
 			 		<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
-
 			    </form>
 			 </div>
 		</div>

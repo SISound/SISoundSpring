@@ -9,11 +9,11 @@
 	<title>SISound</title>
 </head>
 	<body>
-		<jsp:include page="headerNotLogged.jsp"></jsp:include>
+		<jsp:include page="headerLogged.jsp"></jsp:include>
 		
-		<c:if test="${ user == null }">
-				<c:redirect url="index"></c:redirect>
-		</c:if>
+<%-- 		<c:if test="${empty sessionScope.user }"> --%>
+<%-- 				<c:redirect url="index"></c:redirect> --%>
+<%-- 		</c:if> --%>
 		
 		<div id="uploadDiv">
 			<form id="uploadForm" action="saveSong" method="post" enctype="multipart/form-data">

@@ -94,14 +94,14 @@ public class UserController {
 				session.setAttribute("logged", true);
 				//request.getSession().setAttribute("user1", u);
 				
-				synchronized (model) {
-					if(!model.containsAttribute("songs")){
+				synchronized (session) {
+					if(session.getAttribute("songs") == null){
 						TreeSet<Song> songs = songDao.getAllSongs();
-						model.addAttribute("songs", songs);
+						session.setAttribute("songs", songs);
 					}
-					if(!model.containsAttribute("genres")){
+					if(session.getAttribute("genres") == null){
 						Map genres=genresDao.getAllGenres();
-						model.addAttribute("genres", genres);
+						session.setAttribute("genres", genres);
 					}
 				}
 				

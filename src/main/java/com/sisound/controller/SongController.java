@@ -31,6 +31,7 @@ import com.sisound.model.db.SongDao;
 
 @Controller
 @MultipartConfig
+@RequestMapping(value="songCtrl")
 public class SongController {
 
 	@Autowired
@@ -45,7 +46,7 @@ public class SongController {
 	//SAVING THE SELECTED SONG
 	@RequestMapping(value="saveSong", method=RequestMethod.POST)
 	public String saveSong(HttpSession session, Model model, @RequestParam("song") MultipartFile file){
-		User u=(User) session.getAttribute("user");
+		User u=(User) session.getAttribute("sessionUser");
 		File f=new File(WebInitializer.LOCATION + File.separator + file.getOriginalFilename());
 		
 		try {
