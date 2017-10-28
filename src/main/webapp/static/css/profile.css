@@ -233,7 +233,7 @@ a {
 }
 
 .avatar {
-	background-color: #bbbbbb;
+	background-color: white;
 	height: 160px;
 	min-width: 160px;
 	border-radius: 80px;
@@ -497,3 +497,6 @@ display: flex;
 	justify-content: center;
 
 }
+
+
+

@@ -10,32 +10,42 @@
 		<link href="https://p.typekit.net/p.gif?s=1&k=yyw5dsj&app=typekit&ht=tk&h=www.flagstar.com&f=6846.6848.6849.6851.6852&a=1922000&sl=195&fl=122&js=1.14.8&_=1458594264430">
 		<link rel="stylesheet" type="text/css" href="<c:url value="css/profile.css" />" />
 <%-- 		<script src="<c:url value="/js/profile.js" />" type ="text/javascript"></script> --%>
+		<script src="<c:url value="/js/profile.js" />"></script>
 		
 		<title>SISound</title>
 	</head>
 <body>
-	<script src="<c:url value="/js/profile.js" />" type ="text/javascript"></script>
+	<c:set value="${ user }" var="user"></c:set>
+	
 	<jsp:include page="headerLogged.jsp"></jsp:include>
 	
+	<br>
+	<br>
+	<br>
+	<br>
+	
+<div class = profileASD>
 	<div class="banner">
 		<div class="container">
 			<div class="profile-pic">
-				<div class="avatar"></div>
-				<a href="#" class="button button-primary mt-20">Apply with me</a>
+				<div class="avatar">
+					<img class="avatar" src="<c:url value="img/defaultProfile.png"/>">
+				</div>
+				<a href="#" class="button button-primary mt-20">Follow</a>
 			</div>
 			<div class="bio">
-				<h1 class="heading-medium">Lars Loaner</h1>
+				<h1 class="heading-medium"> <c:out value="${ user.username }"></c:out> </h1>
 				<h3 class="heading-small">Home Lending Analyst</h3>
 				<h5 class="heading-small">NMLS ID: 3241525</h5>
-				<p class="body-small">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes.</p>
+				<p class="body-small">asf </p>
 			</div>
 		</div>
 	</div>
 	<div class="section-about">
 		<div class="container">
 			<div class="tab-group">
-				<a href="#tab-contact" class="tab tab-active heading-small tab-label">Contact</a>
-				<a href="#tab-about" class="tab heading-small tab-label">About</a>
+				<a href="#tab-contact" class="tab tab-active heading-small tab-label">Songs</a>
+				<a href="#tab-about" class="tab heading-small tab-label">Playlists</a>
 			</div>
 		</div>
 		<div class="container">
@@ -193,8 +203,9 @@
 		</div>
 	</div>
 
-
+	</div>
 <!--   <div class="fullscreen-bg"></div> -->
 
+	<script src="<c:url value="/js/profile.js" />"  type ="text/javascript"></script>
 </body>
 </html>
