@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -28,15 +29,26 @@
 		  </form>
 		  
 		
-		  <form class="form form--signup framed" action = "registerUser" method = POST>
+<%-- 		  <form class="form form--signup framed" action = "registerUser" method = POST> --%>
 		 		
-		    <input type="email" placeholder="Email" class="input input--top" />
-		    <input type="password" placeholder="Password" class="input" />
-		    <input type="text" placeholder="Username" class="input" />
-		    <input type="submit" value="Sign up" class="input input--submit" />
+<!-- 		    <input type="text" placeholder="Username" class="input" name = "username"/> -->
+<!-- 		    <input type="password" placeholder="Password" class="input" name = "password"/> -->
+<!-- 		    <input type="email" placeholder="Email" class="input input--top" name = "email"/> -->
+<!-- 		    <input type="submit" value="Sign up" class="input input--submit" /> -->
     		
-    		<label for="toggle--login" class="text text--small text--centered">Not new? <b>Log in</b></label>
-		  </form>
+<!--     		<label for="toggle--login" class="text text--small text--centered">Not new? <b>Log in</b></label> -->
+<%-- 		  </form> --%>
+		  
+		  <form class="form form--signup framed" action = "registerUser" method = POST>
+		  	<f:form commandName="user" >
+				<f:input type="text" placeholder="Username" class="input input--top" path="username" required=""/><br>
+				<f:input type="password" placeholder="Password" class="input" path="password" required=""/><br>
+				<f:input type="email" placeholder="Email" class="input" path="email" required=""/><br>
+				<input type="submit" value="Sign up" class="input input--submit" />
+				<label for="toggle--login" class="text text--small text--centered">Not new? <b>Log in</b></label>
+				
+		</f:form>
+		</form>
     </div>
 </body>
 </html>

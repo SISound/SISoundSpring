@@ -17,8 +17,8 @@
 		</a>
 		
 		<input id="input" type="text" placeholder="Search" class="header-input desktop-only" />
-		<a class = headerText href="loginPage">Login</a>
-		<a class = headerText href="index">Home</a>
+		<a class = "headerText" href="loginPage">Login</a>
+		<a class = "headerText" href="index">Home</a>
 	</nav>
 	
 	

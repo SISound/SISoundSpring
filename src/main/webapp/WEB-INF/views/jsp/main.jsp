@@ -13,7 +13,7 @@
 				
 		<jsp:include page="headerLogged.jsp"></jsp:include>
 
-	<c:out value="${ user.username }"></c:out>
-		<c:out value="${ user.username }"></c:out>	<c:out value="${ user.username }"></c:out>	<c:out value="${ user.username }"></c:out>	<c:out value="${ user.username }"></c:out>
+	<c:out value="${ sessionUser.username }"></c:out>
+		<c:out value="${ sessionuser.username }"></c:out>	<c:out value="${ user.username }"></c:out>	<c:out value="${ user.username }"></c:out>	<c:out value="${ user.username }"></c:out>
 	</body>
 </html>

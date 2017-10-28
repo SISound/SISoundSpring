@@ -1,8 +1,8 @@
 @charset "ISO-8859-1";
 
 html, body {
-	padding: 0;
-	margin: 0;
+/* 	padding: 0; */
+/* 	margin: 0; */
 	font-family: Helvetica, Arial, sans-serif;
 }
 
@@ -25,8 +25,21 @@ nav{
 .headerText {
     float: right;
     padding: 15px 20px;
-    margin-top: 0.5%;
-    margin-right: 8%;
+    margin: 0px;
+    color: transparentize(#ff6011, .3);
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    letter-spacing: .1rem;
+    +transition(.3s);
+    &:hover;
+    color: white;
+}
+
+.headerTextLogged{
+	 float: right;
+    padding: 15px 20px;
+    margin-right: 10%;
     color: transparentize(#ff6011, .3);
     text-decoration: none;
     text-transform: uppercase;
@@ -49,27 +62,17 @@ a:hover{
 	border-radius:12px;
 	font: 20px Impact, Charcoal, sans-serif;
 	position: absolute;
-	margin-top: 1%;
+	margin-top: 0.5%;
 }
 .header-input:hover{
 	opacity: 1;
 }  
 
-.fullscreen-bg {
-  position: fixed;
-  top:0; right:0; bottom:0; left:0;
-  background: url("background2.jpg") center;
-/*   background-size: cover; */
-  opacity: 1;
-}
-
-
 /* Dropdown Button */
 .dropbtn {
     background-color: transparent;
     color: white;
-    padding: 16px;
-    font-size: 16px;
+    font-size: 18px;
     border: none;
     cursor: pointer;
 }
@@ -78,8 +81,8 @@ a:hover{
 .dropdown {
     position: absolute;
     display: inline-block;
-    margin-left: 80%;
-    margin-top: 0.5%;
+    margin-left: 78%;
+    margin-top: 0.4%;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -109,7 +112,7 @@ a:hover{
 #signOutDiv:HOVER{
 	width: 101px;
 	height: 40px;
-	background-color: #524A49;
+	background-color: #cccccc;
 	opacity: 0.5;
 }
 
@@ -124,7 +127,7 @@ a:hover{
 
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
-	background-color: #524A49;
+	background-color: #cccccc;
 }
 
 /* Show the dropdown menu on hover */
@@ -135,21 +138,40 @@ a:hover{
 /* Change the background color of the dropdown button when the dropdown content is shown */
 .dropdown:hover .dropbtn {
 	color: #cccccc;
+    background-color: #252424;
 }
 
+/*Format the profile name size*/
 .profileButton{
-	margin-left: 5%;
+	padding: 0%;
+	font: 18px Helvetica, Arial, sans-serif;
 }
+
+.usernameTd{
+	color: #ffffff;
+}
+
+.usernameTd:HOVER{
+	color: #cccccc;
+}
+
 /*Format the profile pic size*/
 .profilePic{
-	position: absolute;
 	height: 30px;
 	width: 30px;
 	border-radius: 50%;
-	margin-left: -33%;
-	margin-top: -10%;
 }
 
 .dropdown:hover .profilePic{
 	opacity: 0.7;
+}
+/*-----------------------------------------------*/
+
+.fullscreen-bg {
+  position: absolute;
+  top:0; right:0; bottom:0; left:0;
+  background: url("background2.jpg") center;
+/*   background-size: cover; */
+  opacity: 1;
+  z-index: -1000;
 }

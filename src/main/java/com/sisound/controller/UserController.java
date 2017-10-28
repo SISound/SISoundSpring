@@ -43,13 +43,16 @@ public class UserController {
 
 	
 	@RequestMapping(value="registerUser", method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute User u, HttpServletRequest request){
+	public String saveUser(@ModelAttribute User u, HttpServletRequest request, HttpSession session){
 				
 		try {
 			if(!userDao.usernameExists(u.getUsername()) && !userDao.emailExists(u.getEmail())){
+				System.out.println(u.getUsername());
+				System.out.println(u.getPassword());
+				System.out.println(u.getEmail());
 				userDao.insertUser(u);
-				request.getSession().setAttribute("user", u);
-				request.getSession().setAttribute("logged", true);
+				session.setAttribute("sessionUser", u);
+				session.setAttribute("logged", true);
 				return "main";
 			} 
 			else if(userDao.usernameExists(u.getUsername())){
@@ -87,7 +90,7 @@ public class UserController {
 				
 				User u = userDao.getUser(username);
 				System.out.println(u.getUsername());
-				session.setAttribute("user", u);
+				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
 				//request.getSession().setAttribute("user1", u);
 				

@@ -15,12 +15,12 @@ public class WelcomeController {
 	@RequestMapping(value="/index")
 	public String welcome(HttpSession session){
 		Object o = session.getAttribute("logged");
-		User u = (User)session.getAttribute("user");
-		System.out.println(u.getUsername());
-		System.out.println(u.getUsername());
-		System.out.println(u.getUsername());
-		System.out.println(u.getUsername());
-		System.out.println(u.getUsername());
+//		User u = (User)session.getAttribute("user");
+//		System.out.println(u.getUsername());
+//		System.out.println(u.getUsername());
+//		System.out.println(u.getUsername());
+//		System.out.println(u.getUsername());
+//		System.out.println(u.getUsername());
 		boolean logged =  (o != null && ((boolean) o ));
 		if(session.isNew() || !logged){
 			return "index";

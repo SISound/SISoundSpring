@@ -12,8 +12,7 @@ import com.sisound.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.common.hash.Hashing;
-import com.sisound.model.User;
+
 
 @Component
 public class UserDao {
