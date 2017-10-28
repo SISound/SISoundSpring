@@ -32,7 +32,7 @@
 				 			</c:if>
 					        <a class="link-title" href="songPage"><c:out value="${ song.title }"></c:out></a>
 					        <a class="link-excerpt" href="songPage"><c:out value="${ song.user.username }"></c:out></a>
-					         Like Dislike Comment Share
+					         
 					      </div>
 					    </li>
 					  </ol>
