@@ -16,8 +16,8 @@
 		</c:if>
 		
 		<div id="uploadDiv">
-			<form id="uploadForm" action="UploadSongServlet" method="post" enctype="multipart/form-data">
-			    <input class="uploader" type="file" name="song" /></br>
+			<form id="uploadForm" action="saveSong" method="post" enctype="multipart/form-data">
+			    <input class="uploader" type="file" name="song" accept="audio/*"/></br>
 			    <input class="uploader" type="submit" /></br>
 			</form>
 		</div>

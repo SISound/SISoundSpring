@@ -119,14 +119,32 @@ public class UserController {
 	@RequestMapping(value="profile", method=RequestMethod.GET)
 	public String profilePage(HttpServletRequest request, Model model){
 		
-		return "profile";
+		return "profile2";
 	}
 	
 	//ON CLICKING THE HOME BUTTON THIS METHOD RETURNS THE USER TO HIS MAIN PAGE
 	@RequestMapping(value="homeButton", method=RequestMethod.GET)
-	public String backToMain(){
+	public String backToMain(Model model){
+		try {
+			synchronized (model) {
+				if(!model.containsAttribute("songs")){
+					TreeSet<Song> songs;
+					songs = songDao.getAllSongs();
+					model.addAttribute("songs", songs);
+				}
+				if(!model.containsAttribute("genres")){
+					Map genres=genresDao.getAllGenres();
+					model.addAttribute("genres", genres);
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "main";
 	}
+	
 	
 	//LOGGIN OUT AN USER
 	@RequestMapping(value="logout", method=RequestMethod.POST)

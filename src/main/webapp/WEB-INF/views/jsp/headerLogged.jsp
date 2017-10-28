@@ -15,46 +15,32 @@
  			<img class = "logoHeader"src="<c:url value="img/logo.png"/>">
 		</a>
 		
-		<input id="input" type="text" placeholder="Search" class="header-input desktop-only" />
-<!-- 		<a class = headerText href="loginPage">Profile</a> -->
-		<a class = headerText href="index">Home</a>
-	</nav>
-	
-	<div class="dropdown">
-		<button class="dropbtn">
-			<a href="homeButton" id="homeLink">
-				<div id="homeButton">Home</div>
-			</a>
-			
-			<div class="dropdown">
+		<!--<div class="dropdown">
 			  <button class="dropbtn">
-
 			  	<c:if test="${user.profilPicture != null}">
 					<img class="profilePic" alt="profilePic" src="${user.profilPicture }">
 					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
 				</c:if>
 				<c:if test="${user.profilPicture == null}">
-					<img class="profilePic" alt="defaultProfilPic" src="img/defaultProfile.png">
+					<img class="profilePic" alt="defaultProfilPic" src="defaultProfile.png">
 					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
 				</c:if>
 			  </button>
 			  <div class="dropdown-content">
-
-			    <a href="profile">Profile</a>
-			    <a href="upload">Upload</a>
-			    <form action="logout" method="post">
-			    	<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out">
-			    	</div>
 			    <a href="profile.jsp">Profile</a>
 			    <a href="upload.jsp">Upload</a>
-			    <form action="logout" method="post">
+			    <form action="LogOutServlet" method="post">
 			    	<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
-
 			    </form>
 			  </div>
-		</div>
+			</div>-->
+		<input id="input" type="text" placeholder="Search" class="header-input desktop-only" />
+		<a class = headerText href="profile">Profile</a>
+		<a class = headerText href="index">Home</a>
+
+	</nav>
 	
 	
-  <div class="fullscreen-bg"></div>
+<!--   <div class="fullscreen-bg"></div> -->
 </body>
 </html>
