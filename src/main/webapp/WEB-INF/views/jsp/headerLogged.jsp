@@ -31,7 +31,9 @@
 				<tr>
 					<c:if test="${user.profilPicture == null}">
 						<td><img class="profilePic" alt="defaultProfilPic" src="<c:url value="img/defaultProfile.png" />"></td>
+
 						<td class="usernameTd"><span class="profileButton"><c:out value="${ sessionUser.username }"></c:out></span></td>
+
 			  		</c:if>
 				</tr>
 			</table>
