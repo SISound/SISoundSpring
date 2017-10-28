@@ -17,29 +17,32 @@
 		
 		<input id="input" type="text" placeholder="Search" class="header-input desktop-only" />
 <!-- 		<a class = headerText href="loginPage">Profile</a> -->
-		<a class = headerText href="index">Home</a>
-
-<div class="dropdown">
-			  <button class="dropbtn">
-			  	<c:if test="${user.profilPicture != null}">
-					<img class="profilePic" alt="profilePic" src="${user.profilPicture }">
-					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
-				</c:if>
-				<c:if test="${user.profilPicture == null}">
-					<img class="profilePic" alt="defaultProfilPic" src="<c:url value="img/defaultProfile.png"/>">
-					<span class="profileButton"><c:out value="${ user.username }"></c:out></span>
-				</c:if>
-			  </button>
-			  <div class="dropdown-content">
+		<a class = "headerTextLogged" href="index">Home</a>
+		
+		<div class="dropdown">
+			<table>
+				<tr>
+					<c:if test="${user.profilPicture != null}">
+						<td><img class="profilePic" alt="profilePic" src="${user.profilPicture }"></td>
+						<td class="usernameTd"><span class="profileButton"><c:out value="${ user.username }"></c:out></span></td>
+			 		</c:if>
+				</tr>
+				<tr>
+					<c:if test="${user.profilPicture == null}">
+						<td><img class="profilePic" alt="defaultProfilPic" src="<c:url value="img/defaultProfile.png" />"></td>
+						<td class="usernameTd"><span class="${ user.username }"><c:out value="moni"></c:out></span></td>
+			  		</c:if>
+				</tr>
+			</table>
+			 <div class="dropdown-content">
 			    <a href="profile.jsp">Profile</a>
-			    <a href="upload.jsp">Upload</a>
-			    <form action="LogOutServlet" method="post">
-			    	<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
+			    <a href="uploadPage">Upload</a>
+			    <form action="logout" method="post">
+			 		<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
 			    </form>
-			  </div>
-			</div>
+			 </div>
+		</div>
 	</nav>
-	
 	
   <div class="fullscreen-bg"></div>
 </body>
