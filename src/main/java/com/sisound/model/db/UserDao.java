@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import com.google.common.hash.Hashing;
 import com.sisound.model.User;
@@ -63,7 +64,19 @@ public class UserDao {
 		
 		return u;
 	}
+	
+	public synchronized HashSet<Long> getAllUsersId() throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT user_id FROM users");
+		ResultSet rs=stmt.executeQuery();
+		HashSet<Long> userIds=new HashSet<>();
+		while(rs.next()){
+			userIds.add(rs.getLong(1));
+		}
 		
+		return userIds;
+	}
+	
 	public synchronized LinkedHashSet<User> getFollowers(User u) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("SELECT u.user_id, "

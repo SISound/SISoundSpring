@@ -3,6 +3,7 @@ package com.sisound.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -104,7 +105,7 @@ public class UserController {
 
 		String username=request.getParameter("username");
 		String password=request.getParameter("password");
-		
+				
 		try {
 			boolean exist = userDao.existsUser(username, password);
 			if(exist){
@@ -114,18 +115,15 @@ public class UserController {
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
 				//request.getSession().setAttribute("user1", u);
-							
-				synchronized (session) {
-					if(session.getAttribute("songs") == null){
-						TreeSet<Song> songs = songDao.getAllSongs();
-						session.setAttribute("songs", songs);
-					}
-					if(session.getAttribute("genres") == null){
-						Map genres=genresDao.getAllGenres();
-						session.setAttribute("genres", genres);
-					}
+		
+				if(session.getAttribute("songs") == null){
+					TreeSet<Song> songs = songDao.getAllSongs();
+					session.setAttribute("songs", songs);
 				}
-				
+				if(session.getAttribute("genres") == null){
+					Map genres=genresDao.getAllGenres();
+					session.setAttribute("genres", genres);
+				}
 				return "main";
 			}
 			else{
@@ -139,26 +137,48 @@ public class UserController {
 	}
 	
 
-	//profile
-	@RequestMapping(value="profile{x}", method=RequestMethod.GET)
-	public String profilePage(@PathVariable String x, Model model, HttpSession session){
-		
-		User currentUser = (User)session.getAttribute("sessionUser");
-		
-		if(x == currentUser.getUsername()) {
-			model.addAttribute("modelUser", currentUser);
-		}
-		else {			
-			try {
-				model.addAttribute("modelUser", userDao.getUser(x));
-			} catch (SQLException e) {
-				// TODO create error page
-				return "errorPage";
-			}
-		}
+		//profile
+		@RequestMapping(value="profile{x}", method=RequestMethod.GET)
+		public String profilePage(@PathVariable String x, Model model, HttpSession session){
 			
-		return "profile2";
-	}
+			User currentUser = (User)session.getAttribute("sessionUser");
+			
+			if(x == "user") {
+				model.addAttribute("modelUser", currentUser);
+			}
+			else {			
+				try {
+					model.addAttribute("modelUser", userDao.getUser(x));
+				} catch (SQLException e) {
+					// TODO create error page
+					return "errorPage";
+				}
+			}			
+			return "profile2";
+		}
+		
+	//ON CLICKING THE HOME BUTTON THIS METHOD RETURNS THE USER TO HIS MAIN PAGE
+				@RequestMapping(value="homeButton", method=RequestMethod.GET)
+				public String backToMain(Model model){
+					try {
+						synchronized (model) {
+							if(!model.containsAttribute("songs")){
+								TreeSet<Song> songs;
+								songs = songDao.getAllSongs();
+								model.addAttribute("songs", songs);
+							}
+							if(!model.containsAttribute("genres")){
+								Map genres=genresDao.getAllGenres();
+								model.addAttribute("genres", genres);
+							}
+						}
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+					return "main";
+				}
 	
 	//get edit profile page
 	@RequestMapping(value="editProfile", method = RequestMethod.GET)
@@ -206,68 +226,47 @@ public class UserController {
 		}		
 	}
 	
-	//ON CLICKING THE HOME BUTTON THIS METHOD RETURNS THE USER TO HIS MAIN PAGE
-	@RequestMapping(value="homeButton", method=RequestMethod.GET)
-	public String backToMain(Model model){
-		try {
-			synchronized (model) {
-				if(!model.containsAttribute("songs")){
-					TreeSet<Song> songs;
-					songs = songDao.getAllSongs();
-					model.addAttribute("songs", songs);
-				}
-				if(!model.containsAttribute("genres")){
-					Map genres=genresDao.getAllGenres();
-					model.addAttribute("genres", genres);
-				}
+
+		//LOGGIN OUT AN USER
+		@RequestMapping(value="logout", method=RequestMethod.POST)
+		public String logoutUser(HttpSession session){
+			session.invalidate();
+			return "index";
+
+		}
+		
+		//FOLLOW USER
+		@RequestMapping(value="followUser", method=RequestMethod.POST)
+		@ResponseBody
+		public void followUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
+			String followed=(String)request.getParameter("followed");
+			
+			try {
+				User fwd=userDao.getUser(followed);
+				User fwr=(User)session.getAttribute("sessionUser");
+				userDao.followUser(fwr.getUserID(), fwd.getUserID());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			resp.setStatus(200);
 		}
 		
-		return "main";
-	}
-	
-	
-	//LOGGIN OUT AN USER
-	@RequestMapping(value="logout", method=RequestMethod.POST)
-	public String logoutUser(HttpSession session){
-		session.invalidate();
-		return "index";
-	}
-	
-	//FOLLOW USER
-	@RequestMapping(value="followUser", method=RequestMethod.POST)
-	@ResponseBody
-	public void followUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
-		String followed=(String)request.getParameter("followed");
-		
-		try {
-			User fwd=userDao.getUser(followed);
-			User fwr=(User)session.getAttribute("sessionUser");
-			userDao.followUser(fwr.getUserID(), fwd.getUserID());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		//UNFOLLOW USER
+		@RequestMapping(value="unfollowUser", method=RequestMethod.POST)
+		@ResponseBody
+		public void unfollowUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
+			String followed=(String)request.getParameter("followed");
+			
+			try {
+				User fwd=userDao.getUser(followed);
+				User fwr=(User)session.getAttribute("sessionUser");
+				userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			resp.setStatus(200);
 		}
-		resp.setStatus(200);
-	}
-	
-	//UNFOLLOW USER
-	@RequestMapping(value="unfollowUser", method=RequestMethod.POST)
-	@ResponseBody
-	public void unfollowUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
-String followed=(String)request.getParameter("followed");
-		
-		try {
-			User fwd=userDao.getUser(followed);
-			User fwr=(User)session.getAttribute("sessionUser");
-			userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		resp.setStatus(200);
-	}
+
 }

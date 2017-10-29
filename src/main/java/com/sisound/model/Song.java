@@ -1,5 +1,6 @@
 package com.sisound.model;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -7,7 +8,7 @@ import java.util.TreeSet;
 import java.util.HashSet;
 
 
-public class Song implements Comparable<Song>, Actionable {
+public class Song implements Comparable<Song>, Actionable, Serializable {
 
 	private long id;
 	private String title;
