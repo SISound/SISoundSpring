@@ -71,11 +71,10 @@ public class SongController {
 		return "main";
 	}
 	
-	@RequestMapping(value="getSong", method=RequestMethod.GET)
+	@RequestMapping(value="getSong{songUrl}", method=RequestMethod.GET)
 	@ResponseBody
 	public void getSong(@PathVariable String songUrl, HttpServletResponse resp){
-		System.out.println(songUrl);
-		File file=new File(WebInitializer.LOCATION + songUrl);
+		File file=new File(WebInitializer.LOCATION + File.separator + songUrl + ".mp3");
 		try {
 			Files.copy(file.toPath(), resp.getOutputStream());
 		} catch (IOException e) {
