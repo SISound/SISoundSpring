@@ -24,7 +24,7 @@
 			<table>
 				<tr>
 					<c:if test="${user.profilPicture != null}">
-						<td><img class="profilePic" alt="profilePic" src="${sessionUser.profilPicture != null}"></td>
+						<td><img class="profilePic" alt="profilePic" src="${ sessionUser.profilPicture }"></td>
 						<td class="usernameTd"><span class="profileButton"><c:out value="${ sessionUser.username }"></c:out></span></td>
 			 		</c:if>
 				</tr>

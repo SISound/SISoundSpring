@@ -47,7 +47,7 @@
 				<input type="submit" value="Sign up" class="input input--submit" />
 				<label for="toggle--login" class="text text--small text--centered">Not new? <b>Log in</b></label>
 				
-		</f:form>
+			</f:form>
 		</form>
     </div>
 </body>

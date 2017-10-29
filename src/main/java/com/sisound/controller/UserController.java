@@ -1,5 +1,7 @@
 package com.sisound.controller;
 
+import java.io.File;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.Map;
 import java.util.TreeSet;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +18,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.sisound.WebInitializer;
 import com.sisound.model.Song;
 import com.sisound.model.User;
 import com.sisound.model.db.GenresDao;
@@ -50,9 +56,9 @@ public class UserController {
 				
 		try {
 			if(!userDao.usernameExists(u.getUsername()) && !userDao.emailExists(u.getEmail())){
-				System.out.println(u.getUsername());
-				System.out.println(u.getPassword());
-				System.out.println(u.getEmail());
+//				System.out.println(u.getUsername());
+//				System.out.println(u.getPassword());
+//				System.out.println(u.getEmail());
 				userDao.insertUser(u);
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
@@ -108,7 +114,7 @@ public class UserController {
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
 				//request.getSession().setAttribute("user1", u);
-				
+							
 				synchronized (session) {
 					if(session.getAttribute("songs") == null){
 						TreeSet<Song> songs = songDao.getAllSongs();
@@ -139,7 +145,7 @@ public class UserController {
 		
 		User currentUser = (User)session.getAttribute("sessionUser");
 		
-		if(x == "user") {
+		if(x == currentUser.getUsername()) {
 			model.addAttribute("modelUser", currentUser);
 		}
 		else {			
@@ -150,9 +156,54 @@ public class UserController {
 				return "errorPage";
 			}
 		}
-		
-		
+			
 		return "profile2";
+	}
+	
+	//get edit profile page
+	@RequestMapping(value="editProfile", method = RequestMethod.GET)
+	public String addUser(Model m, HttpSession session){
+		
+		User u = (User)session.getAttribute("sessionUser");
+		m.addAttribute("user", u);
+		
+		return "edit_profile";
+	}
+	
+	//edit profile
+	@RequestMapping(value="edit", method = RequestMethod.POST)
+	public String editProfile(Model model, HttpServletRequest request, HttpSession session, 
+			@ModelAttribute User u, @RequestParam("profilepic") MultipartFile profilepic, @RequestParam("coverpic") MultipartFile coverpic) {
+		
+		try {			
+			if(u != null){
+				if(profilepic != null && (FilenameUtils.getExtension(profilepic.getOriginalFilename()) != "")) {
+					String profilePicPath = WebInitializer.LOCATION + "\\profile" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(profilepic.getOriginalFilename());
+					File profile = new File(profilePicPath);
+					profilepic.transferTo(profile);
+					u.setProfilPicture(profilePicPath);					
+				}
+				
+				if(coverpic != null && (FilenameUtils.getExtension(coverpic.getOriginalFilename()) != "")) {
+					File cover = new File(WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename()));
+					coverpic.transferTo(cover);
+					u.setCoverPhoto(coverpic.getOriginalFilename());
+				}
+				
+				userDao.editProfile(u);
+				session.removeAttribute("sessionUser");
+				session.setAttribute("sessionUser", u);
+				model.addAttribute("modelUser", u);
+				
+				return "profile2";
+			} 
+			else {
+				return "logReg";
+			}
+		} catch (SQLException | IllegalStateException | IOException e) {
+			e.printStackTrace();
+			return "errorPage";
+		}		
 	}
 	
 	//ON CLICKING THE HOME BUTTON THIS METHOD RETURNS THE USER TO HIS MAIN PAGE

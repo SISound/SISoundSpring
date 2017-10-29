@@ -13,8 +13,12 @@ public class CountryDao {
 
 	private final static Map<String, Long> COUNTRIES = new HashMap<>();
 	
-	public long getCountryId(String genre) throws SQLException {
-		return COUNTRIES.get(genre);
+	public long getCountryId(String country) throws SQLException {
+		if(COUNTRIES.isEmpty()) {
+			getAllCountries();
+		}
+		System.out.println(COUNTRIES);
+		return COUNTRIES.get(country);
 	}
 
 	private void getAllCountries() throws SQLException {
@@ -23,7 +27,7 @@ public class CountryDao {
 		}
 		
 		Connection con = DBManager.getInstance().getConnection();
-		PreparedStatement stmt=con.prepareStatement("SELECT (country_id, country_name) FROM countries");
+		PreparedStatement stmt=con.prepareStatement("SELECT country_id, country_name FROM countries");
 		ResultSet rs = stmt.executeQuery();
 		
 		while(rs.next()) {
