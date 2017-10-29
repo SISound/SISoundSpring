@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,18 @@ public class UserController {
 				userDao.insertUser(u);
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
+				
+				synchronized (session) {
+					if(session.getAttribute("songs") == null){
+						TreeSet<Song> songs = songDao.getAllSongs();
+						session.setAttribute("songs", songs);
+					}
+					if(session.getAttribute("genres") == null){
+						Map genres=genresDao.getAllGenres();
+						session.setAttribute("genres", genres);
+					}
+				}
+				
 				return "main";
 			} 
 			else if(userDao.usernameExists(u.getUsername())){
@@ -171,5 +184,39 @@ public class UserController {
 	public String logoutUser(HttpSession session){
 		session.invalidate();
 		return "index";
+	}
+	
+	//FOLLOW USER
+	@RequestMapping(value="followUser", method=RequestMethod.POST)
+	@ResponseBody
+	public void followUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
+		String followed=(String)request.getParameter("followed");
+		
+		try {
+			User fwd=userDao.getUser(followed);
+			User fwr=(User)session.getAttribute("sessionUser");
+			userDao.followUser(fwr.getUserID(), fwd.getUserID());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		resp.setStatus(200);
+	}
+	
+	//UNFOLLOW USER
+	@RequestMapping(value="unfollowUser", method=RequestMethod.POST)
+	@ResponseBody
+	public void unfollowUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
+String followed=(String)request.getParameter("followed");
+		
+		try {
+			User fwd=userDao.getUser(followed);
+			User fwr=(User)session.getAttribute("sessionUser");
+			userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		resp.setStatus(200);
 	}
 }

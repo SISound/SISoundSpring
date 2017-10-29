@@ -485,6 +485,19 @@ nav.archive-links a.link-title {
 nav.archive-links a.link-excerpt {
   color: #c3c3c3;
   text-decoration: none;
+  font-size: 1.3em;
 }
 
+.followButton{
+	background-color: #ffffff;
+	border-radius: 3px;
+	border: solid thin;
+	border-color: #cccccc;
+	color: #cccccc;
+}
+
+.followButton:HOVER {
+	border-color: #818182;
+	cursor: pointer;
+}
 /*=============================================*/

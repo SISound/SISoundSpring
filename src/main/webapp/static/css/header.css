@@ -47,7 +47,7 @@ nav{
     letter-spacing: .1rem;
     +transition(.3s);
     &:hover;
-    color: red;
+    color: #ffffff;
 }
 
 a:hover{
