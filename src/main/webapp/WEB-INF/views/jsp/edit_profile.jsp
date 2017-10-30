@@ -1,59 +1,139 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		 <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css" />"/>
 		<title>SISound</title>
+		
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="<c:url value="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" />" />
+		<link rel="stylesheet" type="text/css" href="<c:url value="css/editProfile.css" />" />
+		
+		<script type="text/javascript" src=" <c:url value="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js" />"></script>
+		<script type="text/javascript" src=" <c:url value="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js" />"></script>
+		
+		
+		
 	</head>
 	<body>
-		<c:if test="${ sessionScope.user == null }">
-		<c:redirect url="loginPage"></c:redirect>
-	</c:if>
 	
-	<c:set value="${ sessionScope.user}" var="user"></c:set>
+	<jsp:include page="headerLogged.jsp"></jsp:include>
 		
-	<jsp:include page="headerNotLogged.jsp"></jsp:include>
-		
-		<div id="editProfileDiv">
-			<form action="edit_profile" method="POST">
-				<div id="editDiv">
-					<c:if test="${ requestScope.error == null }">
-						<a class=editMessage>Edit profile</a><br>
-					</c:if>
-					
-					<c:if test="${ requestScope.error != null }">
-						<a class=editMessage>Sorry, editing profile unsuccessfull. Reason: ${ requestScope.error }</a>
-					</c:if>
-				
-					<input class="edit" type="Text"  placeholder="First name" name="firstName"><br>
-					<input class="edit" type="Text"  placeholder="Last name" name="lastName"><br>
-					<input class="edit" type="Text"  placeholder="Your description" name="description"><br>
-	<!-- 				country -->
-					<input class="edit" type="Text"  placeholder="City" name="city"><br>
-					
-					<a class="editText">Change profile picture.</a>
-					<input type="file" name="profilePic"><br>
-					<a class="editText">Change cover photo.</a>
-					<input type="file" name="coverPhoto"><br>
-					
-					<a class="editText">Change password.</a><br>
-					<input class="edit" type="password" placeholder="Current password" name="oldPassword"><br>
-					<input class="edit" type="password" placeholder="New password" name="newPassword"><br>
-					<input class="edit" type="password" placeholder="Repeat new password" name="newPassword2"><br>
-					<a class="editText">Change e-mail.</a><br>						
-					<input class="edit" type="email"  placeholder="Current e-mail" name="oldEmail"><br>
-					<input class="edit" type="email"  placeholder="New e-mail" name="newEmail"><br>
-					<input class="edit" type="email"  placeholder="Repeat new e-mail" name="newEmail2"><br>
-					
-					
-					<input id="rb" type="submit" value="" style="background-image: url('img/signup.png'); border:none; background-repeat:no-repeat;background-size:100% 100%;">
-				</div>
-			</form>	
-		</div>
-		
+<div class="wrapper">
+  <div class="profile">
+    <div class="content">
+      <h1>Edit Profile</h1>
+      <form action="edit" method = POST enctype="multipart/form-data">
+      	<f:form commandName="user" >
+        <!-- Photo -->
+        <fieldset>
+          <div class="grid-35">
+            <label for="avatar">Profile Picture</label>
+          </div>
+          <div class="grid-65">
+            <span class="photo" title="Upload your Avatar!"></span>
+            <input type="file" class="btn" name="profilepic" accept="image/*" />
+          </div>
+        </fieldset>
+        
+        <fieldset>
+          <div class="grid-35">
+          <br>
+            <label for="fname">Cover Photo</label>
+          </div>
+          <div class="grid-65">
+            <input type="file" class="btn" name="coverpic" accept="image/*"/>
+          </div>
+        </fieldset>
+        
+        <fieldset>
+          <div class="grid-35">
+            <label for="fname">First Name</label>
+          </div>
+          <div class="grid-65">
+            <f:input type="text" id="fname" tabindex="1" path="firstName"/>
+          </div>
+        </fieldset>
+        <fieldset>
+          <div class="grid-35">
+            <label for="lname">Last Name</label>
+          </div>
+          <div class="grid-65">
+            <f:input type="text" id="lname" tabindex="2" path="lastName"/>
+          </div>
+        </fieldset>
+        <!-- Description about User -->
+        <fieldset>
+          <div class="grid-35">
+            <br>
+            <label for="description">About you</label>
+          </div>
+          <div class="grid-65">
+            <f:textarea name="" id="" cols="30" rows="auto" tabindex="3" path="bio"></f:textarea>
+          </div>
+        </fieldset>
+        <!-- Location -->
+        <fieldset>
+          <div class="grid-35">
+            <label for="location">City</label>
+          </div>
+          <div class="grid-65">
+            <f:input type="text" id="location" tabindex="4"  path="city"/>
+          </div>
+        </fieldset>
+        <!-- Country -->
+        <fieldset>
+          <div class="grid-35">
+            <label for="country">Country</label>
+          </div>
+          <div class="grid-65">
+            <input type="text" id="country" tabindex="5" />
+          </div>
+        </fieldset>
+        <!-- Email -->
+        <fieldset>
+          <div class="grid-35">
+            <label for="email">Email Address</label>
+          </div>
+          <div class="grid-65">
+            <input type="email" id="email" tabindex="6" />
+          </div>
+        </fieldset>
+        <!-- Highest Qualification -->
+        <fieldset>
+          <div class="grid-35">
+            <label for="qualification">Highest level of Education</label>
+          </div>
+          <div class="grid-65">
+            <select name="qualification" id="qualification" tabindex="8">
+              <option selected="selected" value="--------------" disabled>--------------</option>
+              <option value="primary_school">Primary school or equivalent</option>
+              <option value="high_school">High school or equivalent</option>
+              <option value="associate">Associate degree or equivalent</option>
+              <option value="bachelors">Bachelor's degree or equivalent</option>
+              <option value="post_graduate">Post-graduate or equivalent</option>
+            </select>
+          </div>
+        </fieldset>
+<%--         <fieldset> --%>
+          <input type="submit" class="Btn" value="Save Changes"/>
+<%--         </fieldset> --%>
+		</f:form>
+      </form>
+        <form action="profile${sessionUser.username }">
+          <input type="submit" class="Btn cancel" value="Cancel"/>
+          </form>
+    </div>
+  </div>
+</div>
+
+
+<!-- http://www.smashingmagazine.com/2013/08/08/release-livestyle-css-live-reload/ -->	
 		
 		
 	</body>

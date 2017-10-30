@@ -45,7 +45,7 @@ public class UserDao {
 	
 	public synchronized User getUser(String username) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt=con.prepareStatement(/*"SELECT u.user_id, u.user_name, u.user_password, u.email, "
+		PreparedStatement stmt=con.prepareStatement("SELECT u.user_id, u.user_name, u.user_password, u.email, "
 				                                  + "u.first_name, " 
 				                                  + "u.last_name, "
 				                                  + "u.city_name, "
@@ -54,8 +54,8 @@ public class UserDao {
 				                                  + "u.profile_pic, "
 				                                  + "u.cover_photo "
 				                                  + "FROM users as u LEFT join countries as c on u.country_id=c.country_id "
-				                                  + "WHERE user_name=?"*/"SELECT u.user_id, u.user_name, u.user_password, u.email, u.first_name, u.last_name, u.city_name, c.country_id, u.bio, u.profile_pic, u.cover_photo \r\n" + 
-				                                  		"FROM users as u LEFT JOIN countries as c on u.country_id = c.country_id WHERE user_name = ?");
+				                                  + "WHERE user_name=?")/*"SELECT u.user_id, u.user_name, u.user_password, u.email, u.first_name, u.last_name, u.city_name, c.country_name, u.bio, u.profile_pic, u.cover_photo" + 
+				                                  		"FROM users as u LEFT JOIN countries as c on u.country_id = c.country_id WHERE user_name = ?")*/;
 		stmt.setString(1, username);
 		ResultSet rs=stmt.executeQuery();
 		rs.next();
@@ -170,15 +170,23 @@ public class UserDao {
 	public synchronized void editProfile(User user) throws SQLException {
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("UPDATE users SET city_name = ?, bio = ?, profile_pic = ?, first_name = ?, "
-				                                  + "last_name = ?, cover_photo = ?, country_id = ?  WHERE user_name = ?");
+				                                  + "last_name = ?, cover_photo = ? WHERE user_name = ?");
 		stmt.setString(1, user.getCity());
 		stmt.setString(2, user.getBio());
 		stmt.setString(3, user.getProfilPicture());
 		stmt.setString(4, user.getFirstName());
 		stmt.setString(5, user.getLastName());
 		stmt.setString(6, user.getCoverPhoto());
-		stmt.setLong(7, countryDao.getCountryId(user.getCountry()));
-		stmt.setString(8, user.getUsername());
+		if(user.getCountry() == null) {
+			user.setCountry("");
+		}
+//		if(user.getCountry() != null) {
+			//stmt.setLong(7, countryDao.getCountryId(user.getCountry()));			
+//		}
+//		else {
+//			stmt.setLong(7, 0);						
+//		}
+		stmt.setString(7, user.getUsername());
 		
 		stmt.execute();
 	}

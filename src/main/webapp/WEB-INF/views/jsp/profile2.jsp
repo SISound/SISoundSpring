@@ -9,14 +9,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 <!-- 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+	<script type="text/javascript" src=" <c:url value="https://code.jquery.com/jquery-3.2.1.min.js" />"></script>
+
 <!-- https://code.jquery.com/jquery-3.2.1.min.js -->
-		<script src=" https://code.jquery.com/jquery-3.2.1.min.js"></script>
-		<link href="https://p.typekit.net/p.gif?s=1&k=yyw5dsj&app=typekit&ht=tk&h=www.flagstar.com&f=6846.6848.6849.6851.6852&a=1922000&sl=195&fl=122&js=1.14.8&_=1458594264430">
+			<link  rel="stylesheet" type="text/css" href="<c:url value="https://p.typekit.net/p.gif?s=1&k=yyw5dsj&app=typekit&ht=tk&h=www.flagstar.com&f=6846.6848.6849.6851.6852&a=1922000&sl=195&fl=122&js=1.14.8&_=1458594264430" />">
 		<link rel="stylesheet" type="text/css" href="<c:url value="css/profile.css" />" />
 <%-- 		<script src="<c:url value="/js/profile.js" />" type ="text/javascript"></script> --%>
 <%-- 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/profile.js"></script> --%>
 
 		<title>SISound</title>
+		
+				
 	</head>
 <body>
 <%-- 	<c:set value="<%= session.getAttribute("user") %>" var="user"></c:set> --%>
@@ -44,7 +47,7 @@
 					<a href="#" class="button button-primary mt-20">Follow</a>
 				</c:if>
 				<c:if test="${ modelUser.username == sessionUser.username}">					
-					<a href="#" class="button button-primary mt-20">Edit Profile</a>
+					<a href="editProfile" class="button button-primary mt-20">Edit Profile</a>
 				</c:if>
 			</div>
 			<div class="bio">
