@@ -373,6 +373,7 @@ nav.archive-links {
   margin-top: 10%;
   margin-left: 10%;
   max-width: 66%;
+  z-index: 0;
 }
 
 @media screen and (max-width: 1024px) {
