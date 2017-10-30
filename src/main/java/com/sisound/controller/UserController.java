@@ -3,7 +3,6 @@ package com.sisound.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -115,6 +114,7 @@ public class UserController {
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
 				//request.getSession().setAttribute("user1", u);
+				
 		
 				if(session.getAttribute("songs") == null){
 					TreeSet<Song> songs = songDao.getAllSongs();
@@ -143,17 +143,20 @@ public class UserController {
 			
 			User currentUser = (User)session.getAttribute("sessionUser");
 			
-			if(x == "user") {
+			if(x == currentUser.getName()) {
 				model.addAttribute("modelUser", currentUser);
+				session.setAttribute("avatar", currentUser.getProfilPicture());
 			}
 			else {			
 				try {
-					model.addAttribute("modelUser", userDao.getUser(x));
+					User newUser = userDao.getUser(x);
+					model.addAttribute("modelUser", newUser);
+					session.setAttribute("avatar", newUser.getProfilPicture());
 				} catch (SQLException e) {
 					// TODO create error page
 					return "errorPage";
 				}
-			}			
+			}
 			return "profile2";
 		}
 		

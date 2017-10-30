@@ -33,6 +33,7 @@
 	
 <div class = profileASD>
 	<div class="banner">
+		<img src="<c:url value="img/djImg.jpg"/>">
 		<div class="container">
 			<div class="profile-pic">
 				<div class="avatar">
@@ -40,7 +41,7 @@
 						<img class="avatar" src="<c:url value="img/defaultProfile.png"/>">					
 					</c:if>
 					<c:if test="${ modelUser.profilPicture != null}">
-						<img class="avatar" src="<c:url value="${ modelUser.profilPicture }"/>">
+						<img class="avatar" alt="profilePic" src="getPicProfile">
 					</c:if>
 				</div>
 				<c:if test="${ modelUser.username != sessionUser.username}">					
@@ -58,33 +59,34 @@
 			</div>
 		</div>
 	</div>
-	<div class="section-about">
-		<div class="container">
-			<div class="tab-group">
-				<a href="#tab-contact" class="tab tab-active heading-small tab-label">Songs</a>
-				<a href="#tab-about" class="tab heading-small tab-label">Playlists</a>
+
+		<div class="section-about">
+		<div class="container tab-group">
+			<div class="tab">
+			  <button class="tablinks" onclick="openTab(event, 'Songs')" id="defaultOpen">Songs</button>
+			  <button class="tablinks" onclick="openTab(event, 'Playlists')">Playlists</button>
 			</div>
 		</div>
-		<div class="container">
-			<div class="tab-items">
-				<div class="tab-content" id="tab-contact">
-				
-				</div>
-				<div class="tab-content" id="tab-about">
-				asdgsdagsd<br>
-				asdgsdagsd<br>
-				asdgsdagsd<br>
-				asdgsdagsd<br>
-				asdgsdagsd<br>
-				asdgsdagsd<br>
-				asdgsdagsd<br>
-				
-				</div>
+
+			<div id="Songs" class="tabcontent">
+			  <h3>London</h3>
+			  <p>London is the capital city of England.</p>
+			</div>
+			
+			<div id="Playlists" class="tabcontent">
+			  <h3>Paris</h3>
+			  <p>Paris is the capital of France.</p> 
+			  <p>Paris is the capital of France.</p> 
+			  <p>Paris is the capital of France.</p> 
+			  <p>Paris is the capital of France.</p> 
+			  
+			  <p>Paris is the capital of France.</p> 
+			  <p>Paris is the capital of France.</p> 
+			  <p>Paris is the capital of France.</p> 
+			  <p>Paris is the capital of France.</p> 
 			</div>
 		</div>
-	</div>
-
-
+	
 	</div>
 <!--   <div class="fullscreen-bg"></div> -->
 
