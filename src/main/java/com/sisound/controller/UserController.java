@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -142,17 +143,20 @@ public class UserController {
 			
 			User currentUser = (User)session.getAttribute("sessionUser");
 			
-			if(x == "user") {
+			if(x == currentUser.getName()) {
 				model.addAttribute("modelUser", currentUser);
+				session.setAttribute("avatar", currentUser.getProfilPicture());
 			}
 			else {			
 				try {
-					model.addAttribute("modelUser", userDao.getUser(x));
+					User newUser = userDao.getUser(x);
+					model.addAttribute("modelUser", newUser);
+					session.setAttribute("avatar", newUser.getProfilPicture());
 				} catch (SQLException e) {
 					// TODO create error page
 					return "errorPage";
 				}
-			}			
+			}
 			return "profile2";
 		}
 		
