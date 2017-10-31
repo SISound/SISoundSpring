@@ -3,7 +3,9 @@ package com.sisound.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -66,7 +68,7 @@ public class UserController {
 				
 				synchronized (session) {
 					if(session.getAttribute("songs") == null){
-						TreeSet<Song> songs = songDao.getAllSongs();
+						HashSet<Song> songs = songDao.getAllSongs();
 						session.setAttribute("songs", songs);
 					}
 					if(session.getAttribute("genres") == null){
@@ -115,15 +117,12 @@ public class UserController {
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
 				//request.getSession().setAttribute("user1", u);
-		
+				
 				if(session.getAttribute("songs") == null){
-					TreeSet<Song> songs = songDao.getAllSongs();
+					HashSet<Song> songs = songDao.getAllSongs();
 					session.setAttribute("songs", songs);
 				}
-				if(session.getAttribute("genres") == null){
-					Map genres=genresDao.getAllGenres();
-					session.setAttribute("genres", genres);
-				}
+				
 				return "main";
 			}
 			else{
@@ -159,19 +158,29 @@ public class UserController {
 		
 	//ON CLICKING THE HOME BUTTON THIS METHOD RETURNS THE USER TO HIS MAIN PAGE
 				@RequestMapping(value="homeButton", method=RequestMethod.GET)
-				public String backToMain(Model model){
+				public String backToMain(Model model, HttpSession session){
 					try {
-						synchronized (model) {
-							if(!model.containsAttribute("songs")){
-								TreeSet<Song> songs;
-								songs = songDao.getAllSongs();
-								model.addAttribute("songs", songs);
+						if(!model.containsAttribute("songs")){
+							HashSet<Song> songs;
+							songs = songDao.getAllSongs();
+							model.addAttribute("songs", songs);
+						}
+						if(!model.containsAttribute("genres")){
+							Map genres=genresDao.getAllGenres();
+							model.addAttribute("genres", genres);
+						}
+						Map<Long, Integer> isFollowed=new HashMap<>();
+						HashSet<Long> followedIds=userDao.getAllUsersIds();
+						for (Long long1 : userDao.getAllUsersIds()) {
+							if(followedIds.contains(long1)){
+								isFollowed.put(long1, 1);
 							}
-							if(!model.containsAttribute("genres")){
-								Map genres=genresDao.getAllGenres();
-								model.addAttribute("genres", genres);
+							else{
+								isFollowed.put(long1, 0);
 							}
 						}
+						
+						session.setAttribute("isFollowed", isFollowed);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -241,10 +250,13 @@ public class UserController {
 		public void followUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
 			String followed=(String)request.getParameter("followed");
 			
+			System.out.println(followed);
 			try {
 				User fwd=userDao.getUser(followed);
 				User fwr=(User)session.getAttribute("sessionUser");
 				userDao.followUser(fwr.getUserID(), fwd.getUserID());
+				fwr.getFollowedIds().add(fwd.getUserID());
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import com.google.common.hash.Hashing;
@@ -65,16 +66,29 @@ public class UserDao {
 		return u;
 	}
 	
-	public synchronized HashSet<Long> getAllUsersId() throws SQLException{
+	public synchronized HashSet<Long> getFollowedIds(User u) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt=con.prepareStatement("SELECT user_id FROM users");
+		PreparedStatement stmt=con.prepareStatement("SELECT followed_id WHERE follower_id=?");
+		stmt.setLong(1, u.getUserID());
 		ResultSet rs=stmt.executeQuery();
-		HashSet<Long> userIds=new HashSet<>();
+		HashSet<Long> followedIds=new HashSet<>();
 		while(rs.next()){
-			userIds.add(rs.getLong(1));
+			followedIds.add(rs.getLong(1));
 		}
 		
-		return userIds;
+		return followedIds;
+	}
+	
+	public synchronized HashSet<Long> getAllUsersIds() throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT user_id FROM user");
+		ResultSet rs=stmt.executeQuery();
+		HashSet<Long> allUsers=new HashSet<>();
+		while(rs.next()){
+			allUsers.add(rs.getLong(1));
+		}
+		
+		return allUsers;
 	}
 	
 	public synchronized LinkedHashSet<User> getFollowers(User u) throws SQLException{

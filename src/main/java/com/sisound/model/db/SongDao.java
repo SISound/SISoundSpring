@@ -139,8 +139,8 @@ public class SongDao {
 		return res;
 	}
 	
-	public synchronized TreeSet<Song> getAllSongs() throws SQLException{
-		TreeSet<Song> songs=new TreeSet<>();
+	public synchronized HashSet<Song> getAllSongs() throws SQLException{
+		HashSet<Song> songs=new HashSet<>();
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, "
 				                                  + "m.genre_title, s.song_url "
@@ -155,6 +155,21 @@ public class SongDao {
 		}
 		
 		return songs;
+	}
+	
+	public synchronized Song getSongById(long songId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, "
+				                                  + "m.genre_title, s.song_url "
+				                                  + "FROM songs as s "
+				                                  + "JOIN users as u ON s.user_id=u.user_id "
+				                                  + "JOIN music_genres as m ON s.genre_id=m.genre_id "
+				                                  + "WHERE s.song_id=?");
+		stmt.setLong(1, songId);
+		ResultSet rs=stmt.executeQuery();
+		rs.next();
+		return new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4), userDao.getUser(rs.getString(5)), 
+				        rs.getString(7), rs.getString(6), actionsDao.getActions(true, songId), commentDao.getComments(songId, true));
 	}
 	
 	//deleting song method
