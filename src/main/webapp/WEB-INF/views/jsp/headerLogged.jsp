@@ -43,7 +43,7 @@
 			</table>
 			 <div class="dropdown-content">
 			    <a href="profile${sessionUser.username }" >Profile</a>
-			    <a href="songCtrl/uploadPage">Upload</a>
+			    <a href="uploadPage">Upload</a>
 			    <form action="logout" method="post">
 			 		<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
 			    </form>

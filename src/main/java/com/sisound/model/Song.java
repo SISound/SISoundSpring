@@ -103,13 +103,13 @@ public class Song implements Comparable<Song>, Actionable, Serializable {
 		this.genre = genre;
 	}
 	
-	int getLikesCount(){
+	public int getLikesCount(){
 		return this.actions.get(Actions.LIKE).size();
 	}
 
 	@Override
 	public int compareTo(Song o) {
-		return this.uploadDate.compareTo(o.uploadDate);
+		return this.getLikesCount()-o.getLikesCount();
 	}
 
 	public void addAction(Actions action, User user) {

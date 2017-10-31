@@ -579,4 +579,73 @@ nav.archive-links a.link-excerpt {
 .sortingLink{
 	text-decoration: none;
 	color: #6D6D6F;
+	border: none;
+	background-color: transparent;
 }
+
+.sortingLink:HOVER{
+	text-decoration: none;
+	color: #6D6D6F;
+	border: none;
+	background-color: transparent;
+	font-weight: bold;
+	cursor: pointer;
+}
+/*=============================================*/
+/*UPLOAD FORM*/
+form.upload-form {  
+  position: absolute;
+  margin-left: 35%;
+  margin-top: 30%;
+  include: center;
+  margin-top: 5rem;
+  background: rgba(92,168,214,0.9);
+  opacity: 0.9;
+  border-radius: 1rem;
+  min-height: 30%;
+  min-width: 25rem;
+  max-width: 30%;
+  position: absolute;  
+  display: inline-flex;
+  flex-flow: column;
+  align-items: center;
+  justify-content: center; 
+} 
+fieldset {    
+   display: inline-flex;
+   border: none;
+}
+
+label {
+    text-align: center;
+}
+  
+#filefield{
+   border: 0.2rem dashed rgb(43, 44, 40);
+   margin: 0.4rem;
+}
+
+#file{
+	display: none;
+}
+
+footer#controls {
+   display: none;        
+}
+
+#submit {    
+    border-radius: 4rem;
+    line-height: 3rem;
+    min-width: 40%;
+    position: relative;
+    background-color: #ffffff;
+    box-shadow: -170px 0 0 #ffffff inset;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+#submit:HOVER{
+	cursor: pointer;
+	box-shadow: -170px 0 0 #cccccc inset;
+}
+/*=============================================*/

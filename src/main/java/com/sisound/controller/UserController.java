@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -72,7 +72,7 @@ public class UserController {
 				
 				synchronized (session) {
 					if(session.getAttribute("songs") == null){
-						HashSet<Song> songs = songDao.getAllSongs();
+						HashSet<Song> songs = songDao.getTop10();
 						session.setAttribute("songs", songs);
 					}
 					if(session.getAttribute("genres") == null){
@@ -122,9 +122,22 @@ public class UserController {
 				session.setAttribute("logged", true);
 				//request.getSession().setAttribute("user1", u);
 				
+				HashSet<Song> songs = songDao.getTop10();
+				
 				if(session.getAttribute("songs") == null){
-					HashSet<Song> songs = songDao.getAllSongs();
 					session.setAttribute("songs", songs);
+				}
+				
+				TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
+				sortedByDate.addAll(songs);
+				if(session.getAttribute("sortedByDate") == null){
+					session.setAttribute("sortedByDate", sortedByDate);
+				}
+				
+				LinkedHashSet<Song> sortedByLikes=new LinkedHashSet<>();
+				sortedByLikes.addAll(songs);
+				if(session.getAttribute("sortedByLikes")==null){
+					session.setAttribute("sortedByLikes", sortedByLikes);
 				}
 				
 				return "main";
@@ -167,27 +180,19 @@ public class UserController {
 				@RequestMapping(value="homeButton", method=RequestMethod.GET)
 				public String backToMain(Model model, HttpSession session){
 					try {
-						if(!model.containsAttribute("songs")){
 							HashSet<Song> songs;
-							songs = songDao.getAllSongs();
-							model.addAttribute("songs", songs);
-						}
-						if(!model.containsAttribute("genres")){
-							Map genres=genresDao.getAllGenres();
-							model.addAttribute("genres", genres);
-						}
-						Map<Long, Integer> isFollowed=new HashMap<>();
-						HashSet<Long> followedIds=userDao.getAllUsersIds();
-						for (Long long1 : userDao.getAllUsersIds()) {
-							if(followedIds.contains(long1)){
-								isFollowed.put(long1, 1);
-							}
-							else{
-								isFollowed.put(long1, 0);
-							}
-						}
-						
-						session.setAttribute("isFollowed", isFollowed);
+							songs = songDao.getTop10();
+							session.setAttribute("songs", songs);
+							
+							TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
+							sortedByDate.addAll(songs);
+							session.setAttribute("sortedByDate", sortedByDate);
+							
+							
+							TreeSet<Song> sortedByLikes=new TreeSet<>((o1, o2)->Integer.compare(o1.getLikesCount(), o2.getLikesCount()));
+							sortedByLikes.addAll(songs);
+							session.setAttribute("sortedByLikes", sortedByLikes);
+							
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -268,37 +273,46 @@ public class UserController {
 		@RequestMapping(value="followUser", method=RequestMethod.POST)
 		@ResponseBody
 		public void followUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
-			String followed=(String)request.getParameter("followed");
-			
-			System.out.println(followed);
-			try {
-				User fwd=userDao.getUser(followed);
-				User fwr=(User)session.getAttribute("sessionUser");
-				userDao.followUser(fwr.getUserID(), fwd.getUserID());
-				fwr.getFollowedIds().add(fwd.getUserID());
-				
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			User fwr=(User)session.getAttribute("sessionUser");
+			if(fwr==null){
+				resp.setStatus(401);
 			}
-			resp.setStatus(200);
+			else{
+				try {
+					
+					String followed=(String)request.getParameter("followed");
+					System.out.println(followed);
+					User fwd=userDao.getUser(followed);
+					userDao.followUser(fwr.getUserID(), fwd.getUserID());
+					fwr.getFollowedIds().add(fwd.getUserID());
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				resp.setStatus(200);
+			}
 		}
 		
 		//UNFOLLOW USER
 		@RequestMapping(value="unfollowUser", method=RequestMethod.POST)
 		@ResponseBody
 		public void unfollowUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
+			User fwr=(User)session.getAttribute("sessionUser");
 			String followed=(String)request.getParameter("followed");
-			
-			try {
-				User fwd=userDao.getUser(followed);
-				User fwr=(User)session.getAttribute("sessionUser");
-				userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			if(fwr==null){
+				resp.setStatus(401);
 			}
-			resp.setStatus(200);
+			else{
+				try {
+					User fwd=userDao.getUser(followed);
+					userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				resp.setStatus(200);
+			}
 		}
 
 }

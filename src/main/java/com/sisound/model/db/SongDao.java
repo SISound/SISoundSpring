@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,7 +74,7 @@ public class SongDao {
 	
 	public synchronized TreeSet<Song> getSongsForUser(User u) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt = con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, g.genre_title, s.song_url"
+		PreparedStatement stmt = con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, g.genre_title, s.song_url "
 				                                  + "FROM songs as s JOIN music_genres as g "
 				                                  + "ON s.genre_id = g.genre_id"
 				                                  + "WHERE s.user_id = ?");
@@ -139,6 +140,25 @@ public class SongDao {
 		return res;
 	}
 	
+	public synchronized LinkedHashSet<Song> getTop10() throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, "
+				                                  + "m.genre_title, s.song_url  "
+				                                  + "FROM songs as s "
+				                                  + "JOIN users as u ON s.user_id=u.user_id "
+				                                  + "JOIN music_genres as m ON s.genre_id=m.genre_id "
+				                                  + "ORDER BY likes DESC LIMIT 10");
+		ResultSet rs=stmt.executeQuery();
+		LinkedHashSet<Song> songs=new LinkedHashSet<>();
+		while(rs.next()){
+			songs.add(new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4),  
+					userDao.getUser(rs.getString(5)), rs.getString(7), rs.getString(6), 
+					           actionsDao.getActions(true, rs.getLong(1)), commentDao.getComments(rs.getLong(1), true)));
+		}
+		
+		return songs;
+	}
+	
 	public synchronized HashSet<Song> getAllSongs() throws SQLException{
 		HashSet<Song> songs=new HashSet<>();
 		Connection con=DBManager.getInstance().getConnection();
@@ -149,7 +169,7 @@ public class SongDao {
 				                                  + "JOIN music_genres as m ON s.genre_id=m.genre_id");
 		ResultSet rs=stmt.executeQuery();
 		while(rs.next()){
-			songs.add(new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4), 
+			songs.add(new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4),  
 			userDao.getUser(rs.getString(5)), rs.getString(7), rs.getString(6), 
 			           actionsDao.getActions(true, rs.getLong(1)), commentDao.getComments(rs.getLong(1), true)));
 		}

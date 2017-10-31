@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.TreeSet;
 
 import javax.servlet.annotation.MultipartConfig;
@@ -31,6 +32,7 @@ import com.sisound.model.Actions;
 import com.sisound.model.Song;
 import com.sisound.model.User;
 import com.sisound.model.db.ActionsDao;
+import com.sisound.model.db.GenresDao;
 import com.sisound.model.db.SongDao;
 
 
@@ -42,23 +44,33 @@ public class SongController {
 	SongDao songDao;
 	@Autowired
 	ActionsDao actionDao;
+	@Autowired
+	GenresDao genresDao;
 	
 	//UPLOADING PAGE
 	@RequestMapping(value="uploadPage", method=RequestMethod.GET)
-	public String uploadPage(){
+	public String uploadPage(Model model){
+		try {
+			Map<String, Long> genres=genresDao.getAllGenres();
+			model.addAttribute("genres", genres);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return "upload";
 	}
 	
 	//SAVING THE SELECTED SONG
 	@RequestMapping(value="saveSong", method=RequestMethod.POST)
-	public String saveSong(HttpSession session, Model model, @RequestParam("song") MultipartFile file){
+	public String saveSong(HttpSession session, Model model, @RequestParam("song") MultipartFile file, HttpServletRequest req){
 		User u=(User) session.getAttribute("sessionUser");
-		File f=new File(WebInitializer.LOCATION + File.separator + file.getOriginalFilename());
-		
+		File f=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + file.getOriginalFilename());
+		String genre=(String) req.getParameter("genre");
+		System.out.println("THE GENRE IS" + genre);
 		try {
 			file.transferTo(f);
 			
-			Song song=new Song(file.getOriginalFilename(), u, "Rock", file.getOriginalFilename(), LocalDateTime.now());
+			Song song=new Song(file.getOriginalFilename(), u, genre, file.getOriginalFilename(), LocalDateTime.now());
 			songDao.uploadSong(song);
 			
 			HashSet<Song> songs=songDao.getAllSongs();
@@ -108,35 +120,44 @@ public class SongController {
 	@RequestMapping(value="likeSong", method=RequestMethod.POST)
 	@ResponseBody
 	public void likeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
-		long songId=Long.parseLong(req.getParameter("songId").toString());
-		
-		System.out.println("PESENTA E " + songId);
 		User u=(User) session.getAttribute("sessionUser");
-		try {
-			actionDao.likeSong(songId, u.getUserID());
-			actionDao.deleteDislikes(true, songId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(u==null){
+			resp.setStatus(401);
 		}
-		resp.setStatus(200);
+		else{
+			long songId=Long.parseLong(req.getParameter("songId").toString());
+			
+			System.out.println("PESENTA E " + songId);
+			try {
+				actionDao.likeSong(songId, u.getUserID());
+				actionDao.deleteDislikes(true, songId);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			resp.setStatus(200);
+		}
 	}
 	
 	//DISLIKE SONG
 	@RequestMapping(value="dislikeSong", method=RequestMethod.POST)
 	@ResponseBody
 	public void dislikeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
-		long songId=Long.parseLong(req.getParameter("songId").toString());
-		
 		User u=(User) session.getAttribute("sessionUser");
-		try {
-			actionDao.dislikeSong(songId, u.getUserID());
-			actionDao.deleteLikes(true, songId);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if(u==null){
+			resp.setStatus(401);
 		}
-		resp.setStatus(200);
+		else{
+			long songId=Long.parseLong(req.getParameter("songId").toString());
+			try {
+				actionDao.dislikeSong(songId, u.getUserID());
+				actionDao.deleteLikes(true, songId);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			resp.setStatus(200);
+		}
 	}
 	
 	//track page
