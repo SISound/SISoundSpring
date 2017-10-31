@@ -32,6 +32,8 @@
 	<br>
 	
 <div class = profileASD>
+
+		ADD MUSIC PLAYER<br>
 	<div class="banner">
 <%-- 		<c:if test="${ modelUser.coverPhoto == null}"> --%>
 <%-- 			<img class="banner containter" src="<c:url value="img/cover.jpg"/>">					 --%>
@@ -39,6 +41,7 @@
 <%-- 		<c:if test="${ modelUser.coverPhoto != null}"> --%>
 <!-- 			<img class="banner" alt="profilePic" src="getPicCover"> -->
 <%-- 		</c:if> --%>
+
 		<div class="container">
 			<div class="profile-pic">
 				<div class="avatar">
@@ -49,53 +52,20 @@
 						<img class="avatar" alt="profilePic" src="getPicProfile">
 					</c:if>
 				</div>
-				<c:if test="${ modelUser.username != sessionUser.username}">					
-					<a href="#" class="button button-primary mt-20">Follow</a>
-				</c:if>
-				<c:if test="${ modelUser.username == sessionUser.username}">					
-					<a href="editProfile" class="button button-primary mt-20">Edit Profile</a>
-				</c:if>
+				<a href="profile${song.user.username }" class="button button-primary mt-20"><c:out value="${ modelUser.username }"></c:out></a>
+
 			</div>
 			<div class="bio">
-				<h1 class="heading-medium"> <c:out value="${ modelUser.username }"></c:out> </h1>
-				<h3 class="heading-small"> <c:out value="${ modelUser.name }"></c:out>  </h3>
-				<h5 class="heading-small"> <c:out value="${ modelUser.adress }"></c:out> </h5>
-				<p class="body-small"> <c:out value="${ modelUser.bio }"></c:out> </p>
+				<h1 class="heading-medium"> <c:out value="${ song.title }"></c:out> </h1>
+				<h3 class="heading-small"> Genre: <c:out value="${ song.genre }"></c:out>  </h3>
+				<h5 class="heading-small"> Uploaded: <c:out value="${ song.uploadDate }"></c:out> </h5>
+				<p class="body-small"> ADD WORKING BUTTONS </p>
 			</div>
 		</div>
 	</div>
-
-		<div class="section-about">
-		<div class="container tab-group">
-			<div class="tab">
-			  <button class="tablinks" onclick="openTab(event, 'Songs')" id="defaultOpen">Songs</button>
-			  <button class="tablinks" onclick="openTab(event, 'Playlists')">Playlists</button>
-			</div>
-		</div>
-
-			<div id="Songs" class="tabcontent">
-			  <h3>London</h3>
-			  <p>London is the capital city of England.</p>
-			</div>
-			
-			<div id="Playlists" class="tabcontent">
-			  <h3>Paris</h3>
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			</div>
-		</div>
+	COMMENTS
 	
 	</div>
-<!--   <div class="fullscreen-bg"></div> -->
-
 	
-		<script src="<c:url value="js/profile.js" />"  type ="text/javascript"></script>
 </body>
 </html>

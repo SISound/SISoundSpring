@@ -138,4 +138,21 @@ public class SongController {
 		}
 		resp.setStatus(200);
 	}
+	
+	//track page
+	@RequestMapping(value="track={x}", method=RequestMethod.GET)
+	public String profilePage(@PathVariable Long x, Model model, HttpSession session){
+		
+		try {
+			Song song = songDao.getSongById(x);
+			model.addAttribute("song", song);
+			model.addAttribute("modelUser", song.getUser());
+			session.setAttribute("avatar", song.getUser().getProfilPicture());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "errorPage";
+		}
+				
+		return "track";
+	}
 }

@@ -149,7 +149,7 @@
 						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" />
 						        </div>
 				 			</c:if>
-					        <a class="link-title" href="songPage"><c:out value="${ song.title }"></c:out></a>
+					        <a class="link-title" href="track=${ song.id }"><c:out value="${ song.title }"></c:out></a>
 					        <a class="link-excerpt" href="profile${song.user.username }"><c:out value="${ song.user.username }"></c:out></a>
 					        <c:if test="${ song.user.username != sessionUser.username}">
 					        		<button class="followButton" id="followButton" value="${ song.user.username }" onclick="followUnfollow(this.value)">Follow</button>
@@ -171,4 +171,4 @@
 			</c:forEach>
 		</table>
 	</body>
-</html>
+</html>	

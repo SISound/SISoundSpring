@@ -184,23 +184,23 @@ public class UserDao {
 	public synchronized void editProfile(User user) throws SQLException {
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("UPDATE users SET city_name = ?, bio = ?, profile_pic = ?, first_name = ?, "
-				                                  + "last_name = ?, cover_photo = ? WHERE user_name = ?");
+				                                  + "last_name = ?, cover_photo = ?, country_id = ? WHERE user_name = ?");
 		stmt.setString(1, user.getCity());
 		stmt.setString(2, user.getBio());
 		stmt.setString(3, user.getProfilPicture());
 		stmt.setString(4, user.getFirstName());
 		stmt.setString(5, user.getLastName());
 		stmt.setString(6, user.getCoverPhoto());
-		if(user.getCountry() == null) {
-			user.setCountry("");
-		}
+//		if(user.getCountry() == null) {
+//			user.setCountry("");
+//		}
 //		if(user.getCountry() != null) {
-			//stmt.setLong(7, countryDao.getCountryId(user.getCountry()));			
+		stmt.setLong(7, countryDao.getCountryId(user.getCountry()));			
 //		}
 //		else {
 //			stmt.setLong(7, 0);						
 //		}
-		stmt.setString(7, user.getUsername());
+		stmt.setString(8, user.getUsername());
 		
 		stmt.execute();
 	}

@@ -45,17 +45,6 @@ public class PictureController {
 	@RequestMapping(value="getPicProfile", method=RequestMethod.GET)
 	public void getProfilePic(HttpServletResponse resp, HttpSession session){
 
-		System.out.println("opa");
-		System.out.println("opa");
-		System.out.println("opa");
-		System.out.println("opa");
-		System.out.println("opa");
-		System.out.println("opa");
-		System.out.println("opa");
-		System.out.println("opa");
-		System.out.println("opa");
-		System.out.println("opa");
-
 		try {
 			File file=new File((String)session.getAttribute("avatar"));
 			Files.copy(file.toPath(), resp.getOutputStream());
@@ -80,3 +69,15 @@ public class PictureController {
 		}
 	}
 }
+	
+//	@RequestMapping(value="getPicCover", method=RequestMethod.GET)
+//	public void getCoverPic(HttpServletResponse resp, HttpSession session){
+//
+//		try {
+//			File file=new File((String)session.getAttribute("cover"));
+//			Files.copy(file.toPath(), resp.getOutputStream());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}

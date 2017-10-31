@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sisound.WebInitializer;
 import com.sisound.model.Song;
 import com.sisound.model.User;
+import com.sisound.model.db.CountryDao;
 import com.sisound.model.db.GenresDao;
 import com.sisound.model.db.SongDao;
 import com.sisound.model.db.UserDao;
@@ -44,6 +45,8 @@ public class UserController {
 	SongDao songDao;
 	@Autowired
 	GenresDao genresDao;
+	@Autowired
+	CountryDao countryDao;
 	
 
 	//register
@@ -200,6 +203,13 @@ public class UserController {
 		User u = (User)session.getAttribute("sessionUser");
 		m.addAttribute("user", u);
 		
+		try {
+			m.addAttribute("countries", countryDao.getCountries());
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "errorPage";
+		}
+		
 		return "edit_profile";
 	}
 	
@@ -223,6 +233,12 @@ public class UserController {
 					u.setCoverPhoto(coverpic.getOriginalFilename());
 				}
 				
+				System.out.println(u.getCountry());
+				System.out.println(u.getCountry());
+				System.out.println(u.getCountry());
+				System.out.println(u.getCountry());
+				System.out.println(u.getCountry());
+				System.out.println(u.getCountry());
 				userDao.editProfile(u);
 				session.removeAttribute("sessionUser");
 				session.setAttribute("sessionUser", u);
