@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.sisound.WebInitializer;
 import com.sisound.model.User;
 import com.sisound.model.db.UserDao;
 
@@ -62,5 +63,20 @@ public class PictureController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("opa");	}
+		System.out.println("opa");	
+	}
+	
+	@RequestMapping(value="getPic{picUrl}", method=RequestMethod.GET)
+	@ResponseBody
+	public void getPic(@PathVariable String picUrl, HttpServletResponse resp){
+		System.out.println("STIGA DO TUK");
+		File file=new File(picUrl + ".jpg");
+		System.out.println(picUrl);
+		try {
+			Files.copy(file.toPath(), resp.getOutputStream());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
