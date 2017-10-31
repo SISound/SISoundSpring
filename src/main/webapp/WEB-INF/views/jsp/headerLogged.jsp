@@ -8,6 +8,7 @@
 <title>SISound</title>
  <link rel="stylesheet" type="text/css" href="<c:url value="css/header.css" />" />
 <%--  <link rel="stylesheet" type="text/css" href = "<c:url value="css/logReg.css" />" /> --%>
+
 </head>
 <body>
 	<nav class = "nav">
@@ -15,7 +16,10 @@
  			<img class = "logoHeader"src="<c:url value="img/logo.png"/>">
 		</a>
 		
-		<input id="input" type="text" placeholder="Search" class="header-input desktop-only" />
+<!-- 		<form action="searchSong" method="get" class="form"> -->
+			<input id="input" onkeyup="getSongs()" type="text" placeholder="Search" class="header-input desktop-only" />
+<!-- 		</form> -->
+		
 <!-- 		<a class = headerText href="loginPage">Profile</a> -->
 
 		<a class = "headerTextLogged" href="index">Home</a>

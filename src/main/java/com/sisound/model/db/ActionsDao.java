@@ -21,56 +21,71 @@ public class ActionsDao {
 	
 	private String deleteQuery = "DELETE FROM ? WHERE ? = ?";
 	
-	public synchronized void addAction(Actionable a, Actions action, User user) throws SQLException {
-		
-		Connection con = DBManager.getInstance().getConnection();
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO ? (?, user_id) " + "VALUES (?, ?)");
-		switch (action) {
-		case LIKE:
-			if(a.isSong()) {
-				stmt.setString(1, "songs_likes");
-				stmt.setString(2, "song_id");
-				
-			}
-			if(a.isComment()){
-				stmt.setString(1, "comments_likes");
-				stmt.setString(2, "comment_id");
-			}
-			else {
-				stmt.setString(1, "playlists_likes");
-				stmt.setString(2, "playlist_id");
-			}
-						
-			break;
-		case DISLIKE:
-			if(a.isSong()) {
-				stmt.setString(1, "songs_dislikes");
-				stmt.setString(2, "song_id");
-				
-			} else {
-				stmt.setString(1, "playlists_dislikes");
-				stmt.setString(2, "playlist_id");
-			}
-			
-			break;
-		case SHARE:
-			if(a.isSong()) {
-				stmt.setString(1, "songs_shares");
-				stmt.setString(2, "song_id");
-				
-			} else {
-				stmt.setString(1, "playlists_shares");
-				stmt.setString(2, "playlist_id");
-			}
-			
-			break;
-		}
-		
-		stmt.setLong(3, a.getId());
-		stmt.setLong(4, user.getUserID());
-		
+	public synchronized void likeSong(long song_id, long user_id) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("INSERT INTO songs_likes (user_id, song_id) VALUES (?, ?)");
+		stmt.setLong(1, user_id);
+		stmt.setLong(2, song_id);
 		stmt.execute();
 	}
+	
+	public synchronized void dislikeSong(long song_id, long user_id) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("INSERT INTO songs_dislikes (user_id, song_id) VALUES (?, ?)");
+		stmt.setLong(1, user_id);
+		stmt.setLong(2, song_id);
+		stmt.execute();
+	}
+//	public synchronized void addAction(Actionable a, Actions action, User user) throws SQLException {
+//		
+//		Connection con = DBManager.getInstance().getConnection();
+//		PreparedStatement stmt = con.prepareStatement("INSERT INTO ? (user_id, ?) VALUES (?, ?)");
+//		switch (action) {
+//		case LIKE:
+//			if(a.isSong()) {
+//				stmt.setString(1, "songs_likes");
+//				stmt.setString(2, "song_id");
+//				
+//			}
+//			if(a.isComment()){
+//				stmt.setString(1, "comments_likes");
+//				stmt.setString(2, "comment_id");
+//			}
+//			else {
+//				stmt.setString(1, "playlists_likes");
+//				stmt.setString(2, "playlist_id");
+//			}
+//						
+//			break;
+//		case DISLIKE:
+//			if(a.isSong()) {
+//				stmt.setString(1, "songs_dislikes");
+//				stmt.setString(2, "song_id");
+//				
+//			} else {
+//				stmt.setString(1, "playlists_dislikes");
+//				stmt.setString(2, "playlist_id");
+//			}
+//			
+//			break;
+//		case SHARE:
+//			if(a.isSong()) {
+//				stmt.setString(1, "songs_shares");
+//				stmt.setString(2, "song_id");
+//				
+//			} else {
+//				stmt.setString(1, "playlists_shares");
+//				stmt.setString(2, "playlist_id");
+//			}
+//			
+//			break;
+//		}
+//		
+//		stmt.setLong(3, user.getUserID());
+//		stmt.setLong(4, a.getId());
+//		
+//		stmt.execute();
+//	}
 	
 	//OK
 	public synchronized HashMap<Actions, HashSet<User>> getActions(boolean isSong, long id) throws SQLException {
@@ -167,23 +182,43 @@ public class ActionsDao {
 	public synchronized void deleteLikes(boolean isSong, long id) throws SQLException {
 		Connection con = DBManager.getInstance().getConnection();
 		
-		PreparedStatement stmt = con.prepareStatement(this.deleteQuery);
-		stmt.setString(1, isSong ? "songs_likes" : "playlists_likes");
-		stmt.setString(2, isSong ? "song_id" : "playlist_id");
-		stmt.setLong(3, id);
+//		PreparedStatement stmt = con.prepareStatement(this.deleteQuery);
+//		stmt.setString(1, isSong ? "songs_likes" : "playlists_likes");
+//		stmt.setString(2, isSong ? "song_id" : "playlist_id");
+//		stmt.setLong(3, id);
+//		stmt.execute();
 		
-		stmt.execute();
+		if(isSong){
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM songs_likes WHERE song_id=?");
+			stmt.setLong(1, id);
+			stmt.executeUpdate();
+		}
+		if(!isSong){
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM playlists_likes WHERE playlist_id=?");
+			stmt.setLong(1, id);
+			stmt.executeUpdate();
+		}
 	}
 	
 	public synchronized void deleteDislikes(boolean isSong, long id) throws SQLException {
 		Connection con = DBManager.getInstance().getConnection();
 		
-		PreparedStatement stmt = con.prepareStatement(this.deleteQuery);
-		stmt.setString(1, isSong ? "songs_dislikes" : "playlists_dislikes");
-		stmt.setString(2, isSong ? "song_id" : "playlist_id");
-		stmt.setLong(3, id);
+		//PreparedStatement stmt = con.prepareStatement(this.deleteQuery);
+//		stmt.setString(1, isSong ? "songs_dislikes" : "playlists_dislikes");
+//		stmt.setString(2, isSong ? "song_id" : "playlist_id");
+		//stmt.setLong(3, id);
+		//stmt.executeUpdate();
+		if(isSong){
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM songs_dislikes WHERE song_id=?");
+			stmt.setLong(1, id);
+			stmt.executeUpdate();
+		}
+		if(!isSong){
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM playlists_dislikes WHERE playlist_id=?");
+			stmt.setLong(1, id);
+			stmt.executeUpdate();
+		}
 		
-		stmt.execute();
 	}
 	
 	public synchronized void deleteShares(boolean isSong, long id) throws SQLException {

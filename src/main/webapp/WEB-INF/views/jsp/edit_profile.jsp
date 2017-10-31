@@ -67,16 +67,6 @@
             <f:input type="text" id="lname" tabindex="2" path="lastName"/>
           </div>
         </fieldset>
-        <!-- Description about User -->
-        <fieldset>
-          <div class="grid-35">
-            <br>
-            <label for="description">About you</label>
-          </div>
-          <div class="grid-65">
-            <f:textarea name="" id="" cols="30" rows="auto" tabindex="3" path="bio"></f:textarea>
-          </div>
-        </fieldset>
         <!-- Location -->
         <fieldset>
           <div class="grid-35">
@@ -89,35 +79,30 @@
         <!-- Country -->
         <fieldset>
           <div class="grid-35">
-            <label for="country">Country</label>
+            <label for="qualification">Country</label>
           </div>
           <div class="grid-65">
-            <input type="text" id="country" tabindex="5" />
+            <f:select name="qualification" tabindex="8" path = "country">
+                <c:forEach items="${ countries }" var="countr">
+                	<c:if test="${ country == u.country }">
+						<option>  <c:out value="${ countr.key }"></c:out> </option>
+				 	</c:if>
+			    	<c:if test="${ country != u.country }">
+						<option><c:out value="${ countr.key }"></c:out></option>
+				 	</c:if>
+<%-- 			    	<option><c:out value="${ countr.key }"></c:out></option> --%>
+			    </c:forEach>
+            </f:select>
           </div>
         </fieldset>
-        <!-- Email -->
+          <!-- Description about User -->
         <fieldset>
           <div class="grid-35">
-            <label for="email">Email Address</label>
+            <br>
+            <label for="description">About you</label>
           </div>
           <div class="grid-65">
-            <input type="email" id="email" tabindex="6" />
-          </div>
-        </fieldset>
-        <!-- Highest Qualification -->
-        <fieldset>
-          <div class="grid-35">
-            <label for="qualification">Highest level of Education</label>
-          </div>
-          <div class="grid-65">
-            <select name="qualification" id="qualification" tabindex="8">
-              <option selected="selected" value="--------------" disabled>--------------</option>
-              <option value="primary_school">Primary school or equivalent</option>
-              <option value="high_school">High school or equivalent</option>
-              <option value="associate">Associate degree or equivalent</option>
-              <option value="bachelors">Bachelor's degree or equivalent</option>
-              <option value="post_graduate">Post-graduate or equivalent</option>
-            </select>
+            <f:textarea name="" id="" cols="30" rows="auto" tabindex="3" path="bio"></f:textarea>
           </div>
         </fieldset>
 <%--         <fieldset> --%>

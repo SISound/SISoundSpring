@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		 <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>" />
-		<title>SISound</title>
-		
-		<script type="text/javascript">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>" />
+	<title>SISound</title>
+	
+	<script type="text/javascript">
 		
 		function followUnfollow(value) {
 			var button = document.getElementById("followButton");
@@ -118,11 +118,9 @@
 		
 		
 		</script>
-	</head>
-	
-	<body id="mainBody">
-				
-		<jsp:include page="headerLogged.jsp"></jsp:include>
+</head>
+<body id="mainBody">
+	<jsp:include page="headerLogged.jsp"></jsp:include>
 		
 		<table class="sortingTable">
 			<tr>
@@ -133,7 +131,7 @@
 		</table>
 		
 		<table>
-			<c:forEach items="${songs}" var="song">
+			<c:forEach items="${sortedSongs}" var="song">
 				<tr>
 					<nav class="archive-links">
 					  <ol>
@@ -149,7 +147,7 @@
 						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" />
 						        </div>
 				 			</c:if>
-					        <a class="link-title" href="track=${ song.id }"><c:out value="${ song.title }"></c:out></a>
+					        <a class="link-title" href="songPage"><c:out value="${ song.title }"></c:out></a>
 					        <a class="link-excerpt" href="profile${song.user.username }"><c:out value="${ song.user.username }"></c:out></a>
 					        <c:if test="${ song.user.username != sessionUser.username}">
 					        		<button class="followButton" id="followButton" value="${ song.user.username }" onclick="followUnfollow(this.value)">Follow</button>
@@ -170,5 +168,5 @@
 				<br/><br><br><br><br><br><br>
 			</c:forEach>
 		</table>
-	</body>
-</html>	
+</body>
+</html>

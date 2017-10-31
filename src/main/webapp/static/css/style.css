@@ -545,4 +545,38 @@ nav.archive-links a.link-excerpt {
 	border-color: rgba(92,168,214,0.9);
 	cursor: pointer;
 }
+
+.unfollowButton{
+	position: absolute;
+	background-color: rgba(92,168,214,0.9);
+	border-radius: 3px;
+	border: solid thin;
+	border-color: white;
+	color: white;
+	margin-top: 1%;
+	margin-left: 8%;
+	display: inline;
+}
+
+.unfollowButton:HOVER {
+	color: #6D6D6F;
+	border-color: #6D6D6F;
+	cursor: pointer;
+}
 /*=============================================*/
+/*SORTING*/
+.sortingTable{
+	position: absolute;
+	margin-top: 7.5%;
+	margin-left: 10%;
+}
+
+.sortTd{
+	color: #6D6D6F;
+	font-weight: bold;
+}
+
+.sortingLink{
+	text-decoration: none;
+	color: #6D6D6F;
+}

@@ -1,5 +1,7 @@
 package com.sisound.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.TreeSet;
@@ -20,7 +22,7 @@ public class User {
 	private TreeSet<Song> songs;
 	private TreeSet<Playlist> playlists;
 	private LinkedHashSet<User> followers;
-	private Set<Long> followed;
+	private HashSet<Long> followedIds;
 	
 	public User(){}
 	//constructor for registering user
@@ -31,6 +33,7 @@ public class User {
 		this.songs=new TreeSet();
 		this.playlists=new TreeSet();
 		this.followers=new LinkedHashSet();
+		this.followedIds=new HashSet<>();
 	}
 	
 	public User(long userID, String firstName, String lastName, String username, String password, String email,
@@ -187,19 +190,14 @@ public class User {
 		this.lastName = lastName;
 	}
 	
-	public void addFollowedUser(Long userId){
-		this.followed.add(userId);
-	}
-	
-	public void removeFollowedUser(Long userId){
-		if(this.followed.size()>0){
-			this.followed.remove(userId);
-		}
+	public HashSet<Long> getFollowedIds() {
+		return followedIds;
 	}
 	
 	public boolean isFollowing(Long userId){
-		return followed.contains(userId);
+		return this.followedIds.contains(userId);
 	}
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
