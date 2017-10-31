@@ -6,21 +6,24 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import com.google.common.hash.Hashing;
 import com.sisound.model.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 
 
 @Component
 public class UserDao {
 
 	@Autowired
-	public CountryDao countryDao;
+	private CountryDao countryDao;
+	@Autowired
+	private SongDao songDao;
+	@Autowired
+	private PlaylistDao playlistDao;
 	
 	public synchronized void insertUser(User u) throws SQLException{
 		Connection con = DBManager.getInstance().getConnection();
@@ -41,6 +44,7 @@ public class UserDao {
 		stmt.setString(2, Hashing.sha512().hashString(password, StandardCharsets.UTF_8).toString());
 		ResultSet rs = stmt.executeQuery();
 		rs.next();
+		
 		return rs.getInt(1)>0;
 	}
 	
@@ -62,6 +66,11 @@ public class UserDao {
 		rs.next();
 		User u=new User(rs.getLong(1), rs.getString(5), rs.getString(6), rs.getString(2), rs.getString(3), rs.getString(4),
 				rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11));
+		
+//		u.setSongs(songDao.getSongsForUser(u));
+//		u.setPlaylists(playlistDao.getPlaylistsForUser(u));
+//		u.setFollowers(getFollowers(u));
+		//TODO add followed
 		
 		return u;
 	}
@@ -191,15 +200,8 @@ public class UserDao {
 		stmt.setString(4, user.getFirstName());
 		stmt.setString(5, user.getLastName());
 		stmt.setString(6, user.getCoverPhoto());
-//		if(user.getCountry() == null) {
-//			user.setCountry("");
-//		}
-//		if(user.getCountry() != null) {
 		stmt.setLong(7, countryDao.getCountryId(user.getCountry()));			
-//		}
-//		else {
-//			stmt.setLong(7, 0);						
-//		}
+
 		stmt.setString(8, user.getUsername());
 		
 		stmt.execute();

@@ -33,7 +33,7 @@ public class User {
 		this.songs=new TreeSet();
 		this.playlists=new TreeSet();
 		this.followers=new LinkedHashSet();
-		this.followedIds=new HashSet<>();
+		this.followedIds = new HashSet<>();
 	}
 	
 	public User(long userID, String firstName, String lastName, String username, String password, String email,

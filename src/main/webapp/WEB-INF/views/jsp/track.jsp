@@ -9,21 +9,24 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 <!-- 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
-	<script type="text/javascript" src=" <c:url value="https://code.jquery.com/jquery-3.2.1.min.js" />"></script>
+	<script type="text/javascript" src=" <c:url value="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js" />"></script>
+	<script type="text/javascript" src=" <c:url value="https://www.grandvincent-marion.fr/_codepen/jquery.fancybox.pack.js" />"></script>
+	<script type="text/javascript" src=" <c:url value="https://www.grandvincent-marion.fr/_codepen/mediaelement-and-player.min.js" />"></script>
 
 <!-- https://code.jquery.com/jquery-3.2.1.min.js -->
-			<link  rel="stylesheet" type="text/css" href="<c:url value="https://p.typekit.net/p.gif?s=1&k=yyw5dsj&app=typekit&ht=tk&h=www.flagstar.com&f=6846.6848.6849.6851.6852&a=1922000&sl=195&fl=122&js=1.14.8&_=1458594264430" />">
+		<link  rel="stylesheet" type="text/css" href="<c:url value="https://p.typekit.net/p.gif?s=1&k=yyw5dsj&app=typekit&ht=tk&h=www.flagstar.com&f=6846.6848.6849.6851.6852&a=1922000&sl=195&fl=122&js=1.14.8&_=1458594264430" />">
+		<link  rel="stylesheet" type="text/css" href="<c:url value="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />">
 		<link rel="stylesheet" type="text/css" href="<c:url value="css/profile.css" />" />
 <%-- 		<script src="<c:url value="/js/profile.js" />" type ="text/javascript"></script> --%>
 <%-- 		<script type="text/javascript" src="${pageContext.request.contextPath}/js/profile.js"></script> --%>
 
 		<title>SISound</title>
-		
+		<link rel="stylesheet" type="text/css" href="<c:url value="css/musicPlayer.css" />" />
 				
 	</head>
 <body>
 <%-- 	<c:set value="<%= session.getAttribute("user") %>" var="user"></c:set> --%>
-	
+	<script src="<c:url value="js/musicPlayer.js" />"  type ="text/javascript"></script>
 	<jsp:include page="headerLogged.jsp"></jsp:include>
 	
 	<br>
@@ -33,7 +36,24 @@
 	
 <div class = profileASD>
 
-		ADD MUSIC PLAYER<br>
+	<div class="contain">
+		<div class="container">
+		
+			<div class="music-player">
+				<div class="cover">
+					<img src="https://www.grandvincent-marion.fr/_codepen/kygo.png" alt="">
+					
+				</div>
+				<div class="titre">
+					<h3>Kygo</h3>
+					<h1>Stole the show</h1>
+				</div>
+				<div class="lecteur">
+					<audio style="width: 100%;" class="fc-media fc-audio"><source src="getSong${song.url}" type="audio/mp3"/></audio>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="banner">
 <%-- 		<c:if test="${ modelUser.coverPhoto == null}"> --%>
 <%-- 			<img class="banner containter" src="<c:url value="img/cover.jpg"/>">					 --%>

@@ -204,6 +204,7 @@ a {
 
 .banner {
 /* 	background: url('https://images.unsplash.com/photo-1417008914239-59b898b49382?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&s=185476e83f71b5e28e2e8845a312d1e6'); */
+	
 	background-size: cover;
 	padding-top: 25px;
 	padding-bottom: 75px;
@@ -558,3 +559,14 @@ div.tab button.active {
 /* 	} */
 	
 /* } */
+
+.cover-pic {
+	height: 350px;
+	width:auto;
+/* 	display: flex; */
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	display: block;
+    margin: auto;
+}
