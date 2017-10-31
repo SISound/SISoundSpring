@@ -90,19 +90,20 @@ public class SongController {
 		}
 	}
 	
-	//SEND TO FANCY PLAYER
-	@RequestMapping(value="getMusic", method=RequestMethod.GET)
-	@ResponseBody
-	public void getMusic(HttpServletRequest req, HttpServletResponse resp){
-		String url=(String) req.getParameter("url");
-		File file=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + url);
-		try {
-			Files.copy(file.toPath(), resp.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+//	//SEND TO FANCY PLAYER
+//	@RequestMapping(value="getMusic", method=RequestMethod.GET)
+//	@ResponseBody
+//	public void getMusic(HttpServletRequest req, HttpServletResponse resp){
+//		String url=(String) req.getParameter("url");
+//		File file=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + url);
+//		try {
+//			Files.copy(file.toPath(), resp.getOutputStream());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
+	
 	//LIKE SONG
 	@RequestMapping(value="likeSong", method=RequestMethod.POST)
 	@ResponseBody

@@ -141,7 +141,7 @@
 					    <li>
 					      <div href="userProfile" class="${song.user.username}">
 					      	<c:if test="${song.user.profilPicture != null}">
-								<div class="main-image"><img src="${song.user.profilPicture}" alt="Camera" style="width:60px;height:60px;">
+								<div class="main-image"><img src="getPic${song.user.profilPicture }" alt="Camera" style="width:60px;height:60px;">
 						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" />
 						        </div>
 				 			</c:if>
