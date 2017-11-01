@@ -60,7 +60,8 @@ a:hover{
 	opacity: 0.5;
 	margin-left: 15%;
 	height: 32px;
-	border-radius:8px;
+	border-bottom-left-radius:8px;
+	border-top-left-radius:8px;
 	font: 20px Helvetica, Arial, sans-serif;
 	position: absolute;
 	margin-top: 0.5%;
@@ -176,4 +177,28 @@ a:hover{
 /*   background-size: cover; */
   opacity: 1;
   z-index: -1000;
+}
+
+/*SEARCH FORM*/
+.searchForm{
+	position: absolute;
+	margin-top: -3%;
+	margin-left: 20%;
+}
+
+.searchButton{
+	margin-left: 915%;
+	margin-top: 0.5%;
+	background-color: #ffffff;
+	border: none;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	height: 34px;
+	width: 65px;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.searchButton:HOVER{
+	cursor: pointer;
 }

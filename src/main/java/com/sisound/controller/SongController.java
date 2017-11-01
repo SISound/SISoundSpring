@@ -130,7 +130,7 @@ public class SongController {
 			System.out.println("PESENTA E " + songId);
 			try {
 				actionDao.likeSong(songId, u.getUserID());
-				actionDao.deleteDislikes(true, songId);
+				actionDao.removeDislike(true, songId, u.getUserID());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -151,7 +151,7 @@ public class SongController {
 			long songId=Long.parseLong(req.getParameter("songId").toString());
 			try {
 				actionDao.dislikeSong(songId, u.getUserID());
-				actionDao.deleteLikes(true, songId);
+				actionDao.removeLike(true, songId, u.getUserID());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

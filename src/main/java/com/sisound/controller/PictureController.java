@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -55,16 +56,18 @@ public class PictureController {
 		System.out.println("opa");	
 	}
 	
-	@RequestMapping(value="getPic{picUrl}", method=RequestMethod.GET)
+	@RequestMapping(value="getPic{username}", method=RequestMethod.GET)
 	@ResponseBody
-	public void getPic(@PathVariable String picUrl, HttpServletResponse resp){
-		System.out.println("STIGA DO TUK");
-		File file=new File(picUrl + ".jpg");
-		System.out.println(picUrl);
+	public void getPic(@PathVariable String username, HttpServletResponse resp, HttpServletRequest req){
 		try {
+		User u=userDao.getUser(username);
+		File file=new File(u.getProfilPicture());
+//		System.out.println(url);
 			Files.copy(file.toPath(), resp.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e){
 			e.printStackTrace();
 		}
 	}

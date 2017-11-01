@@ -16,9 +16,15 @@
  			<img class = "logoHeader"src="<c:url value="img/logo.png"/>">
 		</a>
 		
-<!-- 		<form action="searchSong" method="get" class="form"> -->
-			<input id="input" onkeyup="getSongs()" type="text" placeholder="Search" class="header-input desktop-only" />
-<!-- 		</form> -->
+		<form action="searchSong" method="get" class="searchForm">
+			<input id="input" type="text" placeholder="Search" name="search" class="header-input desktop-only" />
+			<input class="searchButton" type="submit" value="search">
+		</form>
+		
+		<form action="searchUser" method="get" class="searchUser">
+			<input id="input" type="text" placeholder="Search" name="search" class="header-input desktop-only" />
+			<input class="searchB" type="submit" value="search">
+		</form>
 		
 <!-- 		<a class = headerText href="loginPage">Profile</a> -->
 
@@ -44,7 +50,6 @@
 			 <div class="dropdown-content">
 			    <a href="profile${sessionUser.username }" >Profile</a>
 			    <a href="uploadPage">Upload</a>
-			    <a href="	uploadPage">Upload</a>
 			    <form action="logout" method="post">
 			 		<div id="signOutDiv"><input id="signOut" type="submit" value="Sign Out"></div>
 			    </form>

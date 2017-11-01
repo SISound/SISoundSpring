@@ -140,7 +140,7 @@ public class UserController {
 				if(session.getAttribute("sortedByLikes")==null){
 					session.setAttribute("sortedByLikes", sortedByLikes);
 				}
-				
+		
 				return "main";
 			}
 			else{
@@ -301,6 +301,9 @@ public class UserController {
 			else{
 				try {
 					User fwd=userDao.getUser(followed);
+					if(!userDao.getFollowedIds(fwr).contains(fwd.getUserID())){
+						System.out.println("NE MOJE DA SE OTSLEDVA");
+					}
 					userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
