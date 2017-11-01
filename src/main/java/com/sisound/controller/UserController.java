@@ -129,16 +129,16 @@ public class UserController {
 					session.setAttribute("songs", songs);
 				}
 				
-//				TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
-//				sortedByDate.addAll(songs);
-//				if(session.getAttribute("sortedByDate") == null){
-//					session.setAttribute("sortedByDate", sortedByDate);
-//				}
-//				
-//				LinkedHashSet<Song> sortedByLikes=songDao.getTop10();
-//				if(session.getAttribute("sortedByLikes")==null){
-//					session.setAttribute("sortedByLikes", sortedByLikes);
-//				}
+				TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
+				sortedByDate.addAll(songs);
+				if(session.getAttribute("sortedByDate") == null){
+					session.setAttribute("sortedByDate", sortedByDate);
+				}
+				
+				LinkedHashSet<Song> sortedByLikes=songDao.getTop10();
+				if(session.getAttribute("sortedByLikes")==null){
+					session.setAttribute("sortedByLikes", sortedByLikes);
+				}
 		
 				Map<Long, Integer> followed=new HashMap<>();
 				HashSet<Long> followedIds=userDao.getFollowedIds(u);
@@ -176,13 +176,14 @@ public class UserController {
 			
 			if(x == currentUser.getName()) {
 				model.addAttribute("modelUser", currentUser);
+			
 				session.setAttribute("avatar", currentUser.getProfilPicture());
 			}
 			else {			
 				try {
 					User newUser = userDao.getUser(x);
 					model.addAttribute("modelUser", newUser);
-					session.setAttribute("avatar", newUser.getProfilPicture());
+					
 				} catch (SQLException e) {
 					// TODO create error page
 					return "errorPage";
@@ -248,9 +249,13 @@ public class UserController {
 				}
 				
 				if(coverpic != null && (FilenameUtils.getExtension(coverpic.getOriginalFilename()) != "")) {
-					File cover = new File(WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename()));
-					coverpic.transferTo(cover);
-					u.setCoverPhoto(coverpic.getOriginalFilename());
+//					File cover = new File(WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename()));
+//					coverpic.transferTo(cover);
+//					u.setCoverPhoto(coverpic.getOriginalFilename());
+					String coverPicPath = WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename());
+					File profile = new File(coverPicPath);
+					coverpic.transferTo(profile);
+					u.setCoverPhoto(coverPicPath);	
 				}
 				
 				userDao.editProfile(u);

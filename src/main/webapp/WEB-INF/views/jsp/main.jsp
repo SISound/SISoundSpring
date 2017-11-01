@@ -26,7 +26,7 @@
 	
 		function followUser(followed){
 			var request = new XMLHttpRequest();
-			var fwd=followed;
+			var fwd = followed;
 			request.onreadystatechange = function() {
 				//when response is received
 				if (this.readyState == 4 && this.status == 200) {
@@ -49,7 +49,7 @@
 			request.onreadystatechange = function() {
 				//when response is received
 				if (this.readyState == 4 && this.status == 200) {
-					var button = document.getElementByClassName("followButton");
+					var button = document.getElementClassNameme("followButton");
 					button.innerHTML = "Follow";
 					button.style.background='white';
 				}
@@ -209,89 +209,89 @@
 		</table>
 	</div>
 		
-<!-- 		SORTED BY DATE -->
-<!--     <div id="dateSorted" style="display: none;"> -->
-<!-- 		<table> -->
-<%-- 			<c:forEach items="${sortedByDate}" var="sortedByDate"> --%>
-<!-- 				<tr> -->
-<!-- 					<nav class="archive-links"> -->
-<!-- 					  <ol> -->
-<!-- 					    <li> -->
-<%-- 					      <div href="userProfile" class="${sortedByDate.user.username}"> --%>
-<%-- 					      	<c:if test="${sortedByDate.user.profilPicture != null}"> --%>
-<%-- 								<div class="main-image"><img src="getPic${sortedByDate.user.username }" alt="Camera" style="width:60px;height:60px;"> --%>
-<!-- 						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" /> -->
-<!-- 						        </div> -->
-<%-- 				 			</c:if> --%>
-<%-- 					        <c:if test="${sortedByDate.user.profilPicture == null}"> --%>
-<!-- 								<div class="main-image"><img src="img/defaultProfile.png" alt="Camera" style="width:60px;height:60px;"> -->
-<!-- 						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" /> -->
-<!-- 						        </div> -->
-<%-- 				 			</c:if> --%>
-<%-- 					        <a class="link-title" href="track=${ sortedByDate.id }"><c:out value="${ sortedByDate.title }"></c:out></a> --%>
-<%-- 					        <a class="link-excerpt" href="profile${sortedByDate.user.username }"><c:out value="${ sortedByDate.user.username }"></c:out></a> --%>
-<%-- 					        <c:if test="${ sortedByDate.user.username != sessionUser.username}"> --%>
-<%-- 					        		<button class="followButton" id="followButton" value="${ sortedByDate.user.username }" onclick="followUnfollow(this.value)">Follow</button> --%>
-<%-- 					        </c:if> --%>
-<%-- 					        <button class="addToPlaylist" id="addingButton" value="${ sortedByDate.id }" onclick="addToPlaylist(this.value)">&#8801 Add to playlist</button> --%>
-<%-- 					        <button class="actionButton" id="shareButton" value="${ sortedByDate.id }" onclick="shareSong(this.value)">&#10609Share</button> --%>
-<%-- 					        <button class="actionButton" id="commentButton" value="${ sortedByDate.id }" onclick="commentSong(this.value)">&#128172Comment</button> --%>
-<%-- 					        <button class="actionButton" id="dislikeButton" value="${ sortedByDate.id }" onclick="dislikeSong(this.value)">&#128078Dislike</button> --%>
-<%-- 					        <button class="actionButton" id="likeButton" value="${ sortedByDate.id }" onclick="likeSong(this.value)">&#10084Like</button>				 --%>
-<!-- 					      </div> -->
-<!-- 					      <audio controls class="myPlayer"> -->
-<%-- 							  <source src="getSong${sortedByDate.url}" type="audio/mpeg"> --%>
-<!-- 						  </audio>	 -->
-<!-- 					    </li> -->
-<!-- 					  </ol> -->
-<!-- 					</nav> -->
-<!-- 				</tr> -->
-<!-- 				<br/><br><br><br><br><br><br> -->
-<%-- 			</c:forEach> --%>
-<!-- 		</table> -->
-<!-- 	</div> -->
+		SORTED BY DATE
+    <div id="dateSorted" style="display: none;">
+		<table>
+			<c:forEach items="${sortedByDate}" var="sortedByDate">
+				<tr>
+					<nav class="archive-links">
+					  <ol>
+					    <li>
+					      <div href="userProfile" class="${sortedByDate.user.username}">
+					      	<c:if test="${sortedByDate.user.profilPicture != null}">
+								<div class="main-image"><img src="getPic${sortedByDate.user.username }" alt="Camera" style="width:60px;height:60px;">
+						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" />
+						        </div>
+				 			</c:if>
+					        <c:if test="${sortedByDate.user.profilPicture == null}">
+								<div class="main-image"><img src="img/defaultProfile.png" alt="Camera" style="width:60px;height:60px;">
+						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" />
+						        </div>
+				 			</c:if>
+					        <a class="link-title" href="track=${ sortedByDate.id }"><c:out value="${ sortedByDate.title }"></c:out></a>
+					        <a class="link-excerpt" href="profile${sortedByDate.user.username }"><c:out value="${ sortedByDate.user.username }"></c:out></a>
+					        <c:if test="${ sortedByDate.user.username != sessionUser.username}">
+					        		<button class="followButton" id="followButton" value="${ sortedByDate.user.username }" onclick="followUnfollow(this.value)">Follow</button>
+					        </c:if>
+					        <button class="addToPlaylist" id="addingButton" value="${ sortedByDate.id }" onclick="addToPlaylist(this.value)">&#8801 Add to playlist</button>
+					        <button class="actionButton" id="shareButton" value="${ sortedByDate.id }" onclick="shareSong(this.value)">&#10609Share</button>
+					        <button class="actionButton" id="commentButton" value="${ sortedByDate.id }" onclick="commentSong(this.value)">&#128172Comment</button>
+					        <button class="actionButton" id="dislikeButton" value="${ sortedByDate.id }" onclick="dislikeSong(this.value)">&#128078Dislike</button>
+					        <button class="actionButton" id="likeButton" value="${ sortedByDate.id }" onclick="likeSong(this.value)">&#10084Like</button>				
+					      </div>
+					      <audio controls class="myPlayer">
+							  <source src="getSong${sortedByDate.url}" type="audio/mpeg">
+						  </audio>	
+					    </li>
+					  </ol>
+					</nav>
+				</tr>
+				<br/><br><br><br><br><br><br>
+			</c:forEach>
+		</table>
+	</div>
 	
-<!-- <!-- 	SORT BY LIKES -->
-<!-- 	<div id="likesSorted" style="display: none;"> -->
-<!-- 		<table> -->
-<%-- 			<c:forEach items="${sortedByLikes}" var="sortedByLikes"> --%>
-<!-- 				<tr> -->
-<!-- 					<nav class="archive-links"> -->
-<!-- 					  <ol> -->
-<!-- 					    <li> -->
-<%-- 					      <div href="userProfile" class="${sortedByLikes.user.username}"> --%>
-<%-- 					      	<c:if test="${sortedByLikes.user.profilPicture != null}"> --%>
-<%-- 								<div class="main-image"><img src="getPic${sortedByLikes.user.username }" alt="Camera" style="width:60px;height:60px;"> --%>
-<!-- 						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" /> -->
-<!-- 						        </div> -->
-<%-- 				 			</c:if> --%>
-<%-- 					        <c:if test="${sortedByLikes.user.profilPicture == null}"> --%>
-<!-- 								<div class="main-image"><img src="img/defaultProfile.png" alt="Camera" style="width:60px;height:60px;"> -->
-<!-- 						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" /> -->
-<!-- 						        </div> -->
-<%-- 				 			</c:if> --%>
-<%-- 					        <a class="link-title" href="track=${ sortedByLikes.id }"><c:out value="${ sortedByLikes.title }"></c:out></a> --%>
-<%-- 					        <a class="link-excerpt" href="profile${sortedByLikes.user.username }"><c:out value="${ sortedByLikes.user.username }"></c:out></a> --%>
-<%-- 					        <c:if test="${ sortedByLikes.user.username != sessionUser.username}"> --%>
-<%-- 					        		<button class="followButton" id="followButton" value="${ sortedByLikes.user.username }" onclick="followUnfollow(this.value)">Follow</button> --%>
-<%-- 					        </c:if> --%>
-<%-- 					        <button class="addToPlaylist" id="addingButton" value="${ sortedByLikes.id }" onclick="addToPlaylist(this.value)">&#8801 Add to playlist</button> --%>
-<%-- 					        <button class="actionButton" id="shareButton" value="${ sortedByLikes.id }" onclick="shareSong(this.value)">&#10609Share</button> --%>
-<%-- 					        <button class="actionButton" id="commentButton" value="${ sortedByLikes.id }" onclick="commentSong(this.value)">&#128172Comment</button> --%>
-<%-- 					        <button class="actionButton" id="dislikeButton" value="${ sortedByLikes.id }" onclick="dislikeSong(this.value)">&#128078Dislike</button> --%>
-<%-- 					        <button class="actionButton" id="likeButton" value="${ sortedByLikes.id }" onclick="likeSong(this.value)">&#10084Like</button>				 --%>
-<!-- 					      </div> -->
-<!-- 					      <audio controls class="myPlayer"> -->
-<%-- 							  <source src="getSong${sortedByLikes.url}" type="audio/mpeg"> --%>
-<!-- 						  </audio>	 -->
-<!-- 					    </li> -->
-<!-- 					  </ol> -->
-<!-- 					</nav> -->
-<!-- 				</tr> -->
-<!-- 				<br/><br><br><br><br><br><br> -->
-<%-- 			</c:forEach> --%>
-<!-- 		</table> -->
-<!-- 	</div> -->
+<!-- 	SORT BY LIKES -->
+	<div id="likesSorted" style="display: none;">
+		<table>
+			<c:forEach items="${sortedByLikes}" var="sortedByLikes">
+				<tr>
+					<nav class="archive-links">
+					  <ol>
+					    <li>
+					      <div href="userProfile" class="${sortedByLikes.user.username}">
+					      	<c:if test="${sortedByLikes.user.profilPicture != null}">
+								<div class="main-image"><img src="getPic${sortedByLikes.user.username }" alt="Camera" style="width:60px;height:60px;">
+						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" />
+						        </div>
+				 			</c:if>
+					        <c:if test="${sortedByLikes.user.profilPicture == null}">
+								<div class="main-image"><img src="img/defaultProfile.png" alt="Camera" style="width:60px;height:60px;">
+						          <img src="http://www.meetchaos.com/resources/images/camera.png" class="imtip" />
+						        </div>
+				 			</c:if>
+					        <a class="link-title" href="track=${ sortedByLikes.id }"><c:out value="${ sortedByLikes.title }"></c:out></a>
+					        <a class="link-excerpt" href="profile${sortedByLikes.user.username }"><c:out value="${ sortedByLikes.user.username }"></c:out></a>
+					        <c:if test="${ sortedByLikes.user.username != sessionUser.username}">
+					        		<button class="followButton" id="followButton" value="${ sortedByLikes.user.username }" onclick="followUnfollow(this.value)">Follow</button>
+					        </c:if>
+					        <button class="addToPlaylist" id="addingButton" value="${ sortedByLikes.id }" onclick="addToPlaylist(this.value)">&#8801 Add to playlist</button>
+					        <button class="actionButton" id="shareButton" value="${ sortedByLikes.id }" onclick="shareSong(this.value)">&#10609Share</button>
+					        <button class="actionButton" id="commentButton" value="${ sortedByLikes.id }" onclick="commentSong(this.value)">&#128172Comment</button>
+					        <button class="actionButton" id="dislikeButton" value="${ sortedByLikes.id }" onclick="dislikeSong(this.value)">&#128078Dislike</button>
+					        <button class="actionButton" id="likeButton" value="${ sortedByLikes.id }" onclick="likeSong(this.value)">&#10084Like</button>				
+					      </div>
+					      <audio controls class="myPlayer">
+							  <source src="getSong${sortedByLikes.url}" type="audio/mpeg">
+						  </audio>	
+					    </li>
+					  </ol>
+					</nav>
+				</tr>
+				<br/><br><br><br><br><br><br>
+			</c:forEach>
+		</table>
+	</div>
 	
 	<footer> footerche</footer>
 	</body>

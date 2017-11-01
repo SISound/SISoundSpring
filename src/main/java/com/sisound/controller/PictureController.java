@@ -43,25 +43,44 @@ public class PictureController {
 		}
 	}
 	
-	@RequestMapping(value="getPicProfile", method=RequestMethod.GET)
-	public void getProfilePic(HttpServletResponse resp, HttpSession session){
-
+//	@RequestMapping(value="getPicProfile", method=RequestMethod.GET)
+//	public void getProfilePic(HttpServletResponse resp, HttpSession session){
+//
+//		try {
+//			File file=new File((String)session.getAttribute("avatar"));
+//			Files.copy(file.toPath(), resp.getOutputStream());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println("opa");	
+//	}
+	
+	@RequestMapping(value="getPic{username}", method=RequestMethod.GET)
+	@ResponseBody
+	public void getPic(@PathVariable String username, HttpServletResponse resp){
 		try {
-			File file=new File((String)session.getAttribute("avatar"));
+			User u=userDao.getUser(username);
+	
+			File file=new File(u.getProfilPicture());
+	//		System.out.println(url);
 			Files.copy(file.toPath(), resp.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (SQLException e){
+			e.printStackTrace();
 		}
-		System.out.println("opa");	
 	}
 	
-	@RequestMapping(value="getPic{username}", method=RequestMethod.GET)
+	@RequestMapping(value="getCover{username}", method=RequestMethod.GET)
 	@ResponseBody
-	public void getPic(@PathVariable String username, HttpServletResponse resp, HttpServletRequest req){
+	public void getCover(@PathVariable String username, HttpServletResponse resp){
 		try {
-		User u=userDao.getUser(username);
-		File file=new File(u.getProfilPicture());
+			User u=userDao.getUser(username);
+			System.out.println(u.getCoverPhoto());
+			System.out.println(u.getCoverPhoto());
+			File file=new File(u.getCoverPhoto());
 //		System.out.println(url);
 			Files.copy(file.toPath(), resp.getOutputStream());
 		} catch (IOException e) {

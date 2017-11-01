@@ -13,8 +13,10 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
@@ -33,13 +35,11 @@ public class SearchController {
 	@Autowired
 	UserDao userDao;
 	
-	@RequestMapping(value="searchSong", method=RequestMethod.GET)
-	public String searchSongs(HttpServletRequest req, HttpServletResponse resp, Model model){
+	@RequestMapping(value="searchsong", method=RequestMethod.GET)
+	public String searchSongs(Model model,  @RequestParam(value = "value") String input){
 		
-		String search= (String) req.getParameter("search");
-		System.out.println(search);
 		try {
-			HashSet<Song> songs= songDao.searchSongByName(search);
+			HashSet<Song> songs= songDao.searchSongByName(input);
 			System.out.println(songs.size());
 			if(songs!=null){
 				model.addAttribute("searchedSongs", songs);
@@ -51,13 +51,13 @@ public class SearchController {
 		return "songSearch";
 	}
 	
-	@RequestMapping(value="searchUser", method=RequestMethod.GET)
-	public String searchUsers(HttpServletRequest req, HttpServletResponse resp, Model model){
+	@RequestMapping(value="/searchuser", method=RequestMethod.GET)
+	public String searchUsers(Model model,  @RequestParam(value = "value") String input){
 		
-		String search=(String) req.getParameter("search");
+		//String search=(String) req.getParameter("search");
 		
 		try {
-			HashSet<User> users=userDao.searchUser(search);
+			HashSet<User> users=userDao.searchUser(input);
 			if(users!=null){
 				model.addAttribute("searchedUsers", users);
 			}
@@ -68,4 +68,15 @@ public class SearchController {
 		
 		return "userSearch";
 	}
+	
+	@RequestMapping(value="search", method=RequestMethod.GET)
+	public String search(HttpServletRequest req){
+		
+		String input = req.getParameter("search");
+		String type = req.getParameter("searchType");
+		
+		
+		//return "redirect:/search=" + type + "?" + input;
+		return "redirect:/search" + type +"?value=" + input;
+	}	
 }

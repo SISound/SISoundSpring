@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
-import java.util.TreeSet;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -17,10 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sisound.WebInitializer;
-import com.sisound.model.Actions;
 import com.sisound.model.Song;
 import com.sisound.model.User;
 import com.sisound.model.db.ActionsDao;
@@ -105,6 +100,13 @@ public class SongController {
 	@RequestMapping(value="getSong{songUrl}", method=RequestMethod.GET)
 	@ResponseBody
 	public void getSong(@PathVariable String songUrl, HttpServletResponse resp){
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		
 		File file=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + songUrl + ".mp3");
 		System.out.println(file.toPath());
 		System.out.println(file.toPath());System.out.println(file.toPath());
@@ -189,8 +191,9 @@ public class SongController {
 		try {
 			Song song = songDao.getSongById(x);
 			model.addAttribute("modelSong", song);
+
 			model.addAttribute("modelUser", song.getUser());
-			session.setAttribute("avatar", song.getUser().getProfilPicture());
+//			session.setAttribute("avatar", song.getUser().getProfilPicture());
 			session.setAttribute("songProfile", song.getUrl());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -200,18 +203,18 @@ public class SongController {
 		return "track";
 	}
 	
-	@RequestMapping(value="getSongProfile", method=RequestMethod.GET)
-	public void getSongForProfile(HttpServletResponse resp, HttpSession session){
-
-		try {
-			File file=new File((String)session.getAttribute("songProfile"));
-			Files.copy(file.toPath(), resp.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("opa");
-		
-//		return "redirect:track={x}";
-	}
+//	@RequestMapping(value="getSongProfile", method=RequestMethod.GET)
+//	public void getSongForProfile(HttpServletResponse resp, HttpSession session){
+//
+//		try {
+//			File file=new File((String)session.getAttribute("songProfile"));
+//			Files.copy(file.toPath(), resp.getOutputStream());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println("opa");
+//		
+////		return "redirect:track={x}";
+//	}
 }

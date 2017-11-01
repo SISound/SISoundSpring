@@ -6,7 +6,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-		 <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css" />"/>
+<%-- 		 <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css" />"/> --%>
 		<title>SISound</title>
 		
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -117,9 +117,6 @@
   </div>
 </div>
 
-
-<!-- http://www.smashingmagazine.com/2013/08/08/release-livestyle-css-live-reload/ -->	
-		
 		
 	</body>
 </html>
