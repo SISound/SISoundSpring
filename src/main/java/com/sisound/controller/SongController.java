@@ -62,28 +62,40 @@ public class SongController {
 	
 	//SAVING THE SELECTED SONG
 	@RequestMapping(value="saveSong", method=RequestMethod.POST)
-	public String saveSong(HttpSession session, Model model, @RequestParam("song") MultipartFile file, HttpServletRequest req){
+	public String saveSong(HttpSession session, Model model, @RequestParam("song") MultipartFile file, HttpServletRequest req, HttpServletResponse resp){
 		User u=(User) session.getAttribute("sessionUser");
 		File f=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + file.getOriginalFilename());
 		String genre=(String) req.getParameter("genre");
 		System.out.println("THE GENRE IS" + genre);
-		try {
-			file.transferTo(f);
-			
-			Song song=new Song(file.getOriginalFilename(), u, genre, file.getOriginalFilename(), LocalDateTime.now());
-			songDao.uploadSong(song);
-			
-			HashSet<Song> songs=songDao.getAllSongs();
-			model.addAttribute("songs", songs);
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		
+		if(genre!=null){
+			try {
+				file.transferTo(f);
+				
+				Song song=new Song(file.getOriginalFilename(), u, genre, file.getOriginalFilename(), LocalDateTime.now());
+				songDao.uploadSong(song);
+				
+				HashSet<Song> songs=songDao.getAllSongs();
+				model.addAttribute("songs", songs);
+			} catch (IllegalStateException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else{
+			try {
+				resp.getWriter().append("You have to select genre");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "upload";
 		}
 		
 		return "main";
@@ -127,14 +139,15 @@ public class SongController {
 	@ResponseBody
 	public void likeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
 		User u=(User) session.getAttribute("sessionUser");
+		long songId=Long.parseLong(req.getParameter("songId").toString());
 		if(u==null){
 			resp.setStatus(401);
 		}
 		else{
-			long songId=Long.parseLong(req.getParameter("songId").toString());
-			
-			System.out.println("PESENTA E " + songId);
 			try {
+				if(songDao.getSongById(songId).getUser().equals(u)){
+					return;
+				}
 				actionDao.likeSong(songId, u.getUserID());
 				actionDao.removeDislike(true, songId, u.getUserID());
 			} catch (SQLException e) {
@@ -156,6 +169,9 @@ public class SongController {
 		else{
 			long songId=Long.parseLong(req.getParameter("songId").toString());
 			try {
+				if(songDao.getSongById(songId).getUser().equals(u)){
+					return;
+				}
 				actionDao.dislikeSong(songId, u.getUserID());
 				actionDao.removeLike(true, songId, u.getUserID());
 			} catch (SQLException e) {

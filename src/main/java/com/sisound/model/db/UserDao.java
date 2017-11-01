@@ -77,7 +77,7 @@ public class UserDao {
 	
 	public synchronized HashSet<Long> getFollowedIds(User u) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt=con.prepareStatement("SELECT followed_id WHERE follower_id=?");
+		PreparedStatement stmt=con.prepareStatement("SELECT followed_id FROM follows WHERE follower_id=?");
 		stmt.setLong(1, u.getUserID());
 		ResultSet rs=stmt.executeQuery();
 		HashSet<Long> followedIds=new HashSet<>();
@@ -90,7 +90,7 @@ public class UserDao {
 	
 	public synchronized HashSet<Long> getAllUsersIds() throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt=con.prepareStatement("SELECT user_id FROM user");
+		PreparedStatement stmt=con.prepareStatement("SELECT user_id FROM users");
 		ResultSet rs=stmt.executeQuery();
 		HashSet<Long> allUsers=new HashSet<>();
 		while(rs.next()){

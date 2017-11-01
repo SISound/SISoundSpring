@@ -563,6 +563,10 @@ nav.archive-links a.link-excerpt {
 	border-color: #6D6D6F;
 	cursor: pointer;
 }
+
+.myPlayer{
+	position: inherit;
+}
 /*=============================================*/
 /*SORTING*/
 .sortingTable{

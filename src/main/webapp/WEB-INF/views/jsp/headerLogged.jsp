@@ -21,10 +21,10 @@
 			<input class="searchButton" type="submit" value="search">
 		</form>
 		
-		<form action="searchUser" method="get" class="searchUser">
-			<input id="input" type="text" placeholder="Search" name="search" class="header-input desktop-only" />
-			<input class="searchB" type="submit" value="search">
-		</form>
+<!-- 		<form action="searchUser" method="get" class="searchUser"> -->
+<!-- 			<input id="input" type="text" placeholder="Search" name="search" class="header-input desktop-only" /> -->
+<!-- 			<input class="searchB" type="submit" value="search"> -->
+<!-- 		</form> -->
 		
 <!-- 		<a class = headerText href="loginPage">Profile</a> -->
 

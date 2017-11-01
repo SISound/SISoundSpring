@@ -120,29 +120,40 @@ public class UserController {
 				System.out.println(u.getUsername());
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
-			//	session.setAttribute("followed", userDao.getFollowedIds(u));
 				//request.getSession().setAttribute("user1", u);
-				
+			
 				//TODO
-			//	HashSet<Song> songs = songDao.getTop10();
 				HashSet<Song> songs = songDao.getAllSongs();
 				
 				if(session.getAttribute("songs") == null){
 					session.setAttribute("songs", songs);
 				}
 				
-				TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
-				sortedByDate.addAll(songs);
-				if(session.getAttribute("sortedByDate") == null){
-					session.setAttribute("sortedByDate", sortedByDate);
+//				TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
+//				sortedByDate.addAll(songs);
+//				if(session.getAttribute("sortedByDate") == null){
+//					session.setAttribute("sortedByDate", sortedByDate);
+//				}
+//				
+//				LinkedHashSet<Song> sortedByLikes=songDao.getTop10();
+//				if(session.getAttribute("sortedByLikes")==null){
+//					session.setAttribute("sortedByLikes", sortedByLikes);
+//				}
+		
+				Map<Long, Integer> followed=new HashMap<>();
+				HashSet<Long> followedIds=userDao.getFollowedIds(u);
+				HashSet<Long> allUsers=userDao.getAllUsersIds();
+				for (Long long1 : allUsers) {
+					if(followedIds.contains(long1)){
+						followed.put(long1, 1);
+					}
+					else{
+						followed.put(long1, 0);
+					}
 				}
 				
-				LinkedHashSet<Song> sortedByLikes=new LinkedHashSet<>();
-				sortedByLikes.addAll(songs);
-				if(session.getAttribute("sortedByLikes")==null){
-					session.setAttribute("sortedByLikes", sortedByLikes);
-				}
-		
+				model.addAttribute("followedUsers", followed);
+				
 				return "main";
 			}
 			else{
