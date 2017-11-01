@@ -7,8 +7,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 		 <link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>" />
 		<title>SISound</title>
-		
+				
 		<script type="text/javascript">
+
 		//FOLLOW/UNFOLLOW USER
 		function followUnfollow(value) {
 			var button = document.getElementById("followButton");
@@ -197,6 +198,7 @@
 					      <audio controls class="myPlayer">
 							  <source src="getSong${song.url}" type="audio/mpeg">
 						  </audio>	
+						  
 					    </li>
 					  </ol>
 					</nav>

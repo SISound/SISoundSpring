@@ -120,6 +120,7 @@ public class UserController {
 				System.out.println(u.getUsername());
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
+			//	session.setAttribute("followed", userDao.getFollowedIds(u));
 				//request.getSession().setAttribute("user1", u);
 				
 				HashSet<Song> songs = songDao.getTop10();
@@ -238,12 +239,6 @@ public class UserController {
 					u.setCoverPhoto(coverpic.getOriginalFilename());
 				}
 				
-				System.out.println(u.getCountry());
-				System.out.println(u.getCountry());
-				System.out.println(u.getCountry());
-				System.out.println(u.getCountry());
-				System.out.println(u.getCountry());
-				System.out.println(u.getCountry());
 				userDao.editProfile(u);
 				session.removeAttribute("sessionUser");
 				session.setAttribute("sessionUser", u);

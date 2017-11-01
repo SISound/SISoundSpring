@@ -33,12 +33,12 @@
 	
 <div class = profileASD>
 	<div class="banner">
-<%-- 		<c:if test="${ modelUser.coverPhoto == null}"> --%>
-<%-- 			<img class="banner containter" src="<c:url value="img/cover.jpg"/>">					 --%>
-<%-- 		</c:if> --%>
-<%-- 		<c:if test="${ modelUser.coverPhoto != null}"> --%>
-<!-- 			<img class="banner" alt="profilePic" src="getPicCover"> -->
-<%-- 		</c:if> --%>
+		<c:if test="${ modelUser.coverPhoto == null}">
+			<img class="cover-pic" src="<c:url value="img/cover.jpg"/>">					
+		</c:if>
+		<c:if test="${ modelUser.coverPhoto != null}">
+			<img class="banner" alt="profilePic" src="getPicCover">
+		</c:if>
 		<div class="container">
 			<div class="profile-pic">
 				<div class="avatar">
@@ -74,8 +74,9 @@
 		</div>
 
 			<div id="Songs" class="tabcontent">
-			  <h3>London</h3>
-			  <p>London is the capital city of England.</p>
+			  <c:forEach items="${ modelUser.songs}" var="song">
+			  		<a href="track=${ song.id }"><c:out value="${ song.title }"></c:out></a>
+			  </c:forEach>
 			</div>
 			
 			<div id="Playlists" class="tabcontent">
