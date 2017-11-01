@@ -83,8 +83,9 @@ a:hover{
 .dropdown {
     position: absolute;
     display: inline-block;
-    margin-left: 78%;
+    margin-left: 82%;
     margin-top: 0.4%;
+
 }
 
 /* Dropdown Content (Hidden by Default) */

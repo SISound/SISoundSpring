@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
  <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+  <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+ 
  
 <!DOCTYPE html>
 <html>
@@ -46,7 +48,7 @@
 						<img class="avatar" src="<c:url value="img/defaultProfile.png"/>">					
 					</c:if>
 					<c:if test="${ modelUser.profilPicture != null}">
-						<img class="avatar" alt="profilePic" src="getPicProfile">
+						<img class="avatar" alt="profilePic" src="getPic${ modelUser.profilPicture }">
 					</c:if>
 				</div>
 				<c:if test="${ modelUser.username != sessionUser.username}">					
@@ -72,25 +74,20 @@
 			  <button class="tablinks" onclick="openTab(event, 'Playlists')">Playlists</button>
 			</div>
 		</div>
-
+		
+			<c:if test="${fn:length(modelUser.songs) eq 0}">
+  				<h3 class="heading-small tabcontent" id = "Songs"> No songs yet </h3>
+			</c:if>
+			
 			<div id="Songs" class="tabcontent">
 			  <c:forEach items="${ modelUser.songs}" var="song">
 			  		<a class="heading-small" href="track=${ song.id }"><c:out value="${ song.title }"></c:out></a>
 			  </c:forEach>
 			</div>
-			
-			<div id="Playlists" class="tabcontent">
-			  <h3>Paris</h3>
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			  <p>Paris is the capital of France.</p> 
-			</div>
+					
+			<c:if test="${fn:length(modelUser.playlists) eq 0}">
+  				<h3 class="heading-small tabcontent" id = "Playlists"> No playlist yet </h3>
+			</c:if>
 		</div>
 	
 	</div>

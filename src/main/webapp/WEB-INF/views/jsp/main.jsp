@@ -26,7 +26,7 @@
 	
 		function followUser(followed){
 			var request = new XMLHttpRequest();
-			var fwd=followed;
+			var fwd = followed;
 			request.onreadystatechange = function() {
 				//when response is received
 				if (this.readyState == 4 && this.status == 200) {
