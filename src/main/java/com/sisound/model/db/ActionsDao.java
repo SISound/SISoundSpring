@@ -179,6 +179,38 @@ public class ActionsDao {
 		return commentLikes;
 	}
 	
+	public synchronized void removeLike(boolean isSong, long actionableId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		if(isSong){
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM songs_likes WHERE song_id=? AND user_id=?");
+			stmt.setLong(1, actionableId);
+			stmt.setLong(2, userId);
+			stmt.executeUpdate();
+		}
+		if(!isSong){
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM playlists_likes WHERE song_id=? AND user_id=?");
+			stmt.setLong(1, actionableId);
+			stmt.setLong(2, userId);
+			stmt.executeUpdate();
+		}
+	}
+	
+	public synchronized void removeDislike(boolean isSong, long actionableId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		if(isSong){
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM songs_dislikes WHERE song_id=? AND user_id=?");
+			stmt.setLong(1, actionableId);
+			stmt.setLong(2, userId);
+			stmt.executeUpdate();
+		}
+		if(!isSong){
+			PreparedStatement stmt = con.prepareStatement("DELETE FROM playlists_dislikes WHERE song_id=? AND user_id=?");
+			stmt.setLong(1, actionableId);
+			stmt.setLong(2, userId);
+			stmt.executeUpdate();
+		}
+	}
+	
 	public synchronized void deleteLikes(boolean isSong, long id) throws SQLException {
 		Connection con = DBManager.getInstance().getConnection();
 		

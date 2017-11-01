@@ -43,7 +43,7 @@
 						<img class="avatar" src="<c:url value="img/defaultProfile.png"/>">					
 					</c:if>
 					<c:if test="${ modelUser.profilPicture != null}">
-						<img class="avatar" alt="profilePic" src="getPicProfile">
+						<img class="avatar" alt="profilePic" src="getPic${ modelUser.username }">
 					</c:if>
 					
 				</div>
@@ -52,24 +52,13 @@
 					<h1><c:out value="${ modelSong.title }"></c:out></h1>
 				</div>
 				<div class="lecteur">
-					<audio style="width: 100%;" class="fc-media fc-audio"><source src="getSongProfile" type="audio/mp3"/></audio>
+					<audio style="width: 100%;" class="fc-media fc-audio"><source src="getSong${modelSong.url}" type="audio/mp3"/></audio>
 				</div>
 			</div>
 			
 			
 				<div class="banner">
-			<div class="profile-pic">
-				<div class="avatar">
-					<c:if test="${ modelUser.profilPicture == null}">
-						<img class="avatar" src="<c:url value="img/defaultProfile.png"/>">					
-					</c:if>
-					<c:if test="${ modelUser.profilPicture != null}">
-						<img class="avatar" alt="profilePic" src="getPicProfile">
-					</c:if>
-				</div>
-				<a href="profile${song.user.username }" class="button button-primary mt-20"><c:out value="${ modelUser.username }"></c:out></a>
-
-			</div>
+			
 			<div class="song-info">
 				<h1 class="heading-medium"> <c:out value="${ modelSong.title }"></c:out> </h1>
 				<h3 class="heading-small"> Genre: <c:out value="${ modelSong.genre }"></c:out>  </h3>

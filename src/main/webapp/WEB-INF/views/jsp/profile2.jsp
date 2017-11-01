@@ -35,12 +35,13 @@
 	
 <div class = profileASD>
 	<div class="banner">
-		<c:if test="${ modelUser.coverPhoto == null}">
-			<img class="cover-pic" src="<c:url value="img/cover.jpg"/>">					
-		</c:if>
+<%-- 		<c:if test="${ modelUser.coverPhoto == null}"> --%>
+<%-- 			<img class="cover-pic" src="<c:url value="img/cover.jpg"/>">					 --%>
+<%-- 		</c:if> --%>
 		<c:if test="${ modelUser.coverPhoto != null}">
-			<img class="banner" alt="profilePic" src="getPicCover">
+			<img class="cover-pic" alt="profilePic" src="getCover${ modelUser.username }">
 		</c:if>
+		<br>
 		<div class="container">
 			<div class="profile-pic">
 				<div class="avatar">
@@ -48,7 +49,7 @@
 						<img class="avatar" src="<c:url value="img/defaultProfile.png"/>">					
 					</c:if>
 					<c:if test="${ modelUser.profilPicture != null}">
-						<img class="avatar" alt="profilePic" src="getPic${ modelUser.profilPicture }">
+						<img class="avatar" alt="profilePic" src="getPic${ modelUser.username }">
 					</c:if>
 				</div>
 				<c:if test="${ modelUser.username != sessionUser.username}">					
@@ -81,7 +82,7 @@
 			
 			<div id="Songs" class="tabcontent">
 			  <c:forEach items="${ modelUser.songs}" var="song">
-			  		<a class="heading-small" href="track=${ song.id }"><c:out value="${ song.title }"></c:out></a>
+			  		<a class="heading-small" href="track=${ song.id }"><c:out value="${ song.title }"></c:out></a><br>
 			  </c:forEach>
 			</div>
 					

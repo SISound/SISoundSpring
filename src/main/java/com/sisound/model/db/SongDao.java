@@ -111,19 +111,22 @@ public class SongDao {
 	}
 	
 	//searching song by name
-	public synchronized Song searchSongByName(String songName) throws SQLException{
+	public synchronized HashSet<Song> searchSongByName(String songName) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, mg.genre_title, s.song_url "
 				                                  + "FROM songs as s JOIN users as u "
 				                                  + "ON s.user_id=u.user_id "
 				                                  + "JOIN music_genres as mg ON s.genre_id=mg.genre_id "
-				                                  + "WHERE s.song_name=?");
-		stmt.setString(1, songName);
+				                                  + "WHERE s.song_name LIKE ?");
+		stmt.setString(1, "%" + songName + "%");
 		ResultSet rs = stmt.executeQuery();
-		rs.next();
+		HashSet<Song> songs=new HashSet<>();
+		while(rs.next()){
+			songs.add(new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4), userDao.getUser(rs.getString(5)),
+				        rs.getString(7), rs.getString(6), actionsDao.getActions(true, rs.getLong(1)), commentDao.getComments(rs.getLong(1), true)));
+		}	
 		
-		return new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4), userDao.getUser(rs.getString(5)),
-				        rs.getString(7), rs.getString(6), actionsDao.getActions(true, rs.getLong(1)), commentDao.getComments(rs.getLong(1), true));		
+		return songs;
 	}
 	
 	public synchronized HashMap<LocalDateTime, Long> getPlaylistsWithSong(long songId) throws SQLException {
@@ -143,12 +146,13 @@ public class SongDao {
 	
 	public synchronized LinkedHashSet<Song> getTop10() throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, "
-				                                  + "m.genre_title, s.song_url  "
-				                                  + "FROM songs as s "
-				                                  + "JOIN users as u ON s.user_id=u.user_id "
-				                                  + "JOIN music_genres as m ON s.genre_id=m.genre_id "
-				                                  + "ORDER BY likes DESC LIMIT 10");
+		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, m.genre_title, s.song_url, count(*) as likes "
+												  + "FROM songs_likes as sl "
+												  + "JOIN songs as s ON s.song_id=sl.song_id "
+												  + "JOIN users as u ON sl.user_id=u.user_id "
+												  + "JOIN music_genres as m ON s.genre_id=m.genre_id "
+												  +	"GROUP BY sl.song_id "
+												  +	"ORDER BY likes desc");
 		ResultSet rs=stmt.executeQuery();
 		LinkedHashSet<Song> songs=new LinkedHashSet<>();
 		while(rs.next()){

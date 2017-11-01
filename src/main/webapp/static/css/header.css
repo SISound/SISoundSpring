@@ -58,12 +58,15 @@ a:hover{
 .header-input {
 	width: calc(50vw - 100px);
 	opacity: 0.5;
-	margin-left: 15%;
+	margin-left: 40%;
 	height: 32px;
-	border-radius:8px;
+	border-bottom-left-radius:8px;
+	border-top-left-radius:8px;
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
 	font: 20px Helvetica, Arial, sans-serif;
 	position: absolute;
-	margin-top: 0.5%;
+	margin-top: 7%;
 	border: none;
 }
 .header-input:hover{
@@ -173,8 +176,45 @@ a:hover{
 .fullscreen-bg {
   position: absolute;
   top:0; right:0; bottom:0; left:0;
-  background: url("background2.jpg") center;
+  background: url("SISoundbackground.jpg") center;
 /*   background-size: cover; */
   opacity: 1;
   z-index: -1000;
+}
+
+/*SEARCH FORM*/
+.searchForm{
+	position: absolute;
+	margin-top: -2.2%;
+	margin-left: 25.3%;
+}
+
+/* .searchButton{ */
+/* 	margin-left: 687%; */
+/* 	margin-top: -54%; */
+/* 	background-color: #ffffff; */
+/* 	border: none; */
+/* 	border-top-right-radius: 8px; */
+/* 	border-bottom-right-radius: 8px; */
+/* 	height: 34px; */
+/* 	width: 65px; */
+/* 	font-weight: bold; */
+/* 	font-size: 16px; */
+/* } */
+
+.searchButton:HOVER{
+	cursor: pointer;
+}
+
+.searchDropdown{
+	margin-left: -30%;
+	margin-top: 20.5%;
+	background-color: #ffffff;
+	border: none;
+/* 	border-top-right-radius: 8px; */
+/* 	border-bottom-right-radius: 8px; */
+/* 	height: 34px; */
+/* 	width: 65px; */
+/* 	font-weight: bold; */
+	font-size: 16px;
 }

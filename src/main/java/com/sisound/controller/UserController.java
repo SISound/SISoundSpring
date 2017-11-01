@@ -124,8 +124,8 @@ public class UserController {
 				//request.getSession().setAttribute("user1", u);
 				
 				//TODO
-			//	HashSet<Song> songs = songDao.getTop10();
-				HashSet<Song> songs = songDao.getAllSongs();
+				HashSet<Song> songs = songDao.getTop10();
+			//	HashSet<Song> songs = songDao.getAllSongs();
 				
 				if(session.getAttribute("songs") == null){
 					session.setAttribute("songs", songs);
@@ -142,7 +142,7 @@ public class UserController {
 				if(session.getAttribute("sortedByLikes")==null){
 					session.setAttribute("sortedByLikes", sortedByLikes);
 				}
-				
+		
 				return "main";
 			}
 			else{
@@ -165,13 +165,14 @@ public class UserController {
 			
 			if(x == currentUser.getName()) {
 				model.addAttribute("modelUser", currentUser);
+			
 				session.setAttribute("avatar", currentUser.getProfilPicture());
 			}
 			else {			
 				try {
 					User newUser = userDao.getUser(x);
 					model.addAttribute("modelUser", newUser);
-					session.setAttribute("avatar", newUser.getProfilPicture());
+					
 				} catch (SQLException e) {
 					// TODO create error page
 					return "errorPage";
@@ -237,9 +238,13 @@ public class UserController {
 				}
 				
 				if(coverpic != null && (FilenameUtils.getExtension(coverpic.getOriginalFilename()) != "")) {
-					File cover = new File(WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename()));
-					coverpic.transferTo(cover);
-					u.setCoverPhoto(coverpic.getOriginalFilename());
+//					File cover = new File(WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename()));
+//					coverpic.transferTo(cover);
+//					u.setCoverPhoto(coverpic.getOriginalFilename());
+					String coverPicPath = WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename());
+					File profile = new File(coverPicPath);
+					coverpic.transferTo(profile);
+					u.setCoverPhoto(coverPicPath);	
 				}
 				
 				userDao.editProfile(u);
@@ -304,6 +309,9 @@ public class UserController {
 			else{
 				try {
 					User fwd=userDao.getUser(followed);
+					if(!userDao.getFollowedIds(fwr).contains(fwd.getUserID())){
+						System.out.println("NE MOJE DA SE OTSLEDVA");
+					}
 					userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

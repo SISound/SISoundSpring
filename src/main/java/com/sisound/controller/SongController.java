@@ -88,6 +88,13 @@ public class SongController {
 	@RequestMapping(value="getSong{songUrl}", method=RequestMethod.GET)
 	@ResponseBody
 	public void getSong(@PathVariable String songUrl, HttpServletResponse resp){
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		System.out.println(songUrl);
+		
 		File file=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + songUrl + ".mp3");
 		System.out.println(file.toPath());
 		System.out.println(file.toPath());System.out.println(file.toPath());
@@ -131,7 +138,7 @@ public class SongController {
 			System.out.println("PESENTA E " + songId);
 			try {
 				actionDao.likeSong(songId, u.getUserID());
-				actionDao.deleteDislikes(true, songId);
+				actionDao.removeDislike(true, songId, u.getUserID());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -152,7 +159,7 @@ public class SongController {
 			long songId=Long.parseLong(req.getParameter("songId").toString());
 			try {
 				actionDao.dislikeSong(songId, u.getUserID());
-				actionDao.deleteLikes(true, songId);
+				actionDao.removeLike(true, songId, u.getUserID());
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -168,8 +175,9 @@ public class SongController {
 		try {
 			Song song = songDao.getSongById(x);
 			model.addAttribute("modelSong", song);
+
 			model.addAttribute("modelUser", song.getUser());
-			session.setAttribute("avatar", song.getUser().getProfilPicture());
+//			session.setAttribute("avatar", song.getUser().getProfilPicture());
 			session.setAttribute("songProfile", song.getUrl());
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -179,18 +187,18 @@ public class SongController {
 		return "track";
 	}
 	
-	@RequestMapping(value="getSongProfile", method=RequestMethod.GET)
-	public void getSongForProfile(HttpServletResponse resp, HttpSession session){
-
-		try {
-			File file=new File((String)session.getAttribute("songProfile"));
-			Files.copy(file.toPath(), resp.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		System.out.println("opa");
-		
-//		return "redirect:track={x}";
-	}
+//	@RequestMapping(value="getSongProfile", method=RequestMethod.GET)
+//	public void getSongForProfile(HttpServletResponse resp, HttpSession session){
+//
+//		try {
+//			File file=new File((String)session.getAttribute("songProfile"));
+//			Files.copy(file.toPath(), resp.getOutputStream());
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		System.out.println("opa");
+//		
+////		return "redirect:track={x}";
+//	}
 }

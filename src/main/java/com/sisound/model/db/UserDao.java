@@ -207,4 +207,22 @@ public class UserDao {
 		stmt.execute();
 	}
 	
+	public synchronized HashSet<User> searchUser(String search) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		
+		PreparedStatement stmt=con.prepareStatement("SELECT u.user_id, u.user_name, u.user_password, u.email, u.first_name, u.last_name, "
+				                                  + "u.city_name, c.country_name, u.bio, u.profile_pic, u.cover_photo "
+				                                  + "FROM users as u LEFT join countries as c on u.country_id=c.country_id "
+				                                  + "WHERE u.user_name LIKE ? OR u.first_name LIKE ? OR u.last_name LIKE ?");
+		stmt.setString(1, "%" + search + "%");
+		stmt.setString(2, "%" + search + "%");
+		stmt.setString(3, "%" + search + "%");
+		ResultSet rs=stmt.executeQuery();
+		HashSet<User> users=new HashSet<>();
+		while(rs.next()){
+			users.add(new User(rs.getLong(1), rs.getString(5), rs.getString(6), rs.getString(2), rs.getString(3), rs.getString(4),
+					rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10), rs.getString(11)));
+		}
+		return users;	                                 
+	}
 }

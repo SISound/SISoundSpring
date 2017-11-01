@@ -73,7 +73,7 @@
 			      var uploadbutton = $id("submit");
 			      xhr.upload.addEventListener("progress", function(e) {
 			        uploadbutton.disabled = true;
-			        var pc = parseInt((e.loaded / ((e.total / 100)));
+			        var pc = parseInt((e.loaded / (e.total / 100)));
 			        var offset = uploadbutton.offsetWidth - uploadbutton.offsetWidth*(pc/100);
 			        uploadbutton.style.boxShadow = "-"+offset+"px 0 0 rgb(51, 153, 137) inset";
 			      }, false);
@@ -99,15 +99,29 @@
 	<body>
 		<jsp:include page="headerLogged.jsp"></jsp:include>
 		
-<%-- 		<c:if test="${empty sessionScope.user }"> --%>
-<%-- 				<c:redirect url="index"></c:redirect> --%>
-<%-- 		</c:if> --%>
+		<c:if test="${empty sessionScope.user }">
+				<c:redirect url="index"></c:redirect>
+		</c:if>
 		
+<!-- 			<select name="genre"> -->
+<%--    							 <option  value="null"><c:out value="---------------"></c:out></option> --%>
+<%--       					<c:forEach items="${genres }" var="genre"> --%>
+<%--    							 <option  value="${genre.key}"><c:out value="${genre.key }"></c:out></option> --%>
+<%--       					</c:forEach> --%>
+<!--   			</select> -->
 <!-- 		<div id="uploadDiv"> -->
 <!-- 			<form id="uploadForm" action="saveSong" method="post" enctype="multipart/form-data"> -->
 <!-- 			    <input class="uploader" type="file" name="song" accept="audio/*"/></br> -->
 <!-- 			    <input class="uploader" type="submit" /></br> -->
+			    
+<!-- 			    <select name="genre"> -->
+<%--    							 <option  value="null"><c:out value="---------------"></c:out></option> --%>
+<%--       					<c:forEach items="${genres }" var="genre"> --%>
+<%--    							 <option  value="${genre.key}"><c:out value="${genre.key }"></c:out></option> --%>
+<%--       					</c:forEach> --%>
+<!--   			</select> -->
 <!-- 			</form> -->
+			
 <!-- 		</div> -->
 
 			<form class="upload-form" enctype="multipart/form-data" action="saveSong" id="upload" method="post">

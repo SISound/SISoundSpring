@@ -12,54 +12,71 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.google.gson.JsonArray;
 import com.sisound.model.Song;
+import com.sisound.model.User;
 import com.sisound.model.db.SongDao;
+import com.sisound.model.db.UserDao;
 
 @Controller
 public class SearchController {
 
-	private static HashSet<Song> songs=new HashSet<>();
-	
-	static{
-		songs.add(new Song(5, "Pesnichka", LocalDateTime.now(), 3, null, null, null, null, null));
-	}
 	
 	@Autowired
 	SongDao songDao;
+	@Autowired
+	UserDao userDao;
 	
-	@RequestMapping(value="searchSongs")
-	@ResponseBody
-	public void searchSongs(HttpServletRequest req, HttpServletResponse resp){
-		String search=req.getParameter("title").trim();
+	@RequestMapping(value="searchsong", method=RequestMethod.GET)
+	public String searchSongs(Model model,  @RequestParam(value = "value") String input){
+		
 		try {
-//			TreeSet<Song> allSongs=songDao.getAllSongs();
-//			if(allSongs.size()>this.songs.size()){
-//				this.songs.clear();
-//				this.songs.addAll(allSongs);
-//			}
-			
-			ArrayList<String> searching=new ArrayList<>();
-			for (Song song : songs) {
-				if(song.getTitle().toUpperCase().contains(search.toUpperCase())){
-					searching.add(song.getTitle());
-				}
+			HashSet<Song> songs= songDao.searchSongByName(input);
+			System.out.println(songs.size());
+			if(songs!=null){
+				model.addAttribute("searchedSongs", songs);
 			}
-			
-			JsonArray arr=new JsonArray();
-			
-			for(String s: searching){
-				arr.add(s);
-			}
-			
-			resp.getWriter().write(arr.toString());
-		} catch (IOException e) {
+		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return "songSearch";
 	}
+	
+	@RequestMapping(value="/searchuser", method=RequestMethod.GET)
+	public String searchUsers(Model model,  @RequestParam(value = "value") String input){
+		
+		//String search=(String) req.getParameter("search");
+		
+		try {
+			HashSet<User> users=userDao.searchUser(input);
+			if(users!=null){
+				model.addAttribute("searchedUsers", users);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "userSearch";
+	}
+	
+	@RequestMapping(value="search", method=RequestMethod.GET)
+	public String search(HttpServletRequest req){
+		
+		String input = req.getParameter("search");
+		String type = req.getParameter("searchType");
+		
+		
+		//return "redirect:/search=" + type + "?" + input;
+		return "redirect:/search" + type +"?value=" + input;
+	}	
 }
