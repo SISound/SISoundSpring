@@ -123,7 +123,9 @@ public class UserController {
 			//	session.setAttribute("followed", userDao.getFollowedIds(u));
 				//request.getSession().setAttribute("user1", u);
 				
-				HashSet<Song> songs = songDao.getTop10();
+				//TODO
+			//	HashSet<Song> songs = songDao.getTop10();
+				HashSet<Song> songs = songDao.getAllSongs();
 				
 				if(session.getAttribute("songs") == null){
 					session.setAttribute("songs", songs);
@@ -148,7 +150,8 @@ public class UserController {
 				return "login";
 			}
 		} catch (SQLException e) {
-			request.setAttribute("error", "database problem : " + e.getMessage());
+//			request.setAttribute("error", "database problem : " + e.getMessage());
+			System.out.println(e.getMessage());
 			return "index";
 		}
 	}

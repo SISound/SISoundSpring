@@ -74,13 +74,14 @@ public class SongDao {
 	
 	public synchronized TreeSet<Song> getSongsForUser(User u) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt = con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, g.genre_title, s.song_url "
-				                                  + "FROM songs as s JOIN music_genres as g "
-				                                  + "ON s.genre_id = g.genre_id"
-				                                  + "WHERE s.user_id = ?");
+		PreparedStatement stmt = con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, g.genre_title, s.song_url\r\n" + 
+					                                  		"FROM songs as s JOIN music_genres as g\r\n" + 
+					                                  		"ON s.genre_id = g.genre_id\r\n" + 
+					                                  		"WHERE s.user_id = ?");
+		
 		stmt.setLong(1, u.getUserID());
-		System.out.println("opala");
-		ResultSet rs = stmt.executeQuery();//TODO fix throws exception
+		ResultSet rs = stmt.executeQuery();
+
 		TreeSet<Song> songs = new TreeSet<>();
 
 		while(rs.next()){

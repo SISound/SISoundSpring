@@ -1,6 +1,7 @@
 package com.sisound.model;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -60,6 +61,10 @@ public class Song implements Comparable<Song>, Actionable, Serializable {
 
 	public LocalDateTime getUploadDate() {
 		return uploadDate;
+	}
+	
+	public LocalDate getUploadDateOnly() {
+		return uploadDate.toLocalDate();
 	}
 
 	public int getTimesListened() {
