@@ -63,6 +63,7 @@ public class PlaylistDao {
 		stmt.setLong(1, u.getUserID());
 		ResultSet rs=stmt.executeQuery();
 		TreeSet<Playlist> playlists=new TreeSet<>();
+
 		
 		while(rs.next()){
 			playlists.add(new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), u, actionsDao.getActions(false, rs.getLong(1)),

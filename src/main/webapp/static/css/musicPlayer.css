@@ -244,3 +244,12 @@ span.mejs-currenttime {
 .mejs-controls .mejs-horizontal-volume-slider .mejs-horizontal-volume-current {
     background: #fff;
 }
+
+
+.song-info {
+		margin-left: 0;
+		width: 100%;
+		text-align: center;
+		margin-top: 20px;
+		//line-height: 1.15;
+	}
