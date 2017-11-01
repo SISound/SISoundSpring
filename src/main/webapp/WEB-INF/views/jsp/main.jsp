@@ -209,7 +209,7 @@
 		</table>
 	</div>
 		
-		SORTED BY DATE
+<!-- 		SORTED BY DATE -->
     <div id="dateSorted" style="display: none;">
 		<table>
 			<c:forEach items="${sortedByDate}" var="sortedByDate">
