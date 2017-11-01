@@ -63,7 +63,6 @@ public class SongController {
 		String genre=(String) req.getParameter("genre");
 		System.out.println("THE GENRE IS" + genre);
 		
-		if(genre!=null){
 			try {
 				file.transferTo(f);
 				
@@ -82,18 +81,8 @@ public class SongController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		}
-		else{
-			try {
-				resp.getWriter().append("You have to select genre");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return "upload";
-		}
 		
-		return "main";
+		return "upload";
 	}
 	
 	//SEND SONG TO PLAYER
