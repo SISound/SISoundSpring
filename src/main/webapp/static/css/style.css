@@ -509,7 +509,7 @@ nav.archive-links a.link-excerpt {
 }
 
 .actionButtonClicked{
-	float: right;
+	float: left;
 	background-color: rgba(181,215,236,0.9);
 	border-radius: 3px;
 	border: solid thin;
