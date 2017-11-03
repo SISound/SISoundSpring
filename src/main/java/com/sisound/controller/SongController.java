@@ -130,24 +130,22 @@ public class SongController {
 	@ResponseBody
 	public void likeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
 		User u=(User) session.getAttribute("sessionUser");
-		long songId=Long.parseLong(req.getParameter("songId").toString());
-		if(u==null){
+		boolean isLogged=(boolean) session.getAttribute("logged");
+		System.out.println(isLogged);
+		long songId=Long.parseLong(req.getParameter("song").toString());
+		if(u.getUsername()==null){
 			resp.setStatus(401);
 		}
 		else{
 			try {
 				if(!songDao.isSongLiked(songId, u.getUserID())){
 					actionDao.likeSong(songId, u.getUserID());
-					actionDao.removeDislike(true, songId, u.getUserID());
-					resp.setStatus(200);
-				}
-				else{
-					resp.setStatus(405);
 				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			resp.setStatus(200);
 		}
 	}
 	
