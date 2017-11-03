@@ -61,6 +61,28 @@ public class SongDao {
 		stmt.setTimestamp(3, Timestamp.valueOf(time));
 		stmt.execute();
 	}
+	
+	public synchronized boolean isSongLiked(long songId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT count(*) FROM songs_likes WHERE song_id=? AND user_id=?");
+		stmt.setLong(1, songId);
+		stmt.setLong(2, userId);
+		ResultSet rs=stmt.executeQuery();
+		rs.next();
+		int count=rs.getInt(1);
+		return count>0;
+	}
+	
+	public synchronized boolean isSongDisliked(long songId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT count(*) FROM songs_dislikes WHERE song_id=? AND user_id=?");
+		stmt.setLong(1, songId);
+		stmt.setLong(2, userId);
+		ResultSet rs=stmt.executeQuery();
+		rs.next();
+		int count=rs.getInt(1);
+		return count>0;
+	}
 	//ok
 	public synchronized boolean existSong(Song s) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
@@ -150,7 +172,7 @@ public class SongDao {
 		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, m.genre_title, s.song_url, count(*) as likes "
 												  + "FROM songs_likes as sl "
 												  + "JOIN songs as s ON s.song_id=sl.song_id "
-												  + "JOIN users as u ON sl.user_id=u.user_id "
+												  + "JOIN users as u ON s.user_id=u.user_id "
 												  + "JOIN music_genres as m ON s.genre_id=m.genre_id "
 												  +	"GROUP BY sl.song_id "
 												  +	"ORDER BY likes desc");

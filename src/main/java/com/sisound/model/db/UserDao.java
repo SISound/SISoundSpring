@@ -24,6 +24,8 @@ public class UserDao {
 	private SongDao songDao;
 	@Autowired
 	private PlaylistDao playlistDao;
+	@Autowired
+	private ActionsDao actionDao;
 	
 	public synchronized void insertUser(User u) throws SQLException{
 		Connection con = DBManager.getInstance().getConnection();
@@ -71,6 +73,8 @@ public class UserDao {
 		u.setPlaylists(playlistDao.getPlaylistsForUser(u));
 		u.setFollowers(getFollowers(u));
 		//TODO add followed
+		u.setLikedSongs(actionDao.getSongsAction(u.getUserID(), true));
+//		u.setDislikedSongs(actionDao.getSongsAction(u.getUserID(), false));
 		
 		return u;
 	}

@@ -108,7 +108,10 @@ public class UserController {
 				System.out.println(u.getUsername());
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
-							
+
+//				session.setAttribute("likedSongs", u.getLikedSongs());
+//				session.setAttribute("dislikedSongs", u.getDislikedSongs());
+									
 				return "redirect:/index";
 			}
 			else{
@@ -128,13 +131,13 @@ public class UserController {
 		public String profilePage(@PathVariable String x, Model model, HttpSession session){
 			
 			User currentUser = (User)session.getAttribute("sessionUser");
-			
-			if(x == currentUser.getName()) {
-				model.addAttribute("modelUser", currentUser);
-			
-				session.setAttribute("avatar", currentUser.getProfilPicture());
-			}
-			else {			
+//			
+//			if(x == currentUser.getName()) {
+//				model.addAttribute("modelUser", currentUser);
+//			
+//				session.setAttribute("avatar", currentUser.getProfilPicture());
+//			}
+//			else {			
 				try {
 					User newUser = userDao.getUser(x);
 					model.addAttribute("modelUser", newUser);
@@ -143,16 +146,16 @@ public class UserController {
 					// TODO create error page
 					return "errorPage";
 				}
-			}
+//			}
 			return "profile2";
 		}
 		
 	//back to main page
-	@RequestMapping(value="homeButton", method=RequestMethod.GET)
-	public String backToMain(Model model, HttpSession session){		
-//		return "redirect:/index";
-		return "main3";
-	}
+//	@RequestMapping(value="homeButton", method=RequestMethod.GET)
+//	public String backToMain(Model model, HttpSession session){		
+////		return "redirect:/index";
+//		return "main3";
+//	}
 	
 	//get edit profile page
 	@RequestMapping(value="editProfile", method = RequestMethod.GET)

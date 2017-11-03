@@ -6,10 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.TreeSet;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import com.sisound.model.Actionable;
 import com.sisound.model.Actions;
+import com.sisound.model.Song;
 import com.sisound.model.User;
 
 
@@ -274,4 +277,25 @@ public class ActionsDao {
 		
 		stmt.execute();
 	}
+	
+	public synchronized  HashMap<Long, Boolean> getSongsAction(long id, boolean isLike) throws SQLException {
+		Connection con = DBManager.getInstance().getConnection();
+		
+		PreparedStatement stmt = con.prepareStatement("SELECT song_id, user_id FROM "
+													+ (isLike ? "songs_likes" : "songs_dislikes") +" WHERE user_id = ?");
+
+//		stmt.setString(1, isLike ? "songs_likes" : "songs_dislikes");
+		stmt.setLong(1, id);
+		ResultSet rs = stmt.executeQuery();
+		
+		HashMap<Long, Boolean> likedSongs = new HashMap<>();
+		
+		while(rs.next()){
+			likedSongs.put(rs.getLong("song_id"), true);
+		}
+		
+		return likedSongs;
+	}
+	
+
 }

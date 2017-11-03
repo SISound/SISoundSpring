@@ -19,6 +19,12 @@
 
 		<title>SISound</title>
 
+		<script>
+			function likeSong() {
+				var counter=document.getElementByClassName("likeButton");
+				counter.button.style.background='red';
+			}
+		</script>
 				
 	</head>
 <body>
@@ -54,16 +60,24 @@
 				<div class="lecteur">
 					<audio style="width: 100%;" class="fc-media fc-audio"><source src="getSong${modelSong.url}" type="audio/mp3"/></audio>
 				</div>
+				
 			</div>
 			
 			
-				<div class="banner">
+			<div class="banner">
 			
 			<div class="song-info">
 				<h1 class="heading-medium"> <c:out value="${ modelSong.title }"></c:out> </h1>
 				<h3 class="heading-small"> Genre: <c:out value="${ modelSong.genre }"></c:out>  </h3>
-				<h5 class="heading-small	"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5>
-<!-- 				<p class="body-small"> ADD WORKING BUTTONS </p> -->
+				<h5 class="heading-small"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5>
+				<table class="actionsTable">
+					<tr>
+						<td><button class="likeButton" onclick="likeSong()">&#10084Like</button></td>
+						<td class="counterTd" id="likeCount"><c:out value="${modelSong.likesCount }"></c:out></td>
+						<td><button class="dislikeButton">&#128078Dislike</button></td>
+						<td class="counterTd" id="dislikeCount"><c:out value="${modelSong.dislikesCount }"></c:out></td>
+					</tr>
+				</table>
 			</div>
 			</div>
 			

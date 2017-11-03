@@ -10,104 +10,110 @@
 				
 		<script type="text/javascript">
 
-		//FOLLOW/UNFOLLOW USER
-		function followUnfollow(value) {
-			var button = document.getElementByClassName("followButton");
-			var title = button.innerHTML;
-			var followed=value;
+// 		//FOLLOW/UNFOLLOW USER
+// 		function followUnfollow(value) {
+// 			var button = document.getElementByClassName("followButton");
+// 			var title = button.innerHTML;
+// 			var followed=value;
 			
-			if(title=="Follow"){
-				followUser(followed);
-			}
-			else{
-				unfollowUser(followed);
-			}
-		}
+// 			if(title=="Follow"){
+// 				followUser(followed);
+// 			}
+// 			else{
+// 				unfollowUser(followed);
+// 			}
+// 		}
 	
-		function followUser(followed){
-			var request = new XMLHttpRequest();
-			var fwd = followed;
-			request.onreadystatechange = function() {
-				//when response is received
-				if (this.readyState == 4 && this.status == 200) {
-					var button = document.getElementByClassName("followButton");
-					button.innerHTML = "Unfollow";
-					button.style.background='rgba(92,168,214,0.9)';
-				}
-				else
-					if (this.readyState == 4 && this.status == 401) {
-						alert("Sorry, you must log in to like this video!");
-					}
-			}
-			request.open("post", "followUser?followed="+followed, true);
-			request.send();
-		}
+// 		function followUser(followed){
+// 			var request = new XMLHttpRequest();
+// 			var fwd = followed;
+// 			request.onreadystatechange = function() {
+// 				//when response is received
+// 				if (this.readyState == 4 && this.status == 200) {
+// 					var button = document.getElementByClassName("followButton");
+// 					button.innerHTML = "Unfollow";
+// 					button.style.background='rgba(92,168,214,0.9)';
+// 				}
+// 				else
+// 					if (this.readyState == 4 && this.status == 401) {
+// 						alert("Sorry, you must log in to like this video!");
+// 					}
+// 			}
+// 			request.open("post", "followUser?followed="+followed, true);
+// 			request.send();
+// 		}
 		
-		function unfollowUser(followed) {
-			var request = new XMLHttpRequest();
-			var fwd=followed;
-			request.onreadystatechange = function() {
-				//when response is received
-				if (this.readyState == 4 && this.status == 200) {
-					var button = document.getElementClassNameme("followButton");
-					button.innerHTML = "Follow";
-					button.style.background='white';
-				}
-				else
-					if (this.readyState == 4 && this.status == 401) {
-						alert("Sorry, you must log in to like this video!");
-					}
-			}
-			request.open("post", "unfollowUser?followed="+followed, true);
-			request.send();
-		}
+// 		function unfollowUser(followed) {
+// 			var request = new XMLHttpRequest();
+// 			var fwd=followed;
+// 			request.onreadystatechange = function() {
+// 				//when response is received
+// 				if (this.readyState == 4 && this.status == 200) {
+// 					var button = document.getElementClassNameme("followButton");
+// 					button.innerHTML = "Follow";
+// 					button.style.background='white';
+// 				}
+// 				else
+// 					if (this.readyState == 4 && this.status == 401) {
+// 						alert("Sorry, you must log in to like this video!");
+// 					}
+// 			}
+// 			request.open("post", "unfollowUser?followed="+followed, true);
+// 			request.send();
+// 		}
 		
-// 		LIKE/DISLIKE SONGS
-		function likeSong(value){
-			var songId=value;
-			var request=new XMLHttpRequest();
-			request.onreadystatechange = function(){
-				if(this.readyState ==4 && this.status == 200){
-					var button = document.getElementById("likeButton");
-					button.innerHTML="&#10084Liked";
-					button.style.color='rgba(92,168,214,0.9)';
+// // 		LIKE/DISLIKE SONGS
+// 		function likeSong(value){
+// 			var songId=value;
+// 			var request=new XMLHttpRequest();
+// 			request.onreadystatechange = function(){
+// 				if(this.readyState ==4 && this.status == 200){
+// 					var button = document.getElementById("likeButton");
+// 					button.innerHTML="&#10084Liked";
+// 					button.style.color='rgba(92,168,214,0.9)';
 					
-					var button=document.getElementById("dislikeButton");
-					button.innerHTML="&#128078Dislike";
-					button.style.color='#6D6D6F';
-				}
-				else{
-					if(this.readyState == 4 && this.status == 401){
-						alert("Sorry, you must log in to like this song!")
-					}
-				}
-			}
-			request.open("post", "likeSong?songId=" + songId, true);
-			request.send();
-		}
+// 					var button=document.getElementById("dislikeButton");
+// 					button.innerHTML="&#128078Dislike";
+// 					button.style.color='#6D6D6F';
+// 				}
+// 				if(this.readyState ==4 && this.status == 405){
+// 					alert("Sorry, you can't like a song more than one times!");
+// 				}
+// 				else{
+// 					if(this.readyState == 4 && this.status == 401){
+// 						alert("Sorry, you must log in to like this song!")
+// 					}
+// 				}
+// 			}
+// 			request.open("post", "likeSong?songId=" + songId, true);
+// 			request.send();
+// 		}
 		
-		function dislikeSong(value){
-			var songId=value;
-			var request=new XMLHttpRequest();
-			request.onreadystatechange = function(){
-				if(this.readyState ==4 && this.status == 200){
-					var button = document.getElementById("dislikeButton");
-					button.innerHTML="&#128078Disliked";
-					button.style.color='rgba(92,168,214,0.9)';
+// 		function dislikeSong(value){
+// 			var songId=value;
+// 			var request=new XMLHttpRequest();
+// 			request.onreadystatechange = function(){
+// 				if(this.readyState ==4 && this.status == 200){
+// 					var button = document.getElementById("dislikeButton");
+// 					button.innerHTML="&#128078Disliked";
+// 					button.style.color='rgba(92,168,214,0.9)';
 					
-					var button=document.getElementById("likeButton");
-					button.innerHTML="&#10084Like";
-					button.style.color='#6D6D6F';
-				}
-				else{
-					if(this.readyState == 4 && this.status == 401){
-						alert("Sorry, you must log in to like this song!")
-					}
-				}
-			}
-			request.open("post", "dislikeSong?songId=" + songId, true);
-			request.send();
-		}
+// 					var button=document.getElementById("likeButton");
+// 					button.innerHTML="&#10084Like";
+// 					button.style.color='#6D6D6F';
+// 				}
+// 				if(this.readyState ==4 && this.status == 405){
+// 					alert("Sorry, you can't dislike a song more than one times!");
+// 				}
+// 				else{
+// 					if(this.readyState == 4 && this.status == 401){
+// 						alert("Sorry, you must log in to like this song!")
+// 					}
+// 				}
+// 			}
+// 			request.open("post", "dislikeSong?songId=" + songId, true);
+// 			request.send();
+// 		}
 		
 		//SORT BY DATE
 		function sortByDate() {
@@ -232,12 +238,12 @@
 					        <a class="link-excerpt" href="profile${sortedByDate.user.username }"><c:out value="${ sortedByDate.user.username }"></c:out></a>
 					        <c:if test="${ sortedByDate.user.username != sessionUser.username}">
 					        		<button class="followButton" id="followButton" value="${ sortedByDate.user.username }" onclick="followUnfollow(this.value)">Follow</button>
+					        		<button class="addToPlaylist" id="addingButton" value="${ sortedByDate.id }" onclick="addToPlaylist(this.value)">&#8801 Add to playlist</button>
+							        <button class="actionButton" id="shareButton" value="${ sortedByDate.id }" onclick="shareSong(this.value)">&#10609Share</button>
+							        <button class="actionButton" id="commentButton" value="${ sortedByDate.id }" onclick="commentSong(this.value)">&#128172Comment</button>
+							        <button class="actionButton" id="dislikeButton" value="${ sortedByDate.id }" onclick="dislikeSong(this.value)">&#128078Dislike</button>
+							        <button class="actionButton" id="likeButton" value="${ sortedByDate.id }" onclick="likeSong(this.value)">&#10084Like</button>				
 					        </c:if>
-					        <button class="addToPlaylist" id="addingButton" value="${ sortedByDate.id }" onclick="addToPlaylist(this.value)">&#8801 Add to playlist</button>
-					        <button class="actionButton" id="shareButton" value="${ sortedByDate.id }" onclick="shareSong(this.value)">&#10609Share</button>
-					        <button class="actionButton" id="commentButton" value="${ sortedByDate.id }" onclick="commentSong(this.value)">&#128172Comment</button>
-					        <button class="actionButton" id="dislikeButton" value="${ sortedByDate.id }" onclick="dislikeSong(this.value)">&#128078Dislike</button>
-					        <button class="actionButton" id="likeButton" value="${ sortedByDate.id }" onclick="likeSong(this.value)">&#10084Like</button>				
 					      </div>
 					      <audio controls class="myPlayer">
 							  <source src="getSong${sortedByDate.url}" type="audio/mpeg">
