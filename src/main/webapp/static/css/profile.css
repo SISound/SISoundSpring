@@ -591,7 +591,7 @@ div.tab button.active {
 	font-size: 16px;
 }
 
-.likeButton{
+#likeButton{
 	background-color: #ffffff;
 	border-radius: 3px;
 	border: solid thin;
@@ -600,7 +600,7 @@ div.tab button.active {
 	display: inline;
 }
 
-.likeButton:HOVER {
+#likeButton:HOVER {
 	color: rgba(92,168,214,0.9);
 	border-color: rgba(92,168,214,0.9);
 	cursor: pointer;

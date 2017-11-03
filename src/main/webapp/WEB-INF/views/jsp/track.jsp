@@ -19,12 +19,60 @@
 
 		<title>SISound</title>
 
-		<script>
-			function likeSong() {
-				var counter=document.getElementByClassName("likeButton");
-				counter.button.style.background='red';
+		<script type="text/javascript">
+	
+		
+		function handleLike(){
+			var button = document.getElementById("likeButton");
+			var value=button.value;
+			var title = button.innerHTML;
+			if(title =="Like"){
+				likeSong(value);
 			}
-		</script>
+			else{
+				unlikeSong(value);
+			}
+		}
+	
+		function likeSong(value) {
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById("likeButton");
+					button.innerHTML = "Unlike";
+					button.style.color='#ffffff';
+					button.style.background='rgba(92,168,214,0.9)';
+				}
+				else
+				if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you must log in to like this song!");
+				}
+					
+			}
+			request.open("post", "restLikeSong?songId=" + value, true);
+			request.send();
+		}
+		
+		function unlikeVideo() {
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById("likebutton");
+					button.innerHTML = "Like";
+					button.style.color='#cccccc';
+					button.style.background='#ffffff';
+				}
+				else
+					if (this.readyState == 4 && this.status == 401) {
+						alert("Sorry, you must log in to like this video!");
+					}
+			}
+			request.open("post", "unlike", true);
+			request.send();
+		}
+	</script>
 				
 	</head>
 <body>
@@ -72,9 +120,10 @@
 				<h5 class="heading-smallTP"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5>
 				<table class="actionsTable">
 					<tr>
-						<td><button class="likeButton" onclick="likeSong()">&#10084Like</button></td>
+						<td><button id="likeButton" value="${modelSong.id }" onclick="handleLike()">Like</button></td>
+<%-- 						<button style="background-color: green" id="likebutton" value="${modelSong.id }" onclick="handleLike()">Like</button> --%>
 						<td class="counterTd" id="likeCount"><c:out value="${modelSong.likesCount }"></c:out></td>
-						<td><button class="dislikeButton">&#128078Dislike</button></td>
+						<td><button id="dislikeButton" value="${modelSong.id }" >&#128078Dislike</button></td>
 						<td class="counterTd" id="dislikeCount"><c:out value="${modelSong.dislikesCount }"></c:out></td>
 					</tr>
 				</table>

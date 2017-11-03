@@ -246,7 +246,7 @@ public class User {
 		this.likedSongs.put(songId, false);
 	}
 	
-	public void adddislike(long songId) {
+	public void addDislike(long songId) {
 		this.dislikedSongs.put(songId, true);
 	}
 	

@@ -47,37 +47,39 @@
 					        		<button class="followButton" id="followButton" value="${ songsToShow.user.username }" onclick="followUnfollow(this.value)">Follow</button>
 					        </c:if>
 					        
-					        <form action="index">
-					        	<button class="addToPlaylist" id="addingButton" value="${ songsToShow.id }" >&#8801 Add to playlist</button>
-<%-- 					        <button class="actionButton" id="shareButton" value="${ songsToShow.id }" >&#10609Share</button> --%>
-							</form>
-					        
-							<form action="index">
-					        	<button class="actionButton" id="commentButton" value="${ songsToShow.id }" >&#128172Comment</button>
-					        </form>
-					        
-					        <c:if test="${ sessionUser.dislikedSongs[songsToShow.id] }">
-						        <form action="index">
-						       		<button class="actionButtonClicked" value="${ songsToShow.id }" >&#128078Disliked</button>
-						      	</form>
-							</c:if>
-							<c:if test="${ !sessionUser.dislikedSongs[songsToShow.id] }">
-								<form action="index">
-						      		<button class="actionButton" value="${ songsToShow.id }" >&#128078Dislike</button>
-								</form>
-							</c:if>	
-							
-					        <c:if test="${ sessionUser.likedSongs[songsToShow.id] }">
 					        	<form action="index">
-					       			<button class="actionButtonClicked" value="${ songsToShow.id }" >&#10084Liked</button>
-					        	</form>
-							</c:if>
-							<c:if test="${ !sessionUser.likedSongs[songsToShow.id] }">
-								<form action="index">
-						      		<button class="actionButton" value="${ songsToShow.id }" >&#10084Like</button>
+							       	<button class="addToPlaylist" id="addingButton" value="${ songsToShow.id }" >&#8801 Add to playlist</button>
+<%-- 					      		<button class="actionButton" id="shareButton" value="${ songsToShow.id }" >&#10609Share</button> --%>
 								</form>
-							</c:if>		
-					      	
+								
+								<div class="likeDiv">
+									<c:if test="${ sessionUser.likedSongs[songsToShow.id] }">
+					        			<form method = POST action="unlikesong?song=${ songsToShow.id }">
+					       					<button class="actionButtonClicked" value="${ songsToShow.id }" >&#10084Liked</button>
+					        			</form>
+									</c:if>
+									<c:if test="${ !sessionUser.likedSongs[songsToShow.id] }">
+										<form method = POST action="likesong?song=${ songsToShow.id }">
+						      				<button class="actionButton" value="${ songsToShow.id }" >&#10084Like</button>
+										</form>
+									</c:if>	
+									
+									<c:if test="${ sessionUser.dislikedSongs[songsToShow.id] }">
+					        			<form method = POST action="undislikesong?song=${ songsToShow.id }">
+					       					<button class="actionButtonClicked" value="${ songsToShow.id }" >&#128078Disliked</button>
+					      				</form>
+									</c:if>
+									<c:if test="${ !sessionUser.dislikedSongs[songsToShow.id] }">
+<%-- 									&?page=${requestScope['javax.servlet.forward.request_uri']} --%>
+										<form method = POST action="dislikesong?song=${ songsToShow.id }">
+					      					<button class="actionButton" value="${ songsToShow.id }" >&#128078Dislike</button>
+										</form>
+									</c:if>	
+									<form action="">
+ 					        			<button class="actionButton" id="commentButton" value="${ songsToShow.id }" >&#128172Comment</button>
+					        		</form>
+								</div>
+					        		
 					      </div>
 					      
 					      <audio controls class="myPlayer">
@@ -87,7 +89,7 @@
 					  </ol>
 					</nav>
 				</tr>
-				<br/><br><br><br><br><br><br>
+				<br><br><br><br><br><br><br>
 			</c:forEach>
 		</table>
 				

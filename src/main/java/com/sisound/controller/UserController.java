@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sisound.WebInitializer;
 import com.sisound.model.Song;
 import com.sisound.model.User;
+import com.sisound.model.db.ActionsDao;
 import com.sisound.model.db.CountryDao;
 import com.sisound.model.db.GenresDao;
 import com.sisound.model.db.SongDao;
@@ -47,6 +48,8 @@ public class UserController {
 	GenresDao genresDao;
 	@Autowired
 	CountryDao countryDao;
+	@Autowired
+	ActionsDao actionDao;
 	
 
 	//register
@@ -210,7 +213,7 @@ public class UserController {
 		@RequestMapping(value="logout", method=RequestMethod.POST)
 		public String logoutUser(HttpSession session){
 			session.invalidate();
-			return "index";
+			return "redirect:/index";
 
 		}
 		
@@ -264,7 +267,37 @@ public class UserController {
 		}
 		
 		@RequestMapping(value="/likesong", method=RequestMethod.POST)
-		public String likeSong(HttpSession session, @RequestParam(value = "song") long id, @RequestParam(value = "page") String page){
+		public String likeSong(HttpServletRequest request, HttpSession session, @RequestParam(value = "song") long id /*, @RequestParam(value = "page") String page*/){
+			
+			User u = (User)session.getAttribute("sessionUser");
+			String requestURL = request.getRequestURL().toString();
+//			String url = request.getHeader();
+			String[] str = requestURL.split("/");
+			
+			System.out.println(str[str.length - 1]);
+		
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					actionDao.likeSong(id, u.getUserID());
+					if(u.getDislikedSongs().containsKey(id)) {
+						actionDao.removeDislike(true, id, u.getUserID());
+						u.removeDislike(id);
+					}
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				
+				u.addLike(id);
+				
+				return "redirect:/index";
+			}
+		}
+		
+		@RequestMapping(value="/unlikesong", method=RequestMethod.POST)
+		public String unlikeSong(HttpSession session, @RequestParam(value = "song") long id){
 			
 			User u = (User)session.getAttribute("sessionUser");
 			
@@ -272,9 +305,62 @@ public class UserController {
 				return "logReg";
 			}
 			else{
+				try {
+					actionDao.removeLike(true, id, u.getUserID());
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				u.removeLike(id);
 				
-				return "index" + page;
+				return "redirect:/index";
+//				return "index";
 			}
 		}
+		
+		@RequestMapping(value="/undislikesong", method=RequestMethod.POST)
+		public String undislikeSong(HttpSession session, @RequestParam(value = "song") long id){
+			
+			User u = (User)session.getAttribute("sessionUser");
+			
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					actionDao.removeDislike(true, id, u.getUserID());
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				u.removeDislike(id);
+				
+				return "redirect:/index";
+			}
+		}
+		
+		@RequestMapping(value="/dislikesong", method=RequestMethod.POST)
+		public String dislikeSong(HttpSession session, @RequestParam(value = "song") long id){
+			
+			User u = (User)session.getAttribute("sessionUser");
+		
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					actionDao.dislikeSong(id, u.getUserID());
+					if(u.getLikedSongs().containsKey(id)) {
+						actionDao.removeLike(true, id, u.getUserID());
+						u.removeLike(id);
+					}
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				
+				u.addDislike(id);
+				
+				return "redirect:/index";
+			}
+		}
+
 
 }

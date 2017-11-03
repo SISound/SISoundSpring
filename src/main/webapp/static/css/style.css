@@ -481,7 +481,7 @@ nav.archive-links a.link-title {
   text-decoration: none;
   color: black;
   display: block;
-  width: 700px;
+  width: 800px;
 }
 
 nav.archive-links a.link-excerpt {
@@ -493,27 +493,28 @@ nav.archive-links a.link-excerpt {
   margin-top: 1%;
 }
 
+.likeDiv{
+	position: absolute;
+	margin-left: 90%;
+	margin-top: 0.5%;
+}
+
 .actionButton{
-	float: right;
 	background-color: #ffffff;
-	margin-top: 5%;
 	border-radius: 3px;
 	border: solid thin;
 	border-color: #6D6D6F;
 	color: #6D6D6F;
-	margin-left: 5px;
 	height: 20px;
 }
 
 .actionButtonClicked{
 	float: right;
 	background-color: rgba(181,215,236,0.9);
-	margin-top: 5%;
 	border-radius: 3px;
 	border: solid thin;
 	border-color: #6D6D6F;
 	color: #6D6D6F;
-	margin-left: 5px;
 	height: 20px;
 }
 
@@ -524,14 +525,15 @@ nav.archive-links a.link-excerpt {
 }
 
 .addToPlaylist{
+	position: absolute;
 	background-color: #ffffff;
 	border-radius: 3px;
 	border: solid thin;
 	border-color: #6D6D6F;
 	color: #6D6D6F;
-	margin-left: 34%;
 	height: 20px;
-	margin-top: 5%;
+	margin-left: 25%;
+	margin-top: 3%;
 }
 
 .addToPlaylist:HOVER{
@@ -576,9 +578,7 @@ nav.archive-links a.link-excerpt {
 	cursor: pointer;
 }
 
-.myPlayer{
-	position: inherit;
-}
+
 /*=============================================*/
 /*SORTING*/
 .sortingTable{
