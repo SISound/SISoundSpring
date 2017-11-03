@@ -264,4 +264,27 @@ public class SongDao {
 			con.setAutoCommit(true);
 		}
 	}
+
+	//all the songs of the people user follows
+	public HashSet<Song> getFollowingSongs(long userID) throws SQLException {
+		HashSet<Song> songs = new HashSet<>();
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, m.genre_title, s.song_url \r\n" + 
+													"FROM follows as f \r\n" + 
+													"JOIN songs as s ON f.followed_id = s.user_id\r\n" + 
+													"JOIN users as u ON s.user_id = u.user_id \r\n" + 
+													"JOIN music_genres as m ON s.genre_id = m.genre_id \r\n" + 
+													"WHERE f.follower_id = ?");
+		stmt.setLong(1, userID);
+		
+		ResultSet rs=stmt.executeQuery();
+		
+		while(rs.next()){
+			songs.add(new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4),  
+			userDao.getUser(rs.getString(5)), rs.getString(7), rs.getString(6), 
+			           actionsDao.getActions(true, rs.getLong(1)), commentDao.getComments(rs.getLong(1), true)));
+		}
+		
+		return songs;
+	}
 }

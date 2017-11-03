@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import com.google.common.hash.Hashing;
@@ -26,6 +27,7 @@ public class UserDao {
 	private PlaylistDao playlistDao;
 	@Autowired
 	private ActionsDao actionDao;
+
 	
 	public synchronized void insertUser(User u) throws SQLException{
 		Connection con = DBManager.getInstance().getConnection();
@@ -72,21 +74,23 @@ public class UserDao {
 		u.setSongs(songDao.getSongsForUser(u));
 		u.setPlaylists(playlistDao.getPlaylistsForUser(u));
 		u.setFollowers(getFollowers(u));
-		//TODO add followed
+		u.setFollowedIds(getFollowedIds(u));
 		u.setLikedSongs(actionDao.getSongsAction(u.getUserID(), true));
 //		u.setDislikedSongs(actionDao.getSongsAction(u.getUserID(), false));
 		
 		return u;
 	}
 	
-	public synchronized HashSet<Long> getFollowedIds(User u) throws SQLException{
+	public synchronized HashMap<Long, Boolean> getFollowedIds(User u) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("SELECT followed_id FROM follows WHERE follower_id=?");
+		
 		stmt.setLong(1, u.getUserID());
 		ResultSet rs=stmt.executeQuery();
-		HashSet<Long> followedIds=new HashSet<>();
+		HashMap<Long, Boolean> followedIds = new HashMap<>();
+		
 		while(rs.next()){
-			followedIds.add(rs.getLong(1));
+			followedIds.put(rs.getLong(1), true);
 		}
 		
 		return followedIds;

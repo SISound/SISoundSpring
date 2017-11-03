@@ -14,9 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sisound.model.Song;
-
+import com.sisound.model.User;
 import com.sisound.model.db.CountryDao;
 import com.sisound.model.db.GenresDao;
 import com.sisound.model.db.SongDao;
@@ -40,8 +42,6 @@ public class WelcomeController {
 //		Object o = session.getAttribute("logged");
 //		boolean logged =  (o != null && ((boolean) o ));
 		
-		//TODO
-		
 		HashSet<Song> songs;
 		try {
 			
@@ -63,34 +63,34 @@ public class WelcomeController {
 			}
 						
 			return "main3";
-//			songs = songDao.getAllSongs();
-//			
-//			if(session.getAttribute("songs") == null){
-//				session.setAttribute("songs", songs);
-//			}
-//			
-//			TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
-//			sortedByDate.addAll(songs);
-//			if(session.getAttribute("sortedByDate") == null){
-//				session.setAttribute("sortedByDate", sortedByDate);
-//			}
-//			
-//			LinkedHashSet<Song> sortedByLikes=songDao.getTop10();
-//			if(session.getAttribute("sortedByLikes")==null){
-//				session.setAttribute("sortedByLikes", sortedByLikes);
-//			}
-//			model.addAttribute("sortedByLikes", sortedByLikes);
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "errorPage";
 		}
 		
-//		if(session.isNew() || !logged){
-//			return "index";
-//		}
-//		else{
-//			return "main";
-//		}
+	}
+	
+	//all the songs of the people user follows
+	@RequestMapping(value="/recent", method=RequestMethod.GET)
+	public String searchUsers(Model model, HttpSession session){
+		
+		User u = (User)session.getAttribute("sessionUser");
+		
+		if(u == null){
+			return "redirect:/index";
+		}
+		
+		try {
+			HashSet<Song> songs = songDao.getFollowingSongs(u.getUserID());
+			TreeSet<Song> sortedByDate = new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
+			sortedByDate.addAll(songs);
+			model.addAttribute("songsToShow", sortedByDate);
+			
+		} catch (SQLException e) {
+			return "errorPage";
+		}
+		
+		return "following";
 	}
 }
