@@ -68,8 +68,8 @@
 			
 			<div class="song-info">
 				<h1 class="heading-medium"> <c:out value="${ modelSong.title }"></c:out> </h1>
-				<h3 class="heading-small"> Genre: <c:out value="${ modelSong.genre }"></c:out>  </h3>
-				<h5 class="heading-small"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5>
+				<h3 class="heading-smallTP"> Genre: <c:out value="${ modelSong.genre }"></c:out>  </h3>
+				<h5 class="heading-smallTP"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5>
 				<table class="actionsTable">
 					<tr>
 						<td><button class="likeButton" onclick="likeSong()">&#10084Like</button></td>
