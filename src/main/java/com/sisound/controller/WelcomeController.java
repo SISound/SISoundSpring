@@ -4,7 +4,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
@@ -14,10 +14,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.sisound.model.Song;
-import com.sisound.model.User;
+
 import com.sisound.model.db.CountryDao;
 import com.sisound.model.db.GenresDao;
 import com.sisound.model.db.SongDao;
@@ -43,8 +42,6 @@ public class WelcomeController {
 		
 		//TODO
 		
-		
-		
 		HashSet<Song> songs;
 		try {
 			
@@ -64,7 +61,7 @@ public class WelcomeController {
 				model.addAttribute("songsToShow", songs);
 				break;
 			}
-			
+						
 			return "main3";
 //			songs = songDao.getAllSongs();
 //			

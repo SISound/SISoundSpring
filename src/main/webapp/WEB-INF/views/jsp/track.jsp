@@ -108,10 +108,11 @@
 				<div class="lecteur">
 					<audio style="width: 100%;" class="fc-media fc-audio"><source src="getSong${modelSong.url}" type="audio/mp3"/></audio>
 				</div>
+				
 			</div>
 			
 			
-				<div class="banner">
+			<div class="banner">
 			
 			<div class="song-info">
 				<h1 class="heading-medium"> <c:out value="${ modelSong.title }"></c:out> </h1>

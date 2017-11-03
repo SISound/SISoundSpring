@@ -172,7 +172,7 @@ public class SongDao {
 		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, m.genre_title, s.song_url, count(*) as likes "
 												  + "FROM songs_likes as sl "
 												  + "JOIN songs as s ON s.song_id=sl.song_id "
-												  + "JOIN users as u ON sl.user_id=u.user_id "
+												  + "JOIN users as u ON s.user_id=u.user_id "
 												  + "JOIN music_genres as m ON s.genre_id=m.genre_id "
 												  +	"GROUP BY sl.song_id "
 												  +	"ORDER BY likes desc");

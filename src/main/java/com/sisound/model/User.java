@@ -1,6 +1,7 @@
 package com.sisound.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -23,7 +24,9 @@ public class User {
 	private TreeSet<Playlist> playlists;
 	private LinkedHashSet<User> followers;
 	private HashSet<Long> followedIds;
-	
+	private HashMap<Long, Boolean> likedSongs;
+	private HashMap<Long, Boolean> dislikedSongs;
+		
 	public User(){}
 	//constructor for registering user
 	public User(String username, String password, String email) {
@@ -34,6 +37,8 @@ public class User {
 		this.playlists=new TreeSet();
 		this.followers=new LinkedHashSet();
 		this.followedIds = new HashSet<>();
+		this.likedSongs = new HashMap<>();
+		this.dislikedSongs = new HashMap<>();
 	}
 	
 	public User(long userID, String firstName, String lastName, String username, String password, String email,
@@ -217,4 +222,19 @@ public class User {
 		return true;
 	}
 	
+	public void setDislikedSongs(HashMap<Long, Boolean> dislikedSongs) {
+		this.dislikedSongs = dislikedSongs;
+	}
+	
+	public void setLikedSongs(HashMap<Long, Boolean> likedSongs) {
+		this.likedSongs = likedSongs;
+	}
+	
+	public HashMap<Long, Boolean> getLikedSongs() {
+		return likedSongs;
+	}
+	
+	public HashMap<Long, Boolean> getDislikedSongs() {
+		return dislikedSongs;
+	}
 }
