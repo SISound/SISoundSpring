@@ -253,3 +253,7 @@ span.mejs-currenttime {
 		margin-top: 20px;
 		//line-height: 1.15;
 	}
+	
+.white-words {
+	color: white;
+}

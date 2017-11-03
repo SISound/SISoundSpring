@@ -166,6 +166,7 @@ public class SongDao {
 		return res;
 	}
 	
+	//TODO check
 	public synchronized LinkedHashSet<Song> getTop10() throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, m.genre_title, s.song_url, count(*) as likes "

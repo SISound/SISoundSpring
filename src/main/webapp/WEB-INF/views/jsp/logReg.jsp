@@ -12,8 +12,9 @@
 </head>
 <body>
 
-	<jsp:include page="headerNotLogged.jsp"></jsp:include>
-	
+	<jsp:include page="headerLogged.jsp"></jsp:include>
+	<div class="fullscreen-bg"></div>
+ 	
  	<div>	
 			<input type="radio" checked id="toggle--login" name="toggle" class="ghost" />
 		  <input type="radio" id="toggle--signup" name="toggle" class="ghost" />
@@ -29,17 +30,7 @@
 		    <label for="toggle--signup" class="text text--small text--centered">New? <b>Sign up</b></label>
 		  </form>
 		  
-		
-<%-- 		  <form class="form form--signup framed" action = "registerUser" method = POST> --%>
-		 		
-<!-- 		    <input type="text" placeholder="Username" class="input" name = "username"/> -->
-<!-- 		    <input type="password" placeholder="Password" class="input" name = "password"/> -->
-<!-- 		    <input type="email" placeholder="Email" class="input input--top" name = "email"/> -->
-<!-- 		    <input type="submit" value="Sign up" class="input input--submit" /> -->
-    		
-<!--     		<label for="toggle--login" class="text text--small text--centered">Not new? <b>Log in</b></label> -->
-<%-- 		  </form> --%>
-		  
+				  
 		  <form class="form form--signup framed" action = "registerUser" method = POST>
 		  	<f:form commandName="user" >
 				<f:input type="text" placeholder="Username" class="input input--top" path="username" required=""/><br>

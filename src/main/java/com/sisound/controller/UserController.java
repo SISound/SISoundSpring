@@ -63,37 +63,25 @@ public class UserController {
 				
 		try {
 			if(!userDao.usernameExists(u.getUsername()) && !userDao.emailExists(u.getEmail())){
-//				System.out.println(u.getUsername());
-//				System.out.println(u.getPassword());
-//				System.out.println(u.getEmail());
 				userDao.insertUser(u);
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
 				
-				synchronized (session) {
-					if(session.getAttribute("songs") == null){
-						HashSet<Song> songs = songDao.getTop10();
-						session.setAttribute("songs", songs);
-					}
-					if(session.getAttribute("genres") == null){
-						Map genres=genresDao.getAllGenres();
-						session.setAttribute("genres", genres);
-					}
-				}
-				
-				return "main";
+				return "index";
 			} 
 			else if(userDao.usernameExists(u.getUsername())){
+				//TODO
 				request.setAttribute("error", "username is taken");
 				return "logReg";
 			} 
 			else {
+				//TODO
 				request.setAttribute("error", "e-mail already in use");
 				return "logReg";
 			}
 		} catch (SQLException e) {
 			request.setAttribute("error", "database problem : " + e.getMessage());
-			return "index";
+			return "errorPage";
 		}		
 	}
 
@@ -120,41 +108,8 @@ public class UserController {
 				System.out.println(u.getUsername());
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
-				//request.getSession().setAttribute("user1", u);
-			
-				//TODO
-				HashSet<Song> songs = songDao.getAllSongs();
-				
-				if(session.getAttribute("songs") == null){
-					session.setAttribute("songs", songs);
-				}
-				
-				TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
-				sortedByDate.addAll(songs);
-				if(session.getAttribute("sortedByDate") == null){
-					session.setAttribute("sortedByDate", sortedByDate);
-				}
-				
-				LinkedHashSet<Song> sortedByLikes=songDao.getTop10();
-				if(session.getAttribute("sortedByLikes")==null){
-					session.setAttribute("sortedByLikes", sortedByLikes);
-				}
-		
-				Map<Long, Integer> followed=new HashMap<>();
-				HashSet<Long> followedIds=userDao.getFollowedIds(u);
-				HashSet<Long> allUsers=userDao.getAllUsersIds();
-				for (Long long1 : allUsers) {
-					if(followedIds.contains(long1)){
-						followed.put(long1, 1);
-					}
-					else{
-						followed.put(long1, 0);
-					}
-				}
-				
-				model.addAttribute("followedUsers", followed);
-				
-				return "main";
+							
+				return "redirect:/index";
 			}
 			else{
 				request.setAttribute("error", "User does not exist!");
@@ -163,7 +118,7 @@ public class UserController {
 		} catch (SQLException e) {
 //			request.setAttribute("error", "database problem : " + e.getMessage());
 			System.out.println(e.getMessage());
-			return "index";
+			return "errorPage";
 		}
 	}
 	
@@ -192,30 +147,12 @@ public class UserController {
 			return "profile2";
 		}
 		
-	//ON CLICKING THE HOME BUTTON THIS METHOD RETURNS THE USER TO HIS MAIN PAGE
-				@RequestMapping(value="homeButton", method=RequestMethod.GET)
-				public String backToMain(Model model, HttpSession session){
-					try {
-							HashSet<Song> songs;
-							songs = songDao.getTop10();
-							session.setAttribute("songs", songs);
-							
-							TreeSet<Song> sortedByDate=new TreeSet<>((o1, o2)->(o1.getUploadDate().compareTo(o2.getUploadDate()))*-1);
-							sortedByDate.addAll(songs);
-							session.setAttribute("sortedByDate", sortedByDate);
-							
-							
-							TreeSet<Song> sortedByLikes=new TreeSet<>((o1, o2)->Integer.compare(o1.getLikesCount(), o2.getLikesCount()));
-							sortedByLikes.addAll(songs);
-							session.setAttribute("sortedByLikes", sortedByLikes);
-							
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					
-					return "main";
-				}
+	//back to main page
+	@RequestMapping(value="homeButton", method=RequestMethod.GET)
+	public String backToMain(Model model, HttpSession session){		
+//		return "redirect:/index";
+		return "main3";
+	}
 	
 	//get edit profile page
 	@RequestMapping(value="editProfile", method = RequestMethod.GET)

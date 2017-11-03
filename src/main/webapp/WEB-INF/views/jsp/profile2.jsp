@@ -61,9 +61,15 @@
 			</div>
 			<div class="bio">
 				<h1 class="heading-medium"> <c:out value="${ modelUser.username }"></c:out> </h1>
-				<h3 class="heading-small"> <c:out value="${ modelUser.name }"></c:out>  </h3>
-				<h5 class="heading-small"> <c:out value="${ modelUser.adress }"></c:out> </h5>
-				<p class="body-small"> <c:out value="${ modelUser.bio }"></c:out> </p>
+				<c:if test="${ modelUser.name != null }">
+					<h3 class="heading-small"> <c:out value="${ modelUser.name }"></c:out>  </h3>									
+				</c:if>
+				<c:if test="${ not empty  modelUser.adress }">
+					<h5 class="heading-small"> <c:out value="${ modelUser.adress }"></c:out> </h5>										
+				</c:if>
+				<c:if test="${ not empty modelUser.bio }">
+					<p class="body-small"> <c:out value="${ modelUser.bio }"></c:out> </p>								
+				</c:if>
 			</div>
 		</div>
 	</div>
