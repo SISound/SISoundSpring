@@ -131,22 +131,16 @@ public class UserController {
 		public String profilePage(@PathVariable String x, Model model, HttpSession session){
 			
 			User currentUser = (User)session.getAttribute("sessionUser");
-//			
-//			if(x == currentUser.getName()) {
-//				model.addAttribute("modelUser", currentUser);
-//			
-//				session.setAttribute("avatar", currentUser.getProfilPicture());
-//			}
-//			else {			
-				try {
-					User newUser = userDao.getUser(x);
-					model.addAttribute("modelUser", newUser);
-					
-				} catch (SQLException e) {
-					// TODO create error page
-					return "errorPage";
-				}
-//			}
+		
+			try {
+				User newUser = userDao.getUser(x);
+				model.addAttribute("modelUser", newUser);
+				
+			} catch (SQLException e) {
+				// TODO create error page
+				return "errorPage";
+			}
+
 			return "profile2";
 		}
 		
@@ -189,9 +183,6 @@ public class UserController {
 				}
 				
 				if(coverpic != null && (FilenameUtils.getExtension(coverpic.getOriginalFilename()) != "")) {
-//					File cover = new File(WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename()));
-//					coverpic.transferTo(cover);
-//					u.setCoverPhoto(coverpic.getOriginalFilename());
 					String coverPicPath = WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename());
 					File profile = new File(coverPicPath);
 					coverpic.transferTo(profile);
@@ -269,6 +260,20 @@ public class UserController {
 					e.printStackTrace();
 				}
 				resp.setStatus(200);
+			}
+		}
+		
+		@RequestMapping(value="/likesong", method=RequestMethod.POST)
+		public String likeSong(HttpSession session, @RequestParam(value = "song") long id, @RequestParam(value = "page") String page){
+			
+			User u = (User)session.getAttribute("sessionUser");
+			
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				
+				return "index" + page;
 			}
 		}
 

@@ -237,4 +237,20 @@ public class User {
 	public HashMap<Long, Boolean> getDislikedSongs() {
 		return dislikedSongs;
 	}
+	
+	public void addLike(long songId) {
+		this.likedSongs.put(songId, true);
+	}
+	
+	public void removeLike(long songId) {
+		this.likedSongs.put(songId, false);
+	}
+	
+	public void adddislike(long songId) {
+		this.dislikedSongs.put(songId, true);
+	}
+	
+	public void removeDislike(long songId) {
+		this.dislikedSongs.put(songId, false);
+	}
 }
