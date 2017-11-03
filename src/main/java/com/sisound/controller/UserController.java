@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.sisound.WebInitializer;
 import com.sisound.model.Song;
 import com.sisound.model.User;
+import com.sisound.model.db.ActionsDao;
 import com.sisound.model.db.CountryDao;
 import com.sisound.model.db.GenresDao;
 import com.sisound.model.db.SongDao;
@@ -47,6 +48,8 @@ public class UserController {
 	GenresDao genresDao;
 	@Autowired
 	CountryDao countryDao;
+	@Autowired
+	ActionsDao actionDao;
 	
 
 	//register
@@ -131,22 +134,16 @@ public class UserController {
 		public String profilePage(@PathVariable String x, Model model, HttpSession session){
 			
 			User currentUser = (User)session.getAttribute("sessionUser");
-//			
-//			if(x == currentUser.getName()) {
-//				model.addAttribute("modelUser", currentUser);
-//			
-//				session.setAttribute("avatar", currentUser.getProfilPicture());
-//			}
-//			else {			
-				try {
-					User newUser = userDao.getUser(x);
-					model.addAttribute("modelUser", newUser);
-					
-				} catch (SQLException e) {
-					// TODO create error page
-					return "errorPage";
-				}
-//			}
+		
+			try {
+				User newUser = userDao.getUser(x);
+				model.addAttribute("modelUser", newUser);
+				
+			} catch (SQLException e) {
+				// TODO create error page
+				return "errorPage";
+			}
+
 			return "profile2";
 		}
 		
@@ -189,9 +186,6 @@ public class UserController {
 				}
 				
 				if(coverpic != null && (FilenameUtils.getExtension(coverpic.getOriginalFilename()) != "")) {
-//					File cover = new File(WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename()));
-//					coverpic.transferTo(cover);
-//					u.setCoverPhoto(coverpic.getOriginalFilename());
 					String coverPicPath = WebInitializer.LOCATION + "\\cover" + File.separator +  u.getUserID() + "." + FilenameUtils.getExtension(coverpic.getOriginalFilename());
 					File profile = new File(coverPicPath);
 					coverpic.transferTo(profile);
@@ -219,7 +213,7 @@ public class UserController {
 		@RequestMapping(value="logout", method=RequestMethod.POST)
 		public String logoutUser(HttpSession session){
 			session.invalidate();
-			return "index";
+			return "redirect:/index";
 
 		}
 		
@@ -271,5 +265,102 @@ public class UserController {
 				resp.setStatus(200);
 			}
 		}
+		
+		@RequestMapping(value="/likesong", method=RequestMethod.POST)
+		public String likeSong(HttpServletRequest request, HttpSession session, @RequestParam(value = "song") long id /*, @RequestParam(value = "page") String page*/){
+			
+			User u = (User)session.getAttribute("sessionUser");
+			String requestURL = request.getRequestURL().toString();
+//			String url = request.getHeader();
+			String[] str = requestURL.split("/");
+			
+			System.out.println(str[str.length - 1]);
+		
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					actionDao.likeSong(id, u.getUserID());
+					if(u.getDislikedSongs().containsKey(id)) {
+						actionDao.removeDislike(true, id, u.getUserID());
+						u.removeDislike(id);
+					}
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				
+				u.addLike(id);
+				
+				return "redirect:/index";
+			}
+		}
+		
+		@RequestMapping(value="/unlikesong", method=RequestMethod.POST)
+		public String unlikeSong(HttpSession session, @RequestParam(value = "song") long id){
+			
+			User u = (User)session.getAttribute("sessionUser");
+			
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					actionDao.removeLike(true, id, u.getUserID());
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				u.removeLike(id);
+				
+				return "redirect:/index";
+//				return "index";
+			}
+		}
+		
+		@RequestMapping(value="/undislikesong", method=RequestMethod.POST)
+		public String undislikeSong(HttpSession session, @RequestParam(value = "song") long id){
+			
+			User u = (User)session.getAttribute("sessionUser");
+			
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					actionDao.removeDislike(true, id, u.getUserID());
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				u.removeDislike(id);
+				
+				return "redirect:/index";
+			}
+		}
+		
+		@RequestMapping(value="/dislikesong", method=RequestMethod.POST)
+		public String dislikeSong(HttpSession session, @RequestParam(value = "song") long id){
+			
+			User u = (User)session.getAttribute("sessionUser");
+		
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					actionDao.dislikeSong(id, u.getUserID());
+					if(u.getLikedSongs().containsKey(id)) {
+						actionDao.removeLike(true, id, u.getUserID());
+						u.removeLike(id);
+					}
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				
+				u.addDislike(id);
+				
+				return "redirect:/index";
+			}
+		}
+
 
 }

@@ -54,26 +54,28 @@
 								
 								<div class="likeDiv">
 									<c:if test="${ sessionUser.likedSongs[songsToShow.id] }">
-					        			<form action="index">
+					        			<form method = POST action="unlikesong?song=${ songsToShow.id }">
 					       					<button class="actionButtonClicked" value="${ songsToShow.id }" >&#10084Liked</button>
 					        			</form>
 									</c:if>
 									<c:if test="${ !sessionUser.likedSongs[songsToShow.id] }">
-										<form action="index">
+										<form method = POST action="likesong?song=${ songsToShow.id }">
 						      				<button class="actionButton" value="${ songsToShow.id }" >&#10084Like</button>
 										</form>
 									</c:if>	
+									
 									<c:if test="${ sessionUser.dislikedSongs[songsToShow.id] }">
-					        			<form action="index">
+					        			<form method = POST action="undislikesong?song=${ songsToShow.id }">
 					       					<button class="actionButtonClicked" value="${ songsToShow.id }" >&#128078Disliked</button>
 					      				</form>
 									</c:if>
 									<c:if test="${ !sessionUser.dislikedSongs[songsToShow.id] }">
-										<form action="index">
+<%-- 									&?page=${requestScope['javax.servlet.forward.request_uri']} --%>
+										<form method = POST action="dislikesong?song=${ songsToShow.id }">
 					      					<button class="actionButton" value="${ songsToShow.id }" >&#128078Dislike</button>
 										</form>
 									</c:if>	
-									<form action="index">
+									<form action="">
  					        			<button class="actionButton" id="commentButton" value="${ songsToShow.id }" >&#128172Comment</button>
 					        		</form>
 								</div>
