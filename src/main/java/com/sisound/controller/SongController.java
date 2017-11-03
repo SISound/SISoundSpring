@@ -82,7 +82,7 @@ public class SongController {
 				e.printStackTrace();
 			}
 		
-		return "upload";
+		return "profile2";
 	}
 	
 	//SEND SONG TO PLAYER
