@@ -21,7 +21,7 @@
 
 		<script type="text/javascript">
 	
-		
+		//LIKE AND UNLIKE A SONG
 		function handleLike(){
 			var button = document.getElementById("likeButton");
 			var value=button.value;
@@ -41,8 +41,12 @@
 				if (this.readyState == 4 && this.status == 200) {
 					var button = document.getElementById("likeButton");
 					button.innerHTML = "Unlike";
-					button.style.color='#ffffff';
-					button.style.background='rgba(92,168,214,0.9)';
+					document.getElementById("likeCount").value++;
+					if(document.getElementById("dislikeCount").value>0){
+						document.getElementById("dislikeCount").value--;
+					}
+					var button = document.getElementById("dislikeButton");
+					button.innerHTML = "Dislike";
 				}
 				else
 				if (this.readyState == 4 && this.status == 401) {
@@ -54,22 +58,81 @@
 			request.send();
 		}
 		
-		function unlikeVideo() {
+		function unlikeSong(value) {
 			var request = new XMLHttpRequest();
 			request.onreadystatechange = function() {
 				//when response is received
 				if (this.readyState == 4 && this.status == 200) {
-					var button = document.getElementById("likebutton");
+					var button = document.getElementById("likeButton");
 					button.innerHTML = "Like";
-					button.style.color='#cccccc';
-					button.style.background='#ffffff';
+					if(document.getElementById("likeCount").value>0){
+						document.getElementById("likeCount").value--;
+					}
 				}
 				else
 					if (this.readyState == 4 && this.status == 401) {
-						alert("Sorry, you must log in to like this video!");
+						alert("Sorry, you must log in to unlike this song!");
 					}
 			}
-			request.open("post", "unlike", true);
+			request.open("post", "restUnlikeSong?songId=" + value, true);
+			request.send();
+		}
+		
+		//DISLIKE AND UNDISLIKE A SONG
+		function handleDislike() {
+			var button=document.getElementById("dislikeButton");
+			var value=button.value;
+			var title=button.innerHTML;
+			if(title=="Dislike"){
+				dislikeSong(value);
+			}
+			else{
+				undislikeSong(value);
+			}
+		}
+		
+		function dislikeSong(value) {
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById("dislikeButton");
+					button.innerHTML = "Undislike";
+					document.getElementById("dislikeCount").value++;
+					if(document.getElementById("likeCount").value>0){
+						document.getElementById("likeCount").value--;
+					}
+					var button=document.getElementById("likeButton");
+					button.innerHTML="Like";
+				}
+				else
+				if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you must log in to dislike this song!");
+				}
+					
+			}
+			request.open("post", "restDislikeSong?songId=" + value, true);
+			request.send();
+		}
+		
+		function undislikeSong(value){
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById("dislikeButton");
+					button.innerHTML = "Dislike";
+					if(document.getElementById("dislikeCount").value>0){
+						document.getElementById("dislikeCount").value--;
+					}
+				}
+				else
+				if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you must log in to undislike this song!");
+				}
+					
+			}
+			request.open("post", "restUndislikeSong?songId=" + value, true);
 			request.send();
 		}
 	</script>
@@ -120,11 +183,21 @@
 				<h5 class="heading-smallTP"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5>
 				<table class="actionsTable">
 					<tr>
-						<td><button id="likeButton" value="${modelSong.id }" onclick="handleLike()">Like</button></td>
+						<c:if test="${ sessionUser.likedSongs[modelSong.id] }">
+							<td><button id="likeButton" value="${modelSong.id }" onclick="handleLike()">Unlike</button></td>
+						</c:if>
+						<c:if test="${ !sessionUser.likedSongs[modelSong.id] }">
+							<td><button id="likeButton" value="${modelSong.id }" onclick="handleLike()">Like</button></td>
+						</c:if>
 <%-- 						<button style="background-color: green" id="likebutton" value="${modelSong.id }" onclick="handleLike()">Like</button> --%>
-						<td class="counterTd" id="likeCount"><c:out value="${modelSong.likesCount }"></c:out></td>
-						<td><button id="dislikeButton" value="${modelSong.id }" >&#128078Dislike</button></td>
-						<td class="counterTd" id="dislikeCount"><c:out value="${modelSong.dislikesCount }"></c:out></td>
+						<td class="counterTd"><input id="likeCount" type="number" min="0" onkeydown="return false" value="${modelSong.likesCount }"></input></td>
+						<c:if test="${sessionUser.dislikedSongs[modelSong.id]}">
+							<td><button id="dislikeButton" value="${modelSong.id }" onclick="handleDislike()">Undislike</button></td>
+						</c:if>
+						<c:if test="${!sessionUser.dislikedSongs[modelSong.id]}">
+							<td><button id="dislikeButton" value="${modelSong.id }" onclick="handleDislike()">Dislike</button></td>
+						</c:if>
+						<td class="counterTd"><input id="dislikeCount" type="number" min="0" onkeydown="return false" value="${modelSong.dislikesCount }"></input></td>
 					</tr>
 				</table>
 			</div>

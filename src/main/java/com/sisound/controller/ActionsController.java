@@ -51,8 +51,10 @@ public class ActionsController {
 		}
 		
 		@RequestMapping(value="restUnlikeSong", method=RequestMethod.POST)
+		@ResponseBody
 		public void unlikeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
 			User u=(User) session.getAttribute("sessionUser");
+			System.out.println(u.toString());
 			long songId=Long.parseLong(req.getParameter("songId").toString());
 			
 			if(session.isNew() || u==null){
@@ -62,6 +64,7 @@ public class ActionsController {
 				try {
 					if(songDao.isSongLiked(songId, u.getUserID())){
 						actionDao.removeLike(true, songId, u.getUserID());
+						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
@@ -76,18 +79,39 @@ public class ActionsController {
 		public void dislikeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
 			User u=(User) session.getAttribute("sessionUser");
 			long songId=Long.parseLong(req.getParameter("songId").toString());
-			if(u==null){
+			if(session.isNew() || u==null){
 				resp.setStatus(401);
 			}
 			else{
 				try {
 					if(!songDao.isSongDisliked(songId, u.getUserID())){
+						if(songDao.isSongLiked(songId, u.getUserID())){
+							actionDao.removeLike(true, songId, u.getUserID());
+						}
 						actionDao.dislikeSong(songId, u.getUserID());
-						actionDao.removeLike(true, songId, u.getUserID());
 						resp.setStatus(200);
 					}
-					else{
-						resp.setStatus(405);
+					
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		@RequestMapping(value="restUndislikeSong", method=RequestMethod.POST)
+		@ResponseBody
+		public void undislikeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
+			User u=(User) session.getAttribute("sessionUser");
+			long songId=Long.parseLong(req.getParameter("songId").toString());
+			if(session.isNew() || u==null){
+				resp.setStatus(401);
+			}
+			else{
+				try {
+					if(songDao.isSongDisliked(songId, u.getUserID())){
+						actionDao.removeDislike(true, songId, u.getUserID());
+						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

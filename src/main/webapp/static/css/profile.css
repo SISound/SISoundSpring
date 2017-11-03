@@ -606,7 +606,7 @@ div.tab button.active {
 	cursor: pointer;
 }
 
-.dislikeButton{
+#dislikeButton{
 	background-color: #ffffff;
 	border-radius: 3px;
 	border: solid thin;
@@ -615,8 +615,32 @@ div.tab button.active {
 	display: inline;
 }
 
-.dislikeButton:HOVER {
+#dislikeButton:HOVER {
 	color: rgba(92,168,214,0.9);
 	border-color: rgba(92,168,214,0.9);
 	cursor: pointer;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+input[type=number] {
+    border: none;
+    color: transparent;
+    text-shadow: 0 0 0 gray;
+    text-align: center;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+input[type=number]{
+	border: none;
+	width: 50px;
 }
