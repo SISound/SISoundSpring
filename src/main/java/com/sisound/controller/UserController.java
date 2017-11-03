@@ -217,54 +217,54 @@ public class UserController {
 
 		}
 		
-		//FOLLOW USER
-		@RequestMapping(value="followUser", method=RequestMethod.POST)
-		@ResponseBody
-		public void followUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
-			User fwr=(User)session.getAttribute("sessionUser");
-			if(fwr==null){
-				resp.setStatus(401);
-			}
-			else{
-				try {
-					
-					String followed=(String)request.getParameter("followed");
-					System.out.println(followed);
-					User fwd=userDao.getUser(followed);
-					userDao.followUser(fwr.getUserID(), fwd.getUserID());
-					fwr.getFollowedIds().add(fwd.getUserID());
-					
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				resp.setStatus(200);
-			}
-		}
-		
-		//UNFOLLOW USER
-		@RequestMapping(value="unfollowUser", method=RequestMethod.POST)
-		@ResponseBody
-		public void unfollowUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
-			User fwr=(User)session.getAttribute("sessionUser");
-			String followed=(String)request.getParameter("followed");
-			if(fwr==null){
-				resp.setStatus(401);
-			}
-			else{
-				try {
-					User fwd=userDao.getUser(followed);
-					if(!userDao.getFollowedIds(fwr).contains(fwd.getUserID())){
-						System.out.println("NE MOJE DA SE OTSLEDVA");
-					}
-					userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				resp.setStatus(200);
-			}
-		}
+//		//FOLLOW USER
+//		@RequestMapping(value="followUser", method=RequestMethod.POST)
+//		@ResponseBody
+//		public void followUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
+//			User fwr=(User)session.getAttribute("sessionUser");
+//			if(fwr==null){
+//				resp.setStatus(401);
+//			}
+//			else{
+//				try {
+//					
+//					String followed=(String)request.getParameter("followed");
+//					System.out.println(followed);
+//					User fwd=userDao.getUser(followed);
+//					userDao.followUser(fwr.getUserID(), fwd.getUserID());
+//					//fwr.getFollowedIds().add(fwd.getUserID());
+//					
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				resp.setStatus(200);
+//			}
+//		}
+//		
+//		//UNFOLLOW USER
+//		@RequestMapping(value="unfollowUser", method=RequestMethod.POST)
+//		@ResponseBody
+//		public void unfollowUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
+//			User fwr=(User)session.getAttribute("sessionUser");
+//			String followed=(String)request.getParameter("followed");
+//			if(fwr==null){
+//				resp.setStatus(401);
+//			}
+//			else{
+//				try {
+//					User fwd=userDao.getUser(followed);
+//					if(!userDao.getFollowedIds(fwr).contains(fwd.getUserID())){
+//						System.out.println("NE MOJE DA SE OTSLEDVA");
+//					}
+//					userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				resp.setStatus(200);
+//			}
+//		}
 		
 		@RequestMapping(value="/likesong", method=RequestMethod.POST)
 		public String likeSong(HttpServletRequest request, HttpSession session, @RequestParam(value = "song") long id /*, @RequestParam(value = "page") String page*/){
@@ -361,6 +361,49 @@ public class UserController {
 				return "redirect:/index";
 			}
 		}
+		
+		@RequestMapping(value="/follow", method=RequestMethod.POST)
+		public String followUser(HttpSession session, @RequestParam(value = "user") long id, @RequestParam(value = "name") String username){
+			
+			User u = (User)session.getAttribute("sessionUser");
+		
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					userDao.followUser(u.getUserID(), id);
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				
+				u.addFollowing(id);
+				
+				return "redirect:/profile" + username;
+			}
+		}
+		
+		@RequestMapping(value="/unfollow", method=RequestMethod.POST)
+		public String unfollowUser(HttpSession session, @RequestParam(value = "user") long id, @RequestParam(value = "name") String username){
+			
+			User u = (User)session.getAttribute("sessionUser");
+		
+			if(u == null){
+				return "logReg";
+			}
+			else{
+				try {
+					userDao.unfollowUser(u.getUserID(), id);
+				} catch (SQLException e) {
+					return "errorPage";
+				}
+				
+				u.removeFollowing(id);
+				
+				return "redirect:/profile" + username;
+			}
+		}
+
 
 
 }

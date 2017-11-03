@@ -25,6 +25,8 @@
 <!-- 				<td><a class="sortingLink" href="sortSongs/date">UploadDate </a>|</td> -->
 <!-- 			</tr> -->
 <!-- 		</table> -->
+
+		<c:out value="Results for searching users, containing ${ searched }:"></c:out>
 		
 		<table>
 			<c:forEach items="${searchedUsers}" var="user">
@@ -42,8 +44,8 @@
 								<div class="main-image"><img src="img/defaultProfile.png" alt="Camera" style="width:60px;height:60px;">
 						        </div>
 				 			</c:if>
-					        <a class="link-title" href="profile${user.username }"><c:out value="${ user.name }"></c:out></a>
-					        <a class="link-excerpt" href="profile${user.username }"><c:out value="${user.username }"></c:out></a>
+						        <a class="link-title" href="profile${user.username }"><c:out value="${ user.name }"></c:out></a>
+						        <a class="link-excerpt" href="profile${user.username }"><c:out value="${user.username }"></c:out></a>
 					        <c:if test="${ user.username != sessionUser.username}">
 					        		<button class="followButton" id="followButton" value="${ song.user.username }" onclick="followUnfollow(this.value)">Follow</button>
 					        </c:if>		

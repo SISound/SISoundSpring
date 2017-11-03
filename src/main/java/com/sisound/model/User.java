@@ -23,7 +23,7 @@ public class User {
 	private TreeSet<Song> songs;
 	private TreeSet<Playlist> playlists;
 	private LinkedHashSet<User> followers;
-	private HashSet<Long> followedIds;
+	private HashMap<Long, Boolean> followedIds;
 	private HashMap<Long, Boolean> likedSongs;
 	private HashMap<Long, Boolean> dislikedSongs;
 		
@@ -36,7 +36,7 @@ public class User {
 		this.songs=new TreeSet();
 		this.playlists=new TreeSet();
 		this.followers=new LinkedHashSet();
-		this.followedIds = new HashSet<>();
+		this.followedIds = new HashMap<>();
 		this.likedSongs = new HashMap<>();
 		this.dislikedSongs = new HashMap<>();
 	}
@@ -56,6 +56,14 @@ public class User {
 
 	public void addFollower(User u){
 		this.followers.add(u);
+	}
+	
+	public void addFollowing(long id) {
+		this.followedIds.put(id, true);
+	}
+	
+	public void removeFollowing(long id) {
+		this.followedIds.put(id, false);
 	}
 	
 	public void uploadSong(Song song){
@@ -195,13 +203,10 @@ public class User {
 		this.lastName = lastName;
 	}
 	
-	public HashSet<Long> getFollowedIds() {
+	public HashMap<Long, Boolean> getFollowedIds() {
 		return followedIds;
 	}
 	
-	public boolean isFollowing(Long userId){
-		return this.followedIds.contains(userId);
-	}
 	
 	@Override
 	public boolean equals(Object obj) {
@@ -252,5 +257,9 @@ public class User {
 	
 	public void removeDislike(long songId) {
 		this.dislikedSongs.put(songId, false);
+	}
+	
+	public void setFollowedIds(HashMap<Long, Boolean> followedIds) {
+		this.followedIds = followedIds;
 	}
 }

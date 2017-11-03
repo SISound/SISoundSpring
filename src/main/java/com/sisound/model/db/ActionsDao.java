@@ -91,10 +91,10 @@ public class ActionsDao {
 //	}
 	
 	//OK
-	public synchronized HashMap<Actions, HashSet<User>> getActions(boolean isSong, long id) throws SQLException {
+	public synchronized HashMap<Actions, HashSet<String>> getActions(boolean isSong, long id) throws SQLException {
 		
 		//creating the result map
-		HashMap<Actions, HashSet<User>> actions;
+		HashMap<Actions, HashSet<String>> actions;
 		actions = new HashMap<>();
 		for (Actions act : Actions.values()) {
 			actions.put(act, new HashSet());
@@ -111,7 +111,7 @@ public class ActionsDao {
 			
 		    rs = stmt.executeQuery();
 			while (rs.next()) {
-				actions.get(Actions.LIKE).add(userDao.getUser(rs.getString(1)));
+				actions.get(Actions.LIKE).add(rs.getString(1));
 			}
 			
 			//getting song dislikes
@@ -120,7 +120,7 @@ public class ActionsDao {
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				actions.get(Actions.DISLIKE).add(userDao.getUser(rs.getString(1)));
+				actions.get(Actions.DISLIKE).add(rs.getString(1));
 			}
 			
 			//getting song shares
@@ -129,7 +129,7 @@ public class ActionsDao {
 			rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				actions.get(Actions.SHARE).add(userDao.getUser(rs.getString(1))); 
+				actions.get(Actions.SHARE).add(rs.getString(1)); 
 			}
 		}
 		else{
@@ -139,7 +139,7 @@ public class ActionsDao {
 			
 			rs = stmt.executeQuery();
 			while (rs.next()) {
-				actions.get(Actions.LIKE).add(userDao.getUser(rs.getString(1)));
+				actions.get(Actions.LIKE).add(rs.getString(1));
 			}
 			
 			//getting playlist dislikes
@@ -148,7 +148,7 @@ public class ActionsDao {
             rs = stmt.executeQuery();
 			
 			while (rs.next()) {
-				actions.get(Actions.DISLIKE).add(userDao.getUser(rs.getString(1)));
+				actions.get(Actions.DISLIKE).add(rs.getString(1));
 			}
 			
 			//getting playlist shares
@@ -157,15 +157,15 @@ public class ActionsDao {
 		    rs = stmt.executeQuery();
 		
 		    while (rs.next()) {
-			    actions.get(Actions.SHARE).add(userDao.getUser(rs.getString(1))); 
+			    actions.get(Actions.SHARE).add(rs.getString(1)); 
 		    }
 		}
 		
 		return actions;
 	}
 	
-	public synchronized HashMap<Actions, HashSet<User>> getCommentsLikes(long commentID) throws SQLException{
-		HashMap<Actions, HashSet<User>> commentLikes=new HashMap<>();
+	public synchronized HashMap<Actions, HashSet<String>> getCommentsLikes(long commentID) throws SQLException{
+		HashMap<Actions, HashSet<String>> commentLikes=new HashMap<>();
 		commentLikes.put(Actions.LIKE, new HashSet<>());
 		
 		Connection con=DBManager.getInstance().getConnection();
@@ -176,7 +176,7 @@ public class ActionsDao {
 		ResultSet rs=stmt.executeQuery();
 		
 		while(rs.next()){
-			commentLikes.get(Actions.LIKE).add(userDao.getUser(rs.getString(1)));
+			commentLikes.get(Actions.LIKE).add(rs.getString(1));
 		}
 		
 		return commentLikes;

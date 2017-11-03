@@ -42,7 +42,8 @@ public class SearchController {
 			HashSet<Song> songs= songDao.searchSongByName(input);
 			System.out.println(songs.size());
 			if(songs!=null){
-				model.addAttribute("searchedSongs", songs);
+				model.addAttribute("songsToShow", songs);
+				model.addAttribute("searched", input);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -60,6 +61,7 @@ public class SearchController {
 			HashSet<User> users=userDao.searchUser(input);
 			if(users!=null){
 				model.addAttribute("searchedUsers", users);
+				model.addAttribute("searched", input);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
