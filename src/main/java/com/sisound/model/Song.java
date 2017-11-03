@@ -18,7 +18,7 @@ public class Song implements Comparable<Song>, Actionable, Serializable {
 	private User user;
 	private String url;
 	private String genre;
-	private HashMap<Actions, HashSet<User>> actions;
+	private HashMap<Actions, HashSet<String>> actions;
 	private TreeSet<Comment> comments;
 	
 	//constructor for adding song
@@ -38,7 +38,7 @@ public class Song implements Comparable<Song>, Actionable, Serializable {
 
 	//constructor for retrieving from db
 	public Song(long songId, String title, LocalDateTime uploadDate, int timesListened, User user, String url,
-			String genre, HashMap<Actions, HashSet<User>> actions, TreeSet<Comment> comments) {
+			String genre, HashMap<Actions, HashSet<String>> actions, TreeSet<Comment> comments) {
 		this(title, user, genre, url, uploadDate);
 		this.id = songId;
 		this.timesListened = timesListened;
@@ -83,7 +83,7 @@ public class Song implements Comparable<Song>, Actionable, Serializable {
 		return genre;
 	}
 
-	public HashMap<Actions, HashSet<User>> getActions() {
+	public HashMap<Actions, HashSet<String>> getActions() {
 		return actions;
 	}
 
@@ -116,8 +116,8 @@ public class Song implements Comparable<Song>, Actionable, Serializable {
 		return this.actions.get(Actions.DISLIKE).size();
 	}
 	
-	public void addAction(Actions action, User user) {
-		this.actions.get(action).add(user);
+	public void addAction(Actions action, String username) {
+		this.actions.get(action).add(username);
 	}
 	
 	@Override

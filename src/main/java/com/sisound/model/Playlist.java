@@ -12,7 +12,7 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 	private String title;
 	private LocalDateTime creationDate;
 	private User user;
-	private HashMap<Actions, HashSet<User>> actions;
+	private HashMap<Actions, HashSet<String>> actions;
 	private TreeSet<Comment> comments;
 	private boolean isPrivate;
 	private TreeMap<LocalDateTime, Song> songs;
@@ -33,7 +33,7 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 
 
 	public Playlist(long playlistID, String title, LocalDateTime creationDate, User user, HashMap<Actions, 
-			HashSet<User>> actions, TreeSet<Comment> comments, boolean isPrivate, TreeMap<LocalDateTime, Song> songs) {
+			HashSet<String>> actions, TreeSet<Comment> comments, boolean isPrivate, TreeMap<LocalDateTime, Song> songs) {
 		this(title, creationDate, user, isPrivate);
 		this.playlistID = playlistID;
 		this.actions = actions;
@@ -62,7 +62,7 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 	}
 
 
-	public HashMap<Actions, HashSet<User>> getActions() {
+	public HashMap<Actions, HashSet<String>> getActions() {
 		return actions;
 	}
 
@@ -102,8 +102,8 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 		this.songs.put(time, song);
 	}
 	
-	public void addAction(Actions action, User user) {
-		this.actions.get(action).add(user);
+	public void addAction(Actions action, String username) {
+		this.actions.get(action).add(username);
 	}
 	
 	@Override
