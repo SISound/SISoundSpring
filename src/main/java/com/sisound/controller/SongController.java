@@ -136,16 +136,18 @@ public class SongController {
 		}
 		else{
 			try {
-				if(songDao.getSongById(songId).getUser().equals(u)){
-					return;
+				if(!songDao.isSongLiked(songId, u.getUserID())){
+					actionDao.likeSong(songId, u.getUserID());
+					actionDao.removeDislike(true, songId, u.getUserID());
+					resp.setStatus(200);
 				}
-				actionDao.likeSong(songId, u.getUserID());
-				actionDao.removeDislike(true, songId, u.getUserID());
+				else{
+					resp.setStatus(405);
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			resp.setStatus(200);
 		}
 	}
 	
@@ -154,22 +156,24 @@ public class SongController {
 	@ResponseBody
 	public void dislikeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
 		User u=(User) session.getAttribute("sessionUser");
+		long songId=Long.parseLong(req.getParameter("songId").toString());
 		if(u==null){
 			resp.setStatus(401);
 		}
 		else{
-			long songId=Long.parseLong(req.getParameter("songId").toString());
 			try {
-				if(songDao.getSongById(songId).getUser().equals(u)){
-					return;
+				if(!songDao.isSongDisliked(songId, u.getUserID())){
+					actionDao.dislikeSong(songId, u.getUserID());
+					actionDao.removeLike(true, songId, u.getUserID());
+					resp.setStatus(200);
 				}
-				actionDao.dislikeSong(songId, u.getUserID());
-				actionDao.removeLike(true, songId, u.getUserID());
+				else{
+					resp.setStatus(405);
+				}
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			resp.setStatus(200);
 		}
 	}
 	

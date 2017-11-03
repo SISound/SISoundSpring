@@ -653,3 +653,7 @@ footer#controls {
 	box-shadow: -170px 0 0 #cccccc inset;
 }
 /*=============================================*/
+/*UPLOAD PAGE*/
+.genreSelector{
+	width: 30px;
+}

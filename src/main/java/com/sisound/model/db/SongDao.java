@@ -61,6 +61,28 @@ public class SongDao {
 		stmt.setTimestamp(3, Timestamp.valueOf(time));
 		stmt.execute();
 	}
+	
+	public synchronized boolean isSongLiked(long songId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT count(*) FROM songs_likes WHERE song_id=? AND user_id=?");
+		stmt.setLong(1, songId);
+		stmt.setLong(2, userId);
+		ResultSet rs=stmt.executeQuery();
+		rs.next();
+		int count=rs.getInt(1);
+		return count>0;
+	}
+	
+	public synchronized boolean isSongDisliked(long songId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT count(*) FROM songs_dislikes WHERE song_id=? AND user_id=?");
+		stmt.setLong(1, songId);
+		stmt.setLong(2, userId);
+		ResultSet rs=stmt.executeQuery();
+		rs.next();
+		int count=rs.getInt(1);
+		return count>0;
+	}
 	//ok
 	public synchronized boolean existSong(Song s) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();

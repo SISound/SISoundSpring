@@ -19,6 +19,12 @@
 
 		<title>SISound</title>
 
+		<script>
+			function likeSong() {
+				var counter=document.getElementByClassName("likeButton");
+				counter.button.style.background='red';
+			}
+		</script>
 				
 	</head>
 <body>
@@ -63,7 +69,14 @@
 				<h1 class="heading-medium"> <c:out value="${ modelSong.title }"></c:out> </h1>
 				<h3 class="heading-small"> Genre: <c:out value="${ modelSong.genre }"></c:out>  </h3>
 				<h5 class="heading-small"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5>
-				<p class="body-small"> ADD WORKING BUTTONS </p>
+				<table class="actionsTable">
+					<tr>
+						<td><button class="likeButton" onclick="likeSong()">&#10084Like</button></td>
+						<td class="counterTd" id="likeCount"><c:out value="${modelSong.likesCount }"></c:out></td>
+						<td><button class="dislikeButton">&#128078Dislike</button></td>
+						<td class="counterTd" id="dislikeCount"><c:out value="${modelSong.dislikesCount }"></c:out></td>
+					</tr>
+				</table>
 			</div>
 			</div>
 			

@@ -112,7 +112,10 @@ public class Song implements Comparable<Song>, Actionable, Serializable {
 		return this.actions.get(Actions.LIKE).size();
 	}
 
-
+	public int getDislikesCount(){
+		return this.actions.get(Actions.DISLIKE).size();
+	}
+	
 	public void addAction(Actions action, User user) {
 		this.actions.get(action).add(user);
 	}
