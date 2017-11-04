@@ -16,15 +16,21 @@
 	 			<img class = "logoHeader"src="<c:url value="img/logo.png"/>">
 			</a>
 			
-			<form action="search" method="get" class="searchForm">			
-				<select name="searchType" class = "searchDropdown">
-					<option value="song" selected="selected">Song</option>
-					<option value="user">User</option>
-				</select>
+		<table class="searchTable">
+			<tr>
+				<td>
+					<form action="search" method="get" class="searchForm">			
+						<select name="searchType" class = "searchDropdown">
+							<option value="song" selected="selected">Song</option>
+							<option value="user">User</option>
+						</select>
 				
-				<input id="input" type="text" placeholder="Search" name="search" class="header-input desktop-only" />
-				<input class="searchButton" type="submit" value="search" style="display: none">
-			</form>
+						<input id="input" type="text" placeholder="Search" name="search" class="header-input desktop-only" />
+						<input class="searchButton" type="submit" value="search" style="display: none">
+					</form>
+				</td>
+			</tr>
+		</table>
 			
 			<c:if test="${ sessionUser == null }">
 				<a class = "headerText" href="loginPage">Login</a>
@@ -33,7 +39,7 @@
 			
 			<c:if test="${ sessionUser != null }">
 				<a class = "headerTextLogged" href="index">TOP chart</a>
-				<a class = "headerTextLogged" href="recent">Stream</a>
+				<a class = "streamHeader" href="recent">Stream</a>
 				
 				<div class="dropdown">
 					<table>
