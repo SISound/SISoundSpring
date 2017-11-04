@@ -21,7 +21,8 @@
 			</tr>
 		</table>
 		
-		<jsp:include page="main2.jsp"></jsp:include>
+<%-- 		<jsp:include page="main2.jsp"></jsp:include> --%>
+		<jsp:include page="song_table.jsp"></jsp:include>
 		
 	</body>
 </html>

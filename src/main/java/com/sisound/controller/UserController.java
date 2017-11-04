@@ -148,11 +148,19 @@ public class UserController {
 		}
 		
 	//back to main page
-//	@RequestMapping(value="homeButton", method=RequestMethod.GET)
-//	public String backToMain(Model model, HttpSession session){		
-////		return "redirect:/index";
-//		return "main3";
-//	}
+	@RequestMapping(value="homeButton", method=RequestMethod.GET)
+	public String backToMain(Model model, HttpSession session){		
+//		return "redirect:/index";
+		LinkedHashSet<Song> sortedByLikes;
+		try {
+			sortedByLikes = songDao.getTop10();
+			model.addAttribute("songsToShow", sortedByLikes);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return "main";
+	}
 	
 	//get edit profile page
 	@RequestMapping(value="editProfile", method = RequestMethod.GET)
@@ -284,7 +292,7 @@ public class UserController {
 					actionDao.likeSong(id, u.getUserID());
 					if(u.getDislikedSongs().containsKey(id)) {
 						actionDao.removeDislike(true, id, u.getUserID());
-//						u.removeDislike(id);
+						u.removeDislike(id);
 					}
 				} catch (SQLException e) {
 					return "errorPage";
