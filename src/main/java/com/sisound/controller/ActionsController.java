@@ -149,7 +149,7 @@ public class ActionsController {
 				try {
 					HashMap<Long, Boolean> followed=userDao.getFollowedIds(u);
 					if(followed.size()>0){
-						if(!followed.containsKey(followedId)){
+						if(followed.containsKey(followedId) && !followed.get(followedId)){
 							userDao.followUser(u.getUserID(), followedId);
 							resp.setStatus(200);
 						}
@@ -177,7 +177,7 @@ public class ActionsController {
 				try {
 					HashMap<Long, Boolean> followed=userDao.getFollowedIds(u);
 					if(followed.size()>0){
-						if(followed.containsKey(followedId)){
+						if(followed.containsKey(followedId) && followed.get(followedId)){
 							userDao.unfollowUser(u.getUserID(), followedId);
 							resp.setStatus(200);
 						}

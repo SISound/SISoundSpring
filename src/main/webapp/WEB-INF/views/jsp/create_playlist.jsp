@@ -11,15 +11,35 @@
 				
 	</head>
 	<body>
-		  <div class="wrapper">
-	  		  <form class="form-signin" action = "createPlaylist" method = POST>       
+			<div class="playlistsDiv">
+				<table>
+				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
+				 		<tr>
+				  			<td>
+				  				<a href="playlist${playlist.playlistID }"><c:out value="${playlist.title }"></c:out></a>
+				  			</td>
+				  			<td>
+				  				<button class="addToPlaylist">Add to playlist</button>
+				  			</td>
+				  		</tr>
+				  	</c:forEach>
+				  	<tr>
+				  		<td>
+				  			<button class="createPlaylist">Create new playlist</button>
+				  		</td>
+				  	</tr>
+			  	</table>
+			</div>
+		  
+		 	<div class="wrapper">
+		  	  <form class="form-signin" action = "createPlaylist" method = POST>       
 			      <h2 class="form-signin-heading">Creating new playlist</h2>
 			      <input type="text" class="form-control" name="title" placeholder="Playlist title" required="" autofocus="" />
 			      <label class="checkbox">
-			        <input type="checkbox" name="private"> Private 
-			      </label>
-			      <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>   
-		     </form>
-		  </div>
+		          	<input type="checkbox" name="private"> Private 
+				  </label>
+				  <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>   
+			  </form>
+			</div>
 	</body>
 </html>

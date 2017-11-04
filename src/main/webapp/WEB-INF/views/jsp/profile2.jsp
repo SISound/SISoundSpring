@@ -160,5 +160,7 @@
 
 	
 		<script src="<c:url value="js/profile.js" />"  type ="text/javascript"></script>
+		
+		<a href="playlist">Playlist</a>
 </body>
 </html>
