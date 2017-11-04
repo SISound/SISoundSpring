@@ -159,7 +159,7 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "create_playlist";
+		return "playlist";
 	}
 	
 	//get edit profile page

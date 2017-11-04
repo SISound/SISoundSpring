@@ -1,185 +1,335 @@
-/* ============================================================================================== 
-This copyright notice must be kept untouched in the stylesheet at all times.
-The original version of this stylesheet and the associated (x)html 
-is available at http://www.script-tutorials.com/html5-audio-player-with-playlist/
-Copyright (c) Script Tutorials. All rights reserved.
-This stylesheet and the associated (x)html may be modified in any way to fit your requirements.
-================================================================================================= */
-* {
-    margin: 0;
-    padding: 0;
-}
-body {
-    background-color: #aaa;
-}
-header {
-    background-color:rgba(33, 33, 33, 0.9);
-    color:#fff;
-    display:block;
-    font: 14px/1.3 Arial,sans-serif;
-    margin-bottom: 10px;
-    position:relative;
-}
-header h2{
-    font-size: 22px;
-    margin: 0px auto;
-    padding: 10px 0;
-    width: 80%;
-    text-align: center;
-}
-header a, a:visited {
-    text-decoration:none;
-    color:#fcfcfc;
-}
+/*------------------------*\
+        Audio Player
+\*------------------------*/
+#ap-0, #ap-1, #ap-2, #ap-3, #ap-mix {
+  box-sizing: content-box;
+  display: block;
+  position: relative;
+   border: 1px solid #fff;
+  background-color: #fff;
+  margin: 0;
+  padding: 0;}
 
-/* HTML5 Audio player with playlist styles */
-.example {
-    margin: 50px auto 0;
-    width: 400px;
-}
-.player {
-    background: transparent url("../images/spr.png") no-repeat scroll center top;
-    height: 162px;
-    position: relative;
-    width: 326px;
-    z-index: 2;
-}
-.title, .artist {
-    font-family: verdana;
-    left: 167px;
-    position: absolute;
+#ap-0, #ap-1, #ap-2, #ap-3 {border-radius: 20px 20px 10px 10px;}
+#ap-mix {border-radius: 0 0 10px 10px;}
 
-    -moz-user-select: none;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-}
-.title {
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: bold;
-    top: 23px;
-}
-.artist {
-    color: #EEEEEE;
-    font-size: 12px;
-    top: 40px;
-}
-.pl {
-    background: transparent url("../images/spr.png") no-repeat scroll -274px -175px;
-    cursor: pointer;
-    height: 34px;
-    left: 270px;
-    position: absolute;
-    top: 20px;
-    width: 32px;
-}
-.pl:hover {
-    top: 21px;
-}
-.cover {
-    background: transparent url(../data/cover1.jpg) no-repeat scroll center top;
-    border-radius: 5px 5px 5px 5px;
-    height: 94px;
-    left: 20px;
-    position: absolute;
-    top: 20px;
-    width: 94px;
-}
-.controls {
-    cursor: pointer;
-    height: 23px;
-    left: 167px;
-    position: absolute;
-    top: 65px;
-    width: 138px;
-}
-.controls .play, .controls .pause, .controls .rew, .controls .fwd {
-    background: transparent url("../images/spr.png") no-repeat scroll 0 0;
-    float: left;
-    height: 100%;
-    width: 33%;
-}
-.controls .play {
-    background-position: -8px -171px;
-}
-.controls .pause {
-    background-position: -8px -198px;
-    display: none;
-}
-.controls .rew {
-    background-position: -54px -171px;
-}
-.controls .fwd {
-    background-position: -100px -171px;
-}
-.controls .play:hover {
-    background-position: -8px -170px;
-}
-.controls .pause:hover {
-    background-position: -8px -197px;
-}
-.controls .rew:hover {
-    background-position: -54px -170px;
-}
-.controls .fwd:hover {
-    background-position: -100px -170px;
-}
-.hidden {
-    display: none;
-}
-.controls .visible {
-    display: block;
-}
-.volume {
-    height: 11px;
-    left: 186px;
-    position: absolute;
-    top: 96px;
-    width: 112px;
-}
-.tracker {
-    height: 15px;
-    left: 20px;
-    position: absolute;
-    top: 126px;
-    width: 285px;
-}
-.ui-slider-range {
-    background: transparent url("../images/spr.png") no-repeat scroll 5px -222px;
-    height: 100%;
-    position: absolute;
-    top: 0;
-}
-.ui-slider-handle {
-    cursor: pointer;
-    height: 10px;
-    margin-left: -5px;
-    position: absolute;
-    top: 2px;
-    width: 10px;
-    z-index: 2;
-}
-.volume .ui-slider-handle {
-    background: url("../images/spr.png") no-repeat scroll -201px -188px rgba(0, 0, 0, 0);
-    height: 13px;
-    width: 13px;
-}
-.playlist {
-    background-color: #333333;
-    border-radius: 5px 5px 5px 5px;
-    list-style-type: none;
-    margin: -10px 0 0 2px;
-    padding-bottom: 10px;
-    padding-top: 15px;
-    position: relative;
-    width: 326px;
-    z-index: 1;
-}
-.playlist li {
-    color: #EEEEEE;
-    cursor: pointer;
-    margin: 0 0 5px 15px;
-}
-.playlist li.active {
-    font-weight: bold;
-}
+#ap-0 div, #ap-1 div, #ap-2 div, #ap-3 div, #ap-mix div {-webkit-box-sizing: content-box; -moz-box-sizing: content-box; box-sizing: content-box;}
+
+#ap-0 .ap-text,
+#ap-1 .ap-text,
+#ap-2 .ap-text,
+#ap-3 .ap-text,
+#ap-mix .ap-text {
+  display: block;
+  position: absolute;
+  overflow: hidden;
+  width: 100%;
+  top:0;
+  height: 60px;
+  text-align: center;
+  z-index: 1;}
+
+#ap-0 .ap-text-clear, #ap-1 .ap-text-clear, #ap-2 .ap-text-clear, #ap-3 .ap-text-clear, #ap-mix .ap-text-clear {}
+
+#ap-0 .ap-title,
+#ap-1 .ap-title,
+#ap-2 .ap-title,
+#ap-3 .ap-title,
+#ap-mix .ap-title {
+  display: block;
+  color: #333;
+  padding: 8px 24px 2px;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  font-weight: bold;}
+
+#ap-0 .ap-title-clear, #ap-1 .ap-title-clear, #ap-2 .ap-title-clear, #ap-3 .ap-title-clear, #ap-mix .ap-title-clear {}
+
+#ap-0 .ap-info,
+#ap-1 .ap-info,
+#ap-2 .ap-info,
+#ap-3 .ap-info,
+#ap-mix .ap-info {
+  display: block;
+  color: #555;
+  padding: 2px 24px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  font-style: italic;
+  font-weight: 500;}
+
+#ap-0 .ap-info-clear, #ap-1 .ap-info-clear, #ap-2 .ap-info-clear, #ap-3 .ap-info-clear, #ap-mix .ap-info-clear {}
+
+#ap-0 .ap-bar,
+#ap-1 .ap-bar,
+#ap-2 .ap-bar,
+#ap-3 .ap-bar,
+#ap-mix .ap-bar {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 125px;
+  background-color: #fbfaf6;
+  background: radial-gradient(circle at 50% 50%, white 40%, #A5C100, #849a00);}
+
+#ap-0 .ap-bar,
+#ap-1 .ap-bar,
+#ap-2 .ap-bar,
+#ap-3 .ap-bar {border-radius:20px 20px 0 0;}
+
+#ap-0 .ap-bar-buttons-clear, #ap-1 .ap-bar-buttons-clear, #ap-2 .ap-bar-buttons-clear, #ap-3 .ap-bar-buttons-clear, #ap-mix .ap-bar-buttons-clear {}
+
+#ap-0 .ap-bar-clear,
+#ap-1 .ap-bar-clear,
+#ap-2 .ap-bar-clear,
+#ap-3 .ap-bar-clear,
+#ap-mix .ap-bar-clear {clear: both;}
+
+#ap-0 .ap-bar-title,
+#ap-1 .ap-bar-title,
+#ap-2 .ap-bar-title,
+#ap-3 .ap-bar-title,
+#ap-mix .ap-bar-title {}
+
+#ap-0 .ap-playpause,
+#ap-1 .ap-playpause,
+#ap-2 .ap-playpause,
+#ap-3 .ap-playpause,
+#ap-mix .ap-playpause {
+  position: absolute;
+  left: 50%;
+  margin-left: -24px;
+  bottom: 42px;
+  z-index:2;}
+
+#ap-0 .ap-play,
+#ap-1 .ap-play,
+#ap-2 .ap-play,
+#ap-3 .ap-play,
+#ap-mix .ap-play {position: relative;}
+
+#ap-0 .ap-pause,
+#ap-1 .ap-pause,
+#ap-2 .ap-pause,
+#ap-3 .ap-pause,
+#ap-mix .ap-pause {position: relative;}
+
+#ap-0 .ap-prev,
+#ap-1 .ap-prev,
+#ap-2 .ap-prev,
+#ap-3 .ap-prev,
+#ap-mix .ap-prev {
+  position: absolute;
+  left: 50%;
+  margin-left: -72px;
+  bottom: 42px;
+  z-index:2;}
+
+#ap-0 .ap-next,
+#ap-1 .ap-next,
+#ap-2 .ap-next,
+#ap-3 .ap-next,
+#ap-mix .ap-next {
+  position: absolute;
+  left: 50%;
+  margin-left: 24px;
+  bottom: 42px;
+  z-index:2;}
+
+#ap-0 .ap-progress,
+#ap-1 .ap-progress,
+#ap-2 .ap-progress,
+#ap-3 .ap-progress,
+#ap-mix .ap-progress {
+  position: absolute;
+  left: 0;	
+  bottom: 0;
+  background-color: #dad6b4;
+  width: 100%;}
+
+#ap-0 .ap-progress-loaded,
+#ap-1 .ap-progress-loaded,
+#ap-2 .ap-progress-loaded,
+#ap-3 .ap-progress-loaded,
+#ap-mix .ap-progress-loaded {background-color: #bab49a;}
+
+#ap-0 .ap-progress-played,
+#ap-1 .ap-progress-played,
+#ap-2 .ap-progress-played,
+#ap-3 .ap-progress-played,
+#ap-mix .ap-progress-played {
+  background-color: #fcc500;
+  background-image: -ms-linear-gradient(top, #fede00 0%, #fcc500 100%);
+  background-image: -moz-linear-gradient(top, #fede00 0%, #fcc500 100%);
+  background-image: -o-linear-gradient(top, #fede00 0%, #fcc500 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fede00), color-stop(1, #fcc500));
+  background-image: -webkit-linear-gradient(top, #fede00 0%, #fcc500 100%); 
+  background-image: linear-gradient(to bottom, #fede00 0%, #fcc500 100%);}
+
+#ap-0 .ap-time,
+#ap-1 .ap-time,
+#ap-2 .ap-time,
+#ap-3 .ap-time,
+#ap-mix .ap-time {
+  display: block;
+  position: absolute;
+  width: 100%;
+  bottom: 15px;
+  color: #434548;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 24px;
+  letter-spacing:1.5px;
+  text-align: center;}
+
+#ap-0 .ap-loop,
+#ap-1 .ap-loop,
+#ap-2 .ap-loop,
+#ap-3 .ap-loop,
+#ap-mix .ap-loop {
+	position: absolute;
+	bottom: 30px;
+	left: 50%;
+	margin-left:-130px;
+	z-index:2;}
+
+#ap-0 .ap-volume,
+#ap-1 .ap-volume,
+#ap-2 .ap-volume,
+#ap-3 .ap-volume,
+#ap-mix .ap-volume {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  margin-left: 110px;
+  z-index:2;}
+
+#ap-0 .ap-volume-bar,
+#ap-1 .ap-volume-bar,
+#ap-2 .ap-volume-bar,
+#ap-3 .ap-volume-bar,
+#ap-mix .ap-volume-bar {
+  background-color: #d5cea6;
+  background-image: -moz-linear-gradient(-45deg, #d5cea6 0%, #c9c190 100%);
+  background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0%,#d5cea6), color-stop(100%,#c9c190));
+  background-image: -webkit-linear-gradient(-45deg, #d5cea6 0%,#c9c190 100%);
+  background-image: -o-linear-gradient(-45deg, #d5cea6 0%,#c9c190 100%);
+  background-image: -ms-linear-gradient(-45deg, #d5cea6 0%,#c9c190 100%);
+  background-image: linear-gradient(135deg, #d5cea6 0%,#c9c190 100%);
+  border-radius: 2px;
+  z-index:2}
+
+#ap-0 .ap-volume-bar-adjust,
+#ap-1 .ap-volume-bar-adjust,
+#ap-2 .ap-volume-bar-adjust,
+#ap-3 .ap-volume-bar-adjust,
+#ap-mix .ap-volume-bar-adjust {background-color: #bab49a;}
+
+#ap-0 .ap-volume-bar-adjust-active,
+#ap-1 .ap-volume-bar-adjust-active,
+#ap-2 .ap-volume-bar-adjust-active,
+#ap-3 .ap-volume-bar-adjust-active,
+#ap-mix .ap-volume-bar-adjust-active {background-color: #666;}
+
+#ap-0 .ap-tracklist,
+#ap-1 .ap-tracklist,
+#ap-2 .ap-tracklist,
+#ap-3 .ap-tracklist,
+#ap-mix .ap-tracklist {display: block; position: relative; margin-top: 0;}
+
+#ap-0 .ap-tracklist-container,
+#ap-1 .ap-tracklist-container,
+#ap-2 .ap-tracklist-container,
+#ap-3 .ap-tracklist-container,
+#ap-mix .ap-tracklist-container {
+  display: block;
+  position: relative;
+  border-radius:0 0 10px 10px;
+  padding: 0;
+  background-color: #fbfaf6;
+  background-image: -ms-linear-gradient(top, #fbfaf6 0%, #d7d5cd 100%);
+  background-image: -moz-linear-gradient(top, #fbfaf6 0%, #d7d5cd 100%);
+  background-image: -o-linear-gradient(top, #fbfaf6 0%, #d7d5cd 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fbfaf6), color-stop(1, #d7d5cd));
+  background-image: -webkit-linear-gradient(top, #fbfaf6 0%, #d7d5cd 100%);
+  background-image: linear-gradient(to bottom, #fbfaf6 0%, #d7d5cd 100%);}
+
+#ap-0 .ap-tracks-wrapper,
+#ap-1 .ap-tracks-wrapper,
+#ap-2 .ap-tracks-wrapper,
+#ap-3 .ap-tracks-wrapper,
+#ap-mix .ap-tracks-wrapper {position: relative;}
+
+#ap-0 .ap-tracks,
+#ap-1 .ap-tracks,
+#ap-2 .ap-tracks,
+#ap-3 .ap-tracks,
+#ap-mix .ap-tracks {position: relative; list-style-type: none; margin: 0; padding: 0;}
+
+#ap-0 .ap-track-item,
+#ap-1 .ap-track-item,
+#ap-2 .ap-track-item,
+#ap-3 .ap-track-item,
+#ap-mix .ap-track-item {
+  position: relative;
+  cursor: pointer;
+  color: #888;
+  font-family: 'Oswald', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 30px;
+ border-bottom: solid 1px #888;
+  margin: 0;
+  padding-left: 10px;
+  text-align: left;}
+
+#ap-0 .ap-track-item:last-child,
+#ap-1 .ap-track-item:last-child,
+#ap-2 .ap-track-item:last-child,
+#ap-3 .ap-track-item:last-child,
+#ap-mix .ap-track-item:last-child {border-bottom:none; border-radius:0 0 10px 10px;}
+
+#ap-0 .ap-track-item-active,
+#ap-1 .ap-track-item-active,
+#ap-2 .ap-track-item-active,
+#ap-3 .ap-track-item-active,
+#ap-mix .ap-track-item-active {cursor:pointer; background-color:#555; color:#fff; font-weight:500;}
+
+#ap-0 .ap-track-item-hoverover,
+#ap-1 .ap-track-item-hoverover,
+#ap-2 .ap-track-item-hoverover,
+#ap-3 .ap-track-item-hoverover,
+#ap-mix .ap-track-item-hoverover {background-color:#999; color:#fff;}
+
+#ap-0 .ap-track-item a,
+#ap-1 .ap-track-item a,
+#ap-2 .ap-track-item a,
+#ap-3 .ap-track-item a,
+#ap-mix .ap-track-item a {color: #888; font-size: 22px; text-decoration: none; margin-right:15px;}
+
+#ap-0 .ap-track-item-active a,
+#ap-1 .ap-track-item-active a,
+#ap-2 .ap-track-item-active a,
+#ap-3 .ap-track-item-active a,
+#ap-mix .ap-track-item-active a {color: #fff; text-decoration: none;}
+
+#ap-0 .ap-track-item-active a:hover,
+#ap-1 .ap-track-item-active a:hover,
+#ap-2 .ap-track-item-active a:hover,
+#ap-3 .ap-track-item-active a:hover,
+#ap-mix .ap-track-item-active a:hover {color: #D5CEBA;}
+
+#ap-mix .ap-track-item-number {padding-right:10px; font-family: "Lucida Sans Typewriter", Monaco, "Courier New", monospace; font-weight:900;}
+
+#ap-0 .ap-track-item-duration,
+#ap-1 .ap-track-item-duration,
+#ap-2 .ap-track-item-duration,
+#ap-3 .ap-track-item-duration {position: absolute; top: 0; right: 0;}
+
+#ap-mix .ap-track-item-duration {position: absolute; top: 0; right: 10px; font-family: "Lucida Sans Typewriter", Monaco, "Courier New", monospace; font-weight:900;}
+
+#ap-0 .ap-tracklist-clear,
+#ap-1 .ap-tracklist-clear,
+#ap-2 .ap-tracklist-clear,
+#ap-3 .ap-tracklist-clear,
+#ap-mix .ap-tracklist-clear {clear: both;}
