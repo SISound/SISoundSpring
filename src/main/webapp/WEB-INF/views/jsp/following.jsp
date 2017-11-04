@@ -17,5 +17,6 @@
 		<span class="searching"><c:out value="Your follower's recent uploads"></c:out></span>
 	
 		<jsp:include page="song_table.jsp"></jsp:include>
+		
 	</body>
 </html>	

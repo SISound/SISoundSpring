@@ -181,10 +181,9 @@
 					        	</form>
 					        </c:if>
 					        
-					        	<form action="index">
-							       	<button class="addToPlaylist" >&#8801 Add to playlist</button>
+							       	<button class="addToPlaylist" id="${ songsToShow.id }" value="${songsToShow.id }" onclick="openPlaylists( this.id )">&#8801 Add to playlist</button>
 <%-- 					      		<button class="actionButton" id="shareButton" value="${ songsToShow.id }" >&#10609Share</button> --%>
-								</form>
+								
 								
 								<div class="likeDiv">
 								
