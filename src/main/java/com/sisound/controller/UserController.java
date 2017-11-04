@@ -290,7 +290,7 @@ public class UserController {
 					return "errorPage";
 				}
 				
-//				u.addLike(id);
+				u.addLike(id);
 				
 				return "redirect:/index";
 			}
@@ -310,7 +310,7 @@ public class UserController {
 				} catch (SQLException e) {
 					return "errorPage";
 				}
-//				u.removeLike(id);
+				u.removeLike(id);
 				
 				return "redirect:/index";
 //				return "index";
@@ -331,7 +331,7 @@ public class UserController {
 				} catch (SQLException e) {
 					return "errorPage";
 				}
-//				u.removeDislike(id);
+				u.removeDislike(id);
 				
 				return "redirect:/index";
 			}
@@ -350,13 +350,13 @@ public class UserController {
 					actionDao.dislikeSong(id, u.getUserID());
 					if(u.getLikedSongs().containsKey(id)) {
 						actionDao.removeLike(true, id, u.getUserID());
-//						u.removeLike(id);
+						u.removeLike(id);
 					}
 				} catch (SQLException e) {
 					return "errorPage";
 				}
 				
-//				u.addDislike(id);
+				u.addDislike(id);
 				
 				return "redirect:/index";
 			}

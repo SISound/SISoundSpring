@@ -21,6 +21,57 @@
 
 		<title>SISound</title>
 		
+		<script type="text/javascript">
+			
+			function handleFollow() {
+				var button=document.getElementById("followButton");
+				var value=button.value;
+				var title=button.innerHTML;
+				
+				if(title=="Follow"){
+					followUser(value);
+				}
+				else{
+					unfollowUser(value);
+				}
+			}
+			
+			function followUser(value) {
+				var request = new XMLHttpRequest();
+				request.onreadystatechange = function() {
+					//when response is received
+					if (this.readyState == 4 && this.status == 200) {
+						var button = document.getElementById("followButton");
+						button.innerHTML = "Unfollow";
+					}
+					else
+					if (this.readyState == 4 && this.status == 401) {
+						alert("Sorry, you must log in to follow this user!");
+					}
+						
+				}
+				request.open("post", "restFollowUser?userId=" + value, true);
+				request.send();
+			}
+			
+			function unfollowUser(value) {
+				var request = new XMLHttpRequest();
+				request.onreadystatechange = function() {
+					//when response is received
+					if (this.readyState == 4 && this.status == 200) {
+						var button = document.getElementById("followButton");
+						button.innerHTML = "Follow";
+					}
+					else
+					if (this.readyState == 4 && this.status == 401) {
+						alert("Sorry, you must log in to unfollow this user!");
+					}
+						
+				}
+				request.open("post", "restUnfollowUser?userId=" + value, true);
+				request.send();
+			}
+		</script>
 				
 	</head>
 <body>
@@ -52,8 +103,15 @@
 						<img class="avatar" alt="profilePic" src="getPic${ modelUser.username }">
 					</c:if>
 				</div>
-				<c:if test="${ modelUser.username != sessionUser.username}">					
-					<a href="#" class="button button-primary mt-20">Follow</a>
+				<c:if test="${ modelUser.username != sessionUser.username}">
+					<c:if test="${ sessionUser.followedIds[modelUser.userID]}">
+<!-- 						<a href="#" class="button button-primary mt-20">Follow</a> -->
+						<button class="followButton" id="followButton" value="${modelUser.userID }" onclick="handleFollow()">Unfollow</button>
+					</c:if>
+					<c:if test="${!sessionUser.followedIds[modelUser.userID]}">
+<!-- 						<a href="#" class="button button-primary mt-20">Follow</a> -->
+						<button class="followButton" id="followButton" value="${modelUser.userID }" onclick="handleFollow()">Follow</button>
+					</c:if>						
 				</c:if>
 				<c:if test="${ modelUser.username == sessionUser.username}">					
 					<a href="editProfile" class="button button-primary mt-20">Edit Profile</a>
