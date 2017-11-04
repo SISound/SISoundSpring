@@ -87,10 +87,16 @@ public class User {
 	}
 
 	public String getName() {
+		if(this.firstName == null && this.lastName == null) {
+			return "";
+		}
 		return firstName + " " + lastName;
 	}
 	
 	public String getAdress() {
+		if(this.city == null) {
+			return "";
+		}
 		return city + " " + country;
 	}
 	

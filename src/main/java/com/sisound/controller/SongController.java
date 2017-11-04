@@ -184,7 +184,7 @@ public class SongController {
 			model.addAttribute("modelSong", song);
 
 			model.addAttribute("modelUser", song.getUser());
-			session.setAttribute("songProfile", song.getUrl());
+//			session.setAttribute("songProfile", song.getUrl());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "errorPage";

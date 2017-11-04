@@ -8,7 +8,7 @@ import java.util.TreeSet;
 
 public class Playlist implements Comparable<Playlist>, Actionable {
 
-	private long playlistID;
+	private long id;
 	private String title;
 	private LocalDateTime creationDate;
 	private User user;
@@ -35,7 +35,7 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 	public Playlist(long playlistID, String title, LocalDateTime creationDate, User user, HashMap<Actions, 
 			HashSet<String>> actions, TreeSet<Comment> comments, boolean isPrivate, TreeMap<LocalDateTime, Song> songs) {
 		this(title, creationDate, user, isPrivate);
-		this.playlistID = playlistID;
+		this.id = playlistID;
 		this.actions = actions;
 		this.comments = comments;
 		this.songs = songs;
@@ -43,7 +43,7 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 
 	@Override
 	public long getId() {
-		return playlistID;
+		return id;
 	}
 
 
@@ -72,7 +72,7 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 	}
 
 
-	public boolean isPrivate() {
+	public boolean getIsPrivate() {
 		return isPrivate;
 	}
 
@@ -83,7 +83,7 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 	
 	@Override
 	public void setId(long playlistID) {
-		this.playlistID = playlistID;
+		this.id = playlistID;
 	}
 	
 	public void setPrivate(boolean isPrivate) {
@@ -121,4 +121,10 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 	public boolean isComment() {
 		return false;
 	}
+	
+	public void setSongs(TreeMap<LocalDateTime, Song> songs) {
+		this.songs = songs;
+	}
+	
+	
 }
