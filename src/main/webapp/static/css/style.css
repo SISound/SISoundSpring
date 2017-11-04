@@ -664,6 +664,15 @@ footer#controls {
 	cursor: pointer;
 	box-shadow: -170px 0 0 #cccccc inset;
 }
+
+.searching{
+	position: absolute;
+	margin-left: 10%;
+	margin-top: 8%;
+	border-left: solid thin;
+	border-bottom: solid thin;
+	color: rgba(92,168,214,0.9);
+}
 /*=============================================*/
 /*UPLOAD PAGE*/
 .genreSelector{

@@ -26,7 +26,7 @@
 <!-- 			</tr> -->
 <!-- 		</table> -->
 
-		<c:out value="Results for searching users, containing ${ searched }:"></c:out>
+		<span class="searching"><c:out value="Results for searching users, containing ${ searched }:"></c:out></span>
 		
 		<table>
 			<c:forEach items="${searchedUsers}" var="user">
@@ -55,7 +55,7 @@
 					  </ol>
 					</nav>
 				</tr>
-				<br/><br><br><br>
+				<br><br><br><br><br>
 			</c:forEach>
 		</table>
 	</body>

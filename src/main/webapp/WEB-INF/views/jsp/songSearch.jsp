@@ -14,7 +14,7 @@
 	<body>
 		<jsp:include page="headerLogged.jsp"></jsp:include>
 	
-		<c:out value="Results for searching songs, containing ${ searched }:"></c:out>
+		<span class="searching"><c:out value="Results for searching songs, containing ${ searched }:"></c:out></span>
 	
 		<jsp:include page="song_table.jsp"></jsp:include>
 	
