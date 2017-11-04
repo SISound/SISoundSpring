@@ -8,6 +8,21 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>" />
 
 	</head>
+	
+	<script type="text/javascript">
+	
+		//DISABLE PLAYING MORE THAN 1 SONGS
+		document.addEventListener('play', function(e){
+		    var audios = document.getElementsByTagName('audio');
+		    for(var i = 0, len = audios.length; i < len;i++){
+		        if(audios[i] != e.target){
+		            audios[i].pause();
+		        }
+		    }
+		}, true);	
+		
+	</script>
+	
 	<body>
 
 		

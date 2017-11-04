@@ -41,6 +41,11 @@ public class ActionsController {
 							actionDao.removeDislike(true, songId, u.getUserID());
 						}
 						actionDao.likeSong(songId, u.getUserID());
+						if(u.getDislikedSongs().containsKey(songId)) {
+							actionDao.removeDislike(true, songId, u.getUserID());
+							u.removeDislike(songId);
+						}
+						u.addLike(songId);
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
@@ -64,6 +69,7 @@ public class ActionsController {
 				try {
 					if(songDao.isSongLiked(songId, u.getUserID())){
 						actionDao.removeLike(true, songId, u.getUserID());
+						u.removeLike(songId);
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
@@ -89,6 +95,7 @@ public class ActionsController {
 							actionDao.removeLike(true, songId, u.getUserID());
 						}
 						actionDao.dislikeSong(songId, u.getUserID());
+						u.addDislike(songId);
 						resp.setStatus(200);
 					}
 					
@@ -111,6 +118,11 @@ public class ActionsController {
 				try {
 					if(songDao.isSongDisliked(songId, u.getUserID())){
 						actionDao.removeDislike(true, songId, u.getUserID());
+						if(u.getLikedSongs().containsKey(songId)) {
+							actionDao.removeLike(true, songId, u.getUserID());
+							u.removeLike(songId);
+						}
+						u.removeDislike(songId);
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {

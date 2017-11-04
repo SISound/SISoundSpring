@@ -16,6 +16,6 @@
 	
 		<c:out value="Your follower's recent uploads"></c:out>
 	
-		<jsp:include page="main2.jsp"></jsp:include>
+		<jsp:include page="song_table.jsp"></jsp:include>
 	</body>
 </html>	
