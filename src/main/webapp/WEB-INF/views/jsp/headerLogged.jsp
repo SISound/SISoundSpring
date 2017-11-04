@@ -32,7 +32,7 @@
 			</c:if>
 			
 			<c:if test="${ sessionUser != null }">
-				<a class = "headerTextLogged" href="index">Home</a>
+				<a class = "headerTextLogged" href="homeButton">Home</a>
 				<a class = "headerTextLogged" href="recent">Your follows</a>
 				
 				<div class="dropdown">
