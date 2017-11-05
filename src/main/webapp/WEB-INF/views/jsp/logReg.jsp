@@ -14,6 +14,12 @@
 
 	<jsp:include page="headerLogged.jsp"></jsp:include>
 	<div class="fullscreen-bg"></div>
+	
+	<c:if test="${ requestScope.error != null }">
+			<div id="loginErr">
+				<h1><span id="logErrBack">${ requestScope.error }</span></h1>
+			</div>
+	</c:if>
  	
  	<div>	
 			<input type="radio" checked id="toggle--login" name="toggle" class="ghost" />

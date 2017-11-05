@@ -120,7 +120,7 @@ public class SongDao {
 			                                      + "FROM playlists_songs as ps JOIN songs as s ON ps.song_id = s.song_id "
 			                                      + "JOIN users as u ON u.user_id = s.user_id "
 			                                      + "JOIN music_genres as mg ON s.genre_id = mg.genre_id "
-			                                      + "WHERE ps.playlist_id=?");
+			                                      + "WHERE ps.playlist_id = ?");
 		stmt.setLong(1, playlistId);
 		ResultSet rs=stmt.executeQuery();
 		TreeMap<LocalDateTime, Song> songs=new TreeMap<>();

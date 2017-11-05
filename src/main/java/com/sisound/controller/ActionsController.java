@@ -151,6 +151,7 @@ public class ActionsController {
 					if(followed.size()>0){
 						if(followed.containsKey(followedId) && !followed.get(followedId)){
 							userDao.followUser(u.getUserID(), followedId);
+							u.addFollowing(followedId);
 							resp.setStatus(200);
 						}
 					}
@@ -179,6 +180,7 @@ public class ActionsController {
 					if(followed.size()>0){
 						if(followed.containsKey(followedId) && followed.get(followedId)){
 							userDao.unfollowUser(u.getUserID(), followedId);
+							u.removeFollowing(followedId);
 							resp.setStatus(200);
 						}
 					}

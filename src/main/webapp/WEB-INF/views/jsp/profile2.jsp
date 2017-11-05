@@ -119,15 +119,9 @@
 			</div>
 			<div class="bio">
 				<h1 class="heading-medium"> <c:out value="${ modelUser.username }"></c:out> </h1>
-				<c:if test="${ modelUser.name != null }">
 					<h3 class="heading-small"> <c:out value="${ modelUser.name }"></c:out>  </h3>									
-				</c:if>
-				<c:if test="${ not empty  modelUser.adress }">
 					<h5 class="heading-small"> <c:out value="${ modelUser.adress }"></c:out> </h5>										
-				</c:if>
-				<c:if test="${ not empty modelUser.bio }">
 					<p class="body-small"> <c:out value="${ modelUser.bio }"></c:out> </p>								
-				</c:if>
 			</div>
 		</div>
 	</div>
@@ -154,6 +148,18 @@
   				<h3 class="heading-small tabcontent" id = "Playlists"> No playlist yet </h3>
 			</c:if>
 		</div>
+		<div id="Playlists" class="tabcontent">
+		  <c:forEach items="${ modelUser.playlists}" var="playlist">
+		  		<c:if test="${ playlist.isPrivate && modelUser.username == sessionUser.username}">
+		  			<a class="heading-small" href="playlist=${ playlist.id }"><c:out value="${ playlist.title }"></c:out></a><br>	
+		  		</c:if>
+		  		<c:if test="${ !playlist.isPrivate }">
+		  			<a class="heading-small" href="playlist=${ playlist.id }"><c:out value="${ playlist.title }"></c:out></a><br>	
+		  		</c:if>
+
+		  </c:forEach>
+		</div>
+
 	
 	</div>
 <!--   <div class="fullscreen-bg"></div> -->
@@ -161,6 +167,6 @@
 	
 		<script src="<c:url value="js/profile.js" />"  type ="text/javascript"></script>
 		
-		<a href="playlist">Playlist</a>
+		
 </body>
 </html>

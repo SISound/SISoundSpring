@@ -70,16 +70,14 @@ public class UserController {
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
 				
-				return "index";
+				return "redirect:/index";
 			} 
 			else if(userDao.usernameExists(u.getUsername())){
-				//TODO
-				request.setAttribute("error", "username is taken");
+				request.setAttribute("error", "Username is already taken");
 				return "logReg";
 			} 
 			else {
-				//TODO
-				request.setAttribute("error", "e-mail already in use");
+				request.setAttribute("error", "E-mail already in use");
 				return "logReg";
 			}
 		} catch (SQLException e) {
@@ -118,8 +116,8 @@ public class UserController {
 				return "redirect:/index";
 			}
 			else{
-				request.setAttribute("error", "User does not exist!");
-				return "login";
+				request.setAttribute("error", "Wrong username or password!");
+				return "logReg";
 			}
 		} catch (SQLException e) {
 //			request.setAttribute("error", "database problem : " + e.getMessage());

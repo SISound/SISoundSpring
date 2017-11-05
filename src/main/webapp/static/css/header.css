@@ -10,7 +10,7 @@ nav{
 	background-size: 150px auto;
 	background-repeat: no-repeat;
 	background-position: left;
-	background-color: rgba(92,168,214,0.9);
+	background-color: rgba(92,168,214,1);
 	position: fixed;
 	width: 100vw;
 	box-shadow: 2px 2px 10px rgba(0,0,0,0.8);
@@ -35,12 +35,13 @@ nav{
     +transition(.3s);
     &:hover;
     color: white;
+    margin-right: 2%;
 }
 
 .headerTextLogged{
 	float: right;
     padding: 15px 20px;
-    margin-right: 10%;
+    margin-right: 12%;
     color: transparentize(#ff6011, .3);
     text-decoration: none;
     text-transform: uppercase;
@@ -78,7 +79,7 @@ a:hover{
 	border-bottom-right-radius: 8px;
 	font: 20px Helvetica, Arial, sans-serif;
 	position: absolute;
-/* 	margin-top: 7%; */
+/* 	margin-top: 20%; */
 	border: none;
 }
 .header-input:hover{
@@ -87,7 +88,7 @@ a:hover{
 
 .searchTable{
 	position: absolute;
-	margin-top: -3%;
+	margin-top: -2%;
 	margin-left: 15%;	
 }
 
@@ -235,4 +236,19 @@ a:hover{
 /* 	width: 65px; */
 /* 	font-weight: bold; */
 	font-size: 16px;
+}
+
+#loginErr {
+  font-size: 1.0rem;
+  font-family: @font-heading-regular;
+  color: #ffffff;
+  margin-top: 19.5%;
+  text-align: center;
+  font: "Trebuchet MS", Helvetica, sans-serif;
+  
+}
+
+#logErrBack{
+	background-color: rgba(92,168,214,0.9);
+	border-radius: 0 0 0.5rem 0.5rem;
 }

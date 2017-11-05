@@ -38,7 +38,7 @@ public class PlaylistDao {
 		stmt.setString(1, playlist.getTitle());
 		stmt.setLong(2, playlist.getUser().getUserID());
 		stmt.setString(3, playlist.getCreationDate().toString());
-		stmt.setBoolean(4, playlist.isPrivate());
+		stmt.setBoolean(4, playlist.getIsPrivate());
 		stmt.executeUpdate();
 		ResultSet rs=stmt.getGeneratedKeys();
 		rs.next();
@@ -73,18 +73,21 @@ public class PlaylistDao {
 		return playlists;
 	}
 	
-	public synchronized Playlist searchPlaylistByName(String playlistName) throws SQLException{
+	public synchronized Playlist searchPlaylistById(Long id) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt=con.prepareStatement("SELECT playlist_id, playlist_name, user_name, upload_date, isPrivate FROM playlists as p JOIN users as u "
-				                                  + "ON p.user_id=u.user_id "
-				                                  + "WHERE playlist_name=?");
-		stmt.setString(1, playlistName);
+		PreparedStatement stmt=con.prepareStatement("SELECT p.playlist_id, p.playlist_name, u.user_name, p.upload_date, p.isPrivate \r\n" + 
+													"FROM playlists as p JOIN users as u \r\n" + 
+													"ON p.user_id = u.user_id \r\n" + 
+													"WHERE playlist_id = ?;");
+		stmt.setLong(1, id);
 		ResultSet rs=stmt.executeQuery();
 		rs.next();
 		
-		Playlist p=new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), userDao.getUser(rs.getString(3)),
+		Playlist p=new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(4).toLocalDateTime(), userDao.getUser(rs.getString(3)),
 				                actionsDao.getActions(false, rs.getLong(1)), commentDao.getComments(rs.getLong(1), false), 
 				                rs.getBoolean(5),songDao.getSongsForPlaylist(rs.getLong(1)));
+		
+		//p.setSongs(songDao.getSongsForPlaylist(id));
 		
 		return p;
 	}
@@ -178,4 +181,5 @@ public class PlaylistDao {
 		stmt.setLong(2, songId);
 		stmt.executeQuery();
 	}
+
 }
