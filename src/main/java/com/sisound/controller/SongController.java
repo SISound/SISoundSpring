@@ -170,7 +170,7 @@ public class SongController {
 		
 		try {
 			Song song = songDao.getSongById(x);
-			model.addAttribute("modelSong", song);
+			model.addAttribute("commentable", song);
 
 			model.addAttribute("modelUser", song.getUser());
 //			session.setAttribute("songProfile", song.getUrl());

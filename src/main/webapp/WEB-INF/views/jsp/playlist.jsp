@@ -22,13 +22,13 @@
 	</div>
 	
 	
-		<h3 class="heading-medium"> Playlist: ${ playlist.title }</h3>
+		<h3 class="heading-medium"> Playlist: ${ commentable.title }</h3>
 		
-		<c:if test="${fn:length(playlist.songs) eq 0}">
+		<c:if test="${fn:length(commentable.songs) eq 0}">
   				<h3 class="heading-medium"> No songs yet in the playlist</h3>
 		</c:if>
 		
-		<c:if  test="${not empty playlist.songs}">
+		<c:if  test="${not empty commentable.songs}">
   				<div id = "playerPosition">
 	  				<section class="row top text-center">
 						<div class="eight columns offset-by-two">
@@ -37,7 +37,7 @@
 						        
 						        <c:set var="count" value="0" scope="page" />
 			
-						        <c:forEach var="entry" items="${ playlist.songs }">
+						        <c:forEach var="entry" items="${ commentable.songs }">
 									<c:set var="count" value="${count + 1}" scope="page"/>
 						       		 <li data-artist="${ entry.value.user.username }" data-title="${ entry.value.title }" data-album="" data-info="&nbsp;${ count }." data-image="" data-duration="">
 						            	 <div class="ap-source" data-src="getSong${ entry.value.url }" data-type="audio/mpeg" />

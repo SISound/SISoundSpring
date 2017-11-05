@@ -33,8 +33,17 @@ public class PlaylistController {
 	@Autowired
 	private SongDao songDao;
 	
-	@RequestMapping(value="createPlaylist", method = RequestMethod.POST)
-	public String loginUser(HttpSession session, HttpServletRequest request){
+	@RequestMapping(value="createPlaylistPage", method=RequestMethod.GET)
+	public String createPlaylistPage(HttpServletRequest request, Model model){
+		long songId=Long.parseLong(request.getParameter("songId").toString());
+		
+		model.addAttribute("songId", songId);
+		
+		return "create_playlist";
+	}
+	
+	@RequestMapping(value="createPlaylist{songId}", method = RequestMethod.POST)
+	public String loginUser(@PathVariable long songId, HttpSession session, HttpServletRequest request){
 
 		String playlistTitle = request.getParameter("title");
 		String priv = request.getParameter("private");
@@ -49,8 +58,10 @@ public class PlaylistController {
 		try {
 				Playlist playlist = new Playlist(playlistTitle, LocalDateTime.now(), u, checked);
 				playlistDao.createPlaylist(playlist);
+				playlist.addSong(songDao.getSongById(songId), LocalDateTime.now());
 				u.addPlaylist(playlist);
-									
+				playlistDao.addSongToPlaylist(playlistDao.getPlaylistId(playlistTitle, u.getUserID()), songId);	
+				
 				return "playlist";				
 		} 
 		catch (SQLException e) {
@@ -65,7 +76,7 @@ public class PlaylistController {
 		try {
 			Playlist pl = playlistDao.searchPlaylistById(id);
 			//TreeMap<LocalDateTime, Song> playlist = songDao.getSongsForPlaylist(x);
-			model.addAttribute("playlist", pl);
+			model.addAttribute("commentable", pl);
 //			TreeSet<Comment> comments = pl.getComments();
 //			model.addAttribute("comments", comments);
 

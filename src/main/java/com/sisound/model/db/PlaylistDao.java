@@ -73,6 +73,16 @@ public class PlaylistDao {
 		return playlists;
 	}
 	
+	public synchronized long getPlaylistId(String plTitle, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT playlist_id FROM playlists WHERE playlist_name=? AND user_id=?");
+		stmt.setString(1, plTitle);
+		stmt.setLong(2, userId);
+		ResultSet rs=stmt.executeQuery();
+		rs.next();
+		return rs.getLong(1);
+	}
+	
 	public synchronized Playlist searchPlaylistById(Long id) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("SELECT p.playlist_id, p.playlist_name, u.user_name, p.upload_date, p.isPrivate \r\n" + 
@@ -136,24 +146,32 @@ public class PlaylistDao {
 		}
 	}
 	
-	public synchronized void addSongToPlaylist(long userId, String playlistName, Song s) throws SQLException{
-
-		songDao.uploadSong(s);
-		
-		//getting the ID of the playlist to which we want to add song 
+//	public synchronized void addSongToPlaylist(long userId, String playlistName, Song s) throws SQLException{
+//
+//		songDao.uploadSong(s);
+//		
+//		//getting the ID of the playlist to which we want to add song 
+//		Connection con=DBManager.getInstance().getConnection();
+//		PreparedStatement stmt=con.prepareStatement("SELECT playlist_id FROM playlists WHERE user_id=? AND playlist_name=?");
+//		stmt.setLong(1, userId);
+//		stmt.setString(2, playlistName);
+//		ResultSet rs=stmt.executeQuery();
+//		rs.next();
+//		long playlistId=rs.getLong(1);
+//		
+//		//adding the song to the playlist 
+//		stmt=con.prepareStatement("INSERT INTO playlists_songs (playlist_id, song_id, upload_date) VALUES (?, ?, ?)");
+//		stmt.setLong(1, playlistId);
+//		stmt.setLong(2, s.getId());
+//		stmt.setString(3, LocalDateTime.now().toString());
+//	}
+	
+	public synchronized void addSongToPlaylist(long playlistId, long songId) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
-		PreparedStatement stmt=con.prepareStatement("SELECT playlist_id FROM playlists WHERE user_id=? AND playlist_name=?");
-		stmt.setLong(1, userId);
-		stmt.setString(2, playlistName);
-		ResultSet rs=stmt.executeQuery();
-		rs.next();
-		long playlistId=rs.getLong(1);
-		
-		//adding the song to the playlist 
-		stmt=con.prepareStatement("INSERT INTO playlists_songs (playlist_id, song_id, upload_date) VALUES (?, ?, ?)");
+		PreparedStatement stmt=con.prepareStatement("INSERT INTO playlists_songs (playlist_id, song_id, upload_date) VALUES (?, ?, now())");
 		stmt.setLong(1, playlistId);
-		stmt.setLong(2, s.getId());
-		stmt.setString(3, LocalDateTime.now().toString());
+		stmt.setLong(2, songId);
+		stmt.execute();
 	}
 	
 	public synchronized void deleteSongFromPlaylist(long userId, String playlistName, String songName) throws SQLException{

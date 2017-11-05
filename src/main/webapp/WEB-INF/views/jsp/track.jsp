@@ -141,11 +141,35 @@
 		    var x = document.getElementById("plContainer");
 		    if (x.style.display === "none") {
 		        x.style.display = "block";
-		    } else {
+		    }
+		}
+		
+		function closeDiv(){
+			var x = document.getElementById("plContainer");
+		    if (x.style.display === "block") {
 		        x.style.display = "none";
 		    }
 		}
 		
+		function addToPlaylist(id, value){
+			var playlistId=id;
+			var songId=value;
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById(playlistId);
+					button.innerHTML = "Added";
+				}
+				else
+				if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you must log in to add this song to playlist!");
+				}
+					
+			}
+			request.open("post", "restAddToPlaylist?playlistId=" + playlistId + "&songId=" + value, true);
+			request.send();
+		}
 	</script>
 	
 	</head>
@@ -176,11 +200,11 @@
 					
 				</div>
 				<div class="titre">
-					<h3><c:out value="${ modelUser.username }"></c:out></h3>
-					<h1><c:out value="${ modelSong.title }"></c:out></h1>
+					<h3><c:out value="${ modelUser.username }"></c:out></h3><br>
+					<h1><c:out value="${ commentable.title }"></c:out></h1>
 				</div>
 				<div class="lecteur">
-					<audio style="width: 100%;" class="fc-media fc-audio"><source src="getSong${modelSong.url}" type="audio/mp3"/></audio>
+					<audio style="width: 100%;" class="fc-media fc-audio"><source src="getSong${commentable.url}" type="audio/mp3"/></audio>
 				</div>
 				
 			</div>
@@ -189,27 +213,30 @@
 			<div class="banner">
 			
 			<div class="song-info">
-				<h1 class="heading-medium"> <c:out value="${ modelSong.title }"></c:out> </h1>
-				<h3 class="heading-smallTP"> Genre: <c:out value="${ modelSong.genre }"></c:out>  </h3>
-				<h5 class="heading-smallTP"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5>
+				<h1 class="heading-medium"> <c:out value="${ commentable.title }"></c:out> </h1><br>
+				<h3 class="heading-smallTP"> Genre: <c:out value="${ commentable.genre }"></c:out>  </h3><br>
+				<h5 class="heading-smallTP"> Uploaded: <c:out value="${ commentable.uploadDateOnly }"></c:out> </h5><br>
 				<table class="actionsTable">
 					<tr>
-						<c:if test="${ sessionUser.likedSongs[modelSong.id] }">
-							<td><button id="likeButton" value="${modelSong.id }" onclick="handleLike()">Unlike</button></td>
+						<c:if test="${ sessionUser.likedSongs[commentable.id] }">
+							<td><button id="likeButton" value="${commentable.id }" onclick="handleLike()">Unlike</button></td>
 						</c:if>
-						<c:if test="${ !sessionUser.likedSongs[modelSong.id] }">
-							<td><button id="likeButton" value="${modelSong.id }" onclick="handleLike()">Like</button></td>
+						<c:if test="${ !sessionUser.likedSongs[commentable.id] }">
+							<td><button id="likeButton" value="${commentable.id }" onclick="handleLike()">Like</button></td>
 						</c:if>
 <%-- 						<button style="background-color: green" id="likebutton" value="${modelSong.id }" onclick="handleLike()">Like</button> --%>
-						<td class="counterTd"><input id="likeCount" type="number" min="0" onkeydown="return false" value="${modelSong.likesCount }"></input></td>
-						<c:if test="${sessionUser.dislikedSongs[modelSong.id]}">
-							<td><button id="dislikeButton" value="${modelSong.id }" onclick="handleDislike()">Undislike</button></td>
+						<td class="counterTd"><input id="likeCount" type="number" min="0" onkeydown="return false" value="${commentable.likesCount }"></input></td>
+						<c:if test="${sessionUser.dislikedSongs[commentable.id]}">
+							<td><button id="dislikeButton" value="${commentable.id }" onclick="handleDislike()">Undislike</button></td>
 						</c:if>
-						<c:if test="${!sessionUser.dislikedSongs[modelSong.id]}">
-							<td><button id="dislikeButton" value="${modelSong.id }" onclick="handleDislike()">Dislike</button></td>
+						<c:if test="${!sessionUser.dislikedSongs[commentable.id]}">
+							<td><button id="dislikeButton" value="${commentable.id }" onclick="handleDislike()">Dislike</button></td>
 						</c:if>
-						<td class="counterTd"><input id="dislikeCount" type="number" min="0" onkeydown="return false" value="${modelSong.dislikesCount }"></input></td>
-						<td><button id="addButton" value="${modelSong.id }" onclick="showDiv()">Add to playlist</button></td>
+						<td class="counterTd"><input id="dislikeCount" type="number" min="0" onkeydown="return false" value="${commentable.dislikesCount }"></input></td>
+						
+						<c:if test="${sessionUser!=null }">
+							<td><button id="addButton" value="${commentable.id }" onclick="showDiv()">Add to playlist</button></td>
+						</c:if>
 					</tr>
 				</table>
 			</div>
@@ -220,55 +247,28 @@
 		<div id="plContainer" style="display: none;">
 			<div id="playlistsDiv">
 				<table >
+					<button id="closeButton" onclick="closeDiv()">X</button>
 				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
 				 		<tr>
-				  			<td>
-				  				<a class="playlistLink" href="playlist${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
+				  			<td class="addToTd">
+				  				<a class="playlistLink" href="playlist=${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
 				  			</td>
 				  			<td>
-				  				<button class="addToPlaylist">Add to playlist</button>
-				  			</td>
+				  				<button class="addToPlaylist" id="${playlist.id }" value="${commentable.id }" onclick="addToPlaylist(this.id, this.value)">Add to playlist</button>
+				  			</td class="addToTd">
 				  		</tr>
 				  	</c:forEach>
 				  	<tr>
-				  		<td>
-				  			<a href="create_playlist" class="createPlaylist">Create new playlist</button>
+				  		<td class="addToTd">
+				  			<a href="createPlaylistPage?songId=${commentableSong.id }" class="createPlaylist">Create new playlist</button>
 				  		</td>
 				  	</tr>
 			  	</table>
 			</div>
 		</div>
 	
-<!-- 	<div class="banner"> -->
-<%-- 		<c:if test="${ modelUser.coverPhoto == null}"> --%>
-<%-- 			<img class="banner containter" src="<c:url value="img/cover.jpg"/>">					 --%>
-<%-- 		</c:if> --%>
-<%-- 		<c:if test="${ modelUser.coverPhoto != null}"> --%>
-<!-- 			<img class="banner" alt="profilePic" src="getPicCover"> -->
-<%-- 		</c:if> --%>
-
-<!-- 		<div class="container"> -->
-<!-- 			<div class="profile-pic"> -->
-<!-- 				<div class="avatar"> -->
-<%-- 					<c:if test="${ modelUser.profilPicture == null}"> --%>
-<%-- 						<img class="avatar" src="<c:url value="img/defaultProfile.png"/>">					 --%>
-<%-- 					</c:if> --%>
-<%-- 					<c:if test="${ modelUser.profilPicture != null}"> --%>
-<!-- 						<img class="avatar" alt="profilePic" src="getPicProfile"> -->
-<%-- 					</c:if> --%>
-<!-- 				</div> -->
-<%-- 				<a href="profile${song.user.username }" class="button button-primary mt-20"><c:out value="${ modelUser.username }"></c:out></a> --%>
-
-<!-- 			</div> -->
-<!-- 			<div class="bio"> -->
-<%-- 				<h1 class="heading-medium"> <c:out value="${ modelSong.title }"></c:out> </h1> --%>
-<%-- 				<h3 class="heading-small"> Genre: <c:out value="${ modelSong.genre }"></c:out>  </h3> --%>
-<%-- 				<h5 class="heading-small"> Uploaded: <c:out value="${ modelSong.uploadDateOnly }"></c:out> </h5> --%>
-<!-- 				<p class="body-small"> ADD WORKING BUTTONS </p> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-<!-- 	</div> -->
-	COMMENTS
+		<jsp:include page="comments.jsp"></jsp:include>
+	
 	</div>
 </body>
 </html>

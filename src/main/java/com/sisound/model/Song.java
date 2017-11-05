@@ -134,4 +134,8 @@ public class Song implements Comparable<Song>, Actionable, Serializable {
 	public int compareTo(Song o) {
 		 return this.uploadDate.compareTo(o.uploadDate);
 	}
+	
+	public boolean getIsSong() {
+		return true;
+	}
 }

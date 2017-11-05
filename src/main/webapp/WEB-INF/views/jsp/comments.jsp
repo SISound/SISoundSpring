@@ -26,7 +26,7 @@
 	
 		<div class="wrapper">
 			<div class="commentBoxfloat">
-			  <form id="cmnt" action = "addComment?id=${ playlist.id }&song=${playlist.isSong}" method = POST>
+			  <form id="cmnt" action = "addComment?id=${ commentable.id }&song=${commentable.isSong}" method = POST>
 			    <fieldset>
 			      <div class="form_grp">
 			        <label>comment</label>
@@ -41,7 +41,7 @@
 		</div>
 		
 
-			<c:forEach items="${ playlist.comments }" var="comment">
+			<c:forEach items="${ commentable.comments }" var="comment">
 				<div class="comment">
 					<img src="getPic${ comment.user }" class="comment-avatar">
 		            <a class="comment-author" href="profile${ comment.user }"><c:out value="${ comment.user }"></c:out></a>
@@ -55,7 +55,7 @@
 	        	
 	      		<div  id="r${ comment.id }" style="display: none;" class="wrapper">
 					<div class="commentBoxfloat">
-						 <form id="cmnt" action = "addSubComment?id=${ playlist.id }&song=${playlist.isSong}&parent=${comment.id}" method = POST>
+						 <form id="cmnt" action = "addSubComment?id=${ commentable.id }&song=${commentable.isSong}&parent=${comment.id}" method = POST>
 						   <fieldset>
 						     <div class="form_grp">
 						       <label>reply <c:out value="${ comment.user }"></c:out></label>
