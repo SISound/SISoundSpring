@@ -714,8 +714,8 @@ input[type=number]{
 }
 
 .addToPlaylist:HOVER {
-	color: rgba(92,168,214,0.9);
-	border-color: rgba(92,168,214,0.9);
+	color: rgba(92,168,214,1);
+	border-color: rgba(92,168,214,1);
 	cursor: pointer;
 }
 
@@ -739,10 +739,12 @@ input[type=number]{
 	width: 140px;
 	margin-left: 30%;
 	margin-top: 5%;
+	font-size: 14px;
+	text-align: center;
 }
 
 .createPlaylist:HOVER {
-	color: rgba(92,168,214,0.9);
-	border-color: rgba(92,168,214,0.9);
+	color: rgba(92,168,214,1);
+	border-color: rgba(92,168,214,1);
 	cursor: pointer;
 }

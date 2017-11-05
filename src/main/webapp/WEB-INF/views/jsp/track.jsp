@@ -17,9 +17,6 @@
 		<link  rel="stylesheet" type="text/css" href="<c:url value="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />">
 		<link rel="stylesheet" type="text/css" href="<c:url value="css/profile.css" />" />
 		
-		<link rel="stylesheet" type="text/css" href = "<c:url value="css/create_playlist.css" />" />
-		<link rel="stylesheet" type="text/css" href = "//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
-
 		<title>SISound</title>
 
 		<script type="text/javascript">
@@ -149,27 +146,6 @@
 		    }
 		}
 		
-		function showForm(){
-			var x = document.getElementById("wrapper");
-			var y=document.getElementById("playlistsDiv");
-		    if (x.style.display === "none") {
-		        x.style.display = "";
-		        y.style.display = "none";
-		    } else {
-		        x.style.display = "none";
-		    }
-		}
-		
-		function closeForm(){
-			var x = document.getElementById("wrapper");
-			var y=document.getElementById("playlistsDiv");
-		    if (x.style.display === "") {
-		        x.style.display = "none";
-		        y.style.display = "";
-		    } else {
-		        x.style.display = "";
-		    }
-		}
 	</script>
 	
 	</head>
@@ -256,22 +232,10 @@
 				  	</c:forEach>
 				  	<tr>
 				  		<td>
-				  			<button class="createPlaylist" onclick="showForm()">Create new playlist</button>
+				  			<a href="create_playlist" class="createPlaylist">Create new playlist</button>
 				  		</td>
 				  	</tr>
 			  	</table>
-			</div>
-			
-			<div id="wrapper" class="wrapper" style="display: none;">
-			  <button id="closer" onclick="closeForm()">Close</button>	
-		  	  <form class="form-signin" action = "createPlaylist" method = POST>       
-			      <h2 class="form-signin-heading">Creating new playlist</h2>
-			      <input type="text" class="form-control" name="title" placeholder="Playlist title" required="" autofocus="" />
-			      <label class="checkbox">
-		          	<input type="checkbox" name="private"> Private 
-				  </label>
-				  <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>   
-			  </form>
 			</div>
 		</div>
 	
