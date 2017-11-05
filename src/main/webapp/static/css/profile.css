@@ -739,10 +739,12 @@ input[type=number]{
 	width: 140px;
 	margin-left: 30%;
 	margin-top: 5%;
+	z-index: 1000;
 }
 
 .createPlaylist:HOVER {
 	color: rgba(92,168,214,0.9);
 	border-color: rgba(92,168,214,0.9);
 	cursor: pointer;
+	
 }

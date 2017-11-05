@@ -275,7 +275,7 @@
 			</div>
 		</div>
 	
-	<div class="banner">
+<!-- 	<div class="banner"> -->
 <%-- 		<c:if test="${ modelUser.coverPhoto == null}"> --%>
 <%-- 			<img class="banner containter" src="<c:url value="img/cover.jpg"/>">					 --%>
 <%-- 		</c:if> --%>
@@ -303,7 +303,7 @@
 <!-- 				<p class="body-small"> ADD WORKING BUTTONS </p> -->
 <!-- 			</div> -->
 <!-- 		</div> -->
-	</div>
+<!-- 	</div> -->
 	COMMENTS
 	</div>
 </body>

@@ -26,27 +26,29 @@
 		</c:if>
 		
 		<c:if  test="${not empty playlist.songs}">
-  				<section class="row top text-center">
-					<div class="eight columns offset-by-two">
-					   <div id="ap-mix" style="display:block;position:relative;width:100%;height:auto;margin:0px auto 0px;">
-					        <ul class="ap-audios" style="display:none;">
-					        
-					        <c:set var="count" value="0" scope="page" />
-		
-					        <c:forEach var="entry" items="${ playlist.songs }">
-								<c:set var="count" value="${count + 1}" scope="page"/>
-					       		 <li data-artist="${ entry.value.user.username }" data-title="${ entry.value.title }" data-album="" data-info="&nbsp;${ count }." data-image="" data-duration="">
-					            	 <div class="ap-source" data-src="getSong${ entry.value.url }" data-type="audio/mpeg" />
-					          	</li>
-							</c:forEach>
-							
-					        </ul>
+  				<div id = "playerPosition">
+	  				<section class="row top text-center">
+						<div class="eight columns offset-by-two">
+						   <div id="ap-mix" style="display:block;position:relative;width:100%;height:auto;margin:0px auto 0px;">
+						        <ul class="ap-audios" style="display:none;">
+						        
+						        <c:set var="count" value="0" scope="page" />
+			
+						        <c:forEach var="entry" items="${ playlist.songs }">
+									<c:set var="count" value="${count + 1}" scope="page"/>
+						       		 <li data-artist="${ entry.value.user.username }" data-title="${ entry.value.title }" data-album="" data-info="&nbsp;${ count }." data-image="" data-duration="">
+						            	 <div class="ap-source" data-src="getSong${ entry.value.url }" data-type="audio/mpeg" />
+						          	</li>
+								</c:forEach>
+								
+						        </ul>
+						      </div>
 					      </div>
-				      </div>
-				</section>
+					</section>
+				</div>
 		</c:if>
 		
-		
+		<jsp:include page="comments.jsp"></jsp:include>
 
 </body>
 </html>

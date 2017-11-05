@@ -64,8 +64,7 @@
 	                    document.getElementById(likeCntId).value--;
 	                }
 	            }
-	            else
-	                if (this.readyState == 4 && this.status == 401) {
+	            else if (this.readyState == 4 && this.status == 401) {
 	                    alert("Sorry, you must log in to unlike this song!");
 	                }
 	        }
@@ -103,8 +102,7 @@
 					var button=document.getElementById(likedId);
 					button.innerHTML="Like";
 				}
-				else
-				if (this.readyState == 4 && this.status == 401) {
+				else if (this.readyState == 4 && this.status == 401) {
 					alert("Sorry, you must log in to dislike this song!");
 				}
 					
@@ -125,8 +123,7 @@
 						document.getElementById(dislikeCntId).value--;
 					}
 				}
-				else
-				if (this.readyState == 4 && this.status == 401) {
+				else if (this.readyState == 4 && this.status == 401) {
 					alert("Sorry, you must log in to undislike this song!");
 				}
 					
@@ -135,6 +132,41 @@
 			request.send();
 		}
 		
+		//follow/unfollow
+		function handleFollow(name) {
+			var button = document.getElementByName(name);
+			var value = button.value;
+			var title = button.innerHTML;
+			alert(title);
+			if(title == "Follow"){
+				alert("tuka2");
+				followUser(value);
+			}
+			else{
+				alert("tuka3");
+				unfollowUser(value);
+			}
+		}
+		
+		function follow(name){
+			var request = new XMLHttpRequest();
+			
+			request.onreadystatechange = function() {
+				allert("cant reach here");
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var x = document.getElementsByName(name);
+					for (i = 0; i < x.length; i++) {
+						x.item(i).innerHTML == "Unfollow";
+					}
+				}
+				else if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you must log in to follow users!");
+				}		
+			}
+			request.open("post", "restFollowUser?userId=" + value, true);
+			request.send();
+		}
 		
 		//DISABLE PLAYING MORE THAN 1 SONGS
 		document.addEventListener('play', function(e){
@@ -169,10 +201,13 @@
 					        <a class="link-title" href="track=${ songsToShow.id }"><c:out value="${ songsToShow.title }"></c:out></a>
 					        <a class="link-excerpt" href="profile${ songsToShow.user.username }"><c:out value="${ songsToShow.user.username }"></c:out></a>
 					        
+<%-- 					        <c:if test="${ songsToShow.user.username != sessionUser.username || !sessionUser.followedIds[songsToShow.user.userID] }"> --%>
+<%-- 					        	<form method = POST action="follow?user=${songsToShow.user.userID}&name=${songsToShow.user.username}"> --%>
+<!-- 					        		<button class="followButton" >Follow</button> -->
+<!-- 					        	</form> -->
+<%-- 					        </c:if> --%>
 					        <c:if test="${ songsToShow.user.username != sessionUser.username || !sessionUser.followedIds[songsToShow.user.userID] }">
-					        	<form method = POST action="follow?user=${songsToShow.user.userID}&name=${songsToShow.user.username}">
-					        		<button class="followButton" >Follow</button>
-					        	</form>
+					        		<button class="followButton" name = "${ songsToShow.user.username }" onclick="follow(this.name)" >Follow</button>
 					        </c:if>
 					        
 					        <c:if test="${ sessionUser.followedIds[songsToShow.user.userID] }">

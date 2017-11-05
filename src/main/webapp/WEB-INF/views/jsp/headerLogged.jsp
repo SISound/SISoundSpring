@@ -40,7 +40,7 @@
 			<c:if test="${ sessionUser != null }">
 
 				<a class = "headerTextLogged" href="index">TOP chart</a>
-				<a class = "streamHeader" href="recent">Stream</a>
+				<a class = "streamHeader" href="homeButton">Stream</a>
 				
 				<div class="dropdown">
 					<table>
