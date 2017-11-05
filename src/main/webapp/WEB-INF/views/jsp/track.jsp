@@ -139,6 +139,7 @@
 		//ADDING TO PLAYLIST
 		function showDiv() {
 		    var x = document.getElementById("plContainer");
+		    alert("are");
 		    if (x.style.display === "none") {
 		        x.style.display = "block";
 		    }
@@ -260,7 +261,7 @@
 				  	</c:forEach>
 				  	<tr>
 				  		<td class="addToTd">
-				  			<a href="createPlaylistPage?songId=${commentableSong.id }" class="createPlaylist">Create new playlist</button>
+				  			<a href="createPlaylistPage?songId=${commentable.id }" class="createPlaylist">Create new playlist</button>
 				  		</td>
 				  	</tr>
 			  	</table>

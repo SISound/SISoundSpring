@@ -135,6 +135,7 @@
 		
 		//ADDING SONGS TO PLAYLIST
 		function showDiv(value) {
+			alert("are");
 		    var x = document.getElementById("plContainer");
 		    if (x.style.display === "none") {
 		        x.style.display = "block";

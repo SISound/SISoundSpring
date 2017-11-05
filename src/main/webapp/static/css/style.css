@@ -698,7 +698,7 @@ footer#controls {
 	position: fixed;
 	height: 1200px;
 	width: 1400px;
-	margin-top: -70%;
+	margin-top: 10%;
 	color: white;
 	background: rgba(255, 255, 255, 0.5);
 	z-index: 0;
