@@ -141,11 +141,35 @@
 		    var x = document.getElementById("plContainer");
 		    if (x.style.display === "none") {
 		        x.style.display = "block";
-		    } else {
+		    }
+		}
+		
+		function closeDiv(){
+			var x = document.getElementById("plContainer");
+		    if (x.style.display === "block") {
 		        x.style.display = "none";
 		    }
 		}
 		
+		function addToPlaylist(id, value){
+			var playlistId=id;
+			var songId=value;
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById(playlistId);
+					button.innerHTML = "Added";
+				}
+				else
+				if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you must log in to add this song to playlist!");
+				}
+					
+			}
+			request.open("post", "restAddToPlaylist?playlistId=" + playlistId + "&songId=" + value, true);
+			request.send();
+		}
 	</script>
 	
 	</head>
@@ -209,7 +233,10 @@
 							<td><button id="dislikeButton" value="${modelSong.id }" onclick="handleDislike()">Dislike</button></td>
 						</c:if>
 						<td class="counterTd"><input id="dislikeCount" type="number" min="0" onkeydown="return false" value="${modelSong.dislikesCount }"></input></td>
-						<td><button id="addButton" value="${modelSong.id }" onclick="showDiv()">Add to playlist</button></td>
+						
+						<c:if test="${sessionUser!=null }">
+							<td><button id="addButton" value="${modelSong.id }" onclick="showDiv()">Add to playlist</button></td>
+						</c:if>
 					</tr>
 				</table>
 			</div>
@@ -220,19 +247,20 @@
 		<div id="plContainer" style="display: none;">
 			<div id="playlistsDiv">
 				<table >
+					<button id="closeButton" onclick="closeDiv()">X</button>
 				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
 				 		<tr>
-				  			<td>
-				  				<a class="playlistLink" href="playlist${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
+				  			<td class="addToTd">
+				  				<a class="playlistLink" href="playlist=${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
 				  			</td>
 				  			<td>
-				  				<button class="addToPlaylist">Add to playlist</button>
-				  			</td>
+				  				<button class="addToPlaylist" id="${playlist.id }" value="${modelSong.id }" onclick="addToPlaylist(this.id, this.value)">Add to playlist</button>
+				  			</td class="addToTd">
 				  		</tr>
 				  	</c:forEach>
 				  	<tr>
-				  		<td>
-				  			<a href="create_playlist" class="createPlaylist">Create new playlist</button>
+				  		<td class="addToTd">
+				  			<a href="createPlaylistPage?songId=${modelSong.id }" class="createPlaylist">Create new playlist</button>
 				  		</td>
 				  	</tr>
 			  	</table>

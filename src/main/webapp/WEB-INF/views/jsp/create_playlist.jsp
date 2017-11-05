@@ -12,7 +12,7 @@
 	</head>
 	<body>
 		 	<div class="wrapper" >
-		  	  <form class="form-signin" action = "createPlaylist" method = POST>       
+		  	  <form class="form-signin" action = "createPlaylist${songId }" method = POST>       
 			      <h2 class="form-signin-heading">Creating new playlist</h2>
 			      <input type="text" class="form-control" name="title" placeholder="Playlist title" required="" autofocus="" />
 			      <label class="checkbox">

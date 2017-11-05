@@ -602,7 +602,6 @@ div.tab button.active {
 	margin-top: 2%;
 	background-color: #ffffff;
 	border-radius: 5px;
-	z-index: 1;
 }
 
 .counterTd{
@@ -682,10 +681,13 @@ input[type=number]{
 #playlistsDiv{
 	position: relative;
 	background-color: #ffffff;
-	width: 400px;
-	height: 100px;
+	width: auto;
+	max-width: 400px;
+	height: auto;
+	white-space: nowrap;
 	margin-left: 34%;
 	margin-top: 15%;
+	border: solid thin black;
 	border-radius: 7px;
 	z-index: 10;
 }
@@ -705,12 +707,11 @@ input[type=number]{
 	background-color: #ffffff;
 	border-radius: 3px;
 	border: solid thin;
-	border-color: #6D6D6F;
+	border-color: black;
 	color: #6D6D6F;
 	height: 25px;
 	width: 110px;
-	margin-left: 55%;
-	margin-top: -2%;
+	margin-top: -3%;
 }
 
 .addToPlaylist:HOVER {
@@ -722,10 +723,17 @@ input[type=number]{
 .playlistLink{
 	text-decoration: none;
 	font-size: 20px;
-	font-family: Courier New;
-	font-weight: bold;
+	font-family: "Courier New", Courier, monospace;
+/* 	font-weight: bold; */
 	color: black;
-	float: right;
+	float: left;
+	width: 250px;
+	display: block;
+	overflow: hidden;
+}
+
+.playlistLink:HOVER{
+	color: rgba(92,168,214,1);
 }
 
 .createPlaylist{
@@ -733,7 +741,7 @@ input[type=number]{
 	background-color: #ffffff;
 	border-radius: 3px;
 	border: solid thin;
-	border-color: #6D6D6F;
+	border-color: black;
 	color: #6D6D6F;
 	height: 35px;
 	width: 140px;
@@ -745,6 +753,28 @@ input[type=number]{
 
 .createPlaylist:HOVER {
 	color: rgba(92,168,214,1);
+	background-color: #ffffff;
+	opacity: 1;
 	border-color: rgba(92,168,214,1);
 	cursor: pointer;
 }
+
+#closeButton{
+	background-color: #ffffff;
+	font-size: 10px;
+	border: none;
+	color: red;
+	height: 15px;
+	width: 15px;
+	margin-left: 95%;
+}
+
+#closeButton:HOVER {
+	color: rgba(92,168,214,1);
+	border-color: rgba(92,168,214,1);
+	cursor: pointer;
+}
+/* .addToTd{ */
+/* 	height: auto; */
+/* 	width: 200px; */
+/* } */

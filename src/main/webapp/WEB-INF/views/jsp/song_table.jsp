@@ -135,6 +135,49 @@
 			request.send();
 		}
 		
+		//ADDING SONGS TO PLAYLIST
+		function showDiv(value) {
+		    var x = document.getElementById("plContainer");
+		    if (x.style.display === "none") {
+		        x.style.display = "block";
+		    }
+		    var buttons=document.getElementsByName("addToPl");
+		    for (var i=0;i<buttons.length;i++) {
+		    	buttons[i].value = value;
+		    }
+		    
+		    var link=document.getElementsByClassName("createPlaylist");
+		    for (var i=0;i<link.length;i++) {
+		    	link[i].href = "createPlaylistPage?songId=" + value;
+		    }
+		}
+		
+		function closeDiv(){
+			var x = document.getElementById("plContainer");
+		    if (x.style.display === "block") {
+		        x.style.display = "none";
+		    }
+		}
+		
+		function addToPlaylist(id, value){
+			var playlistId=id;
+			var songId=value;
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById(playlistId);
+					button.innerHTML = "Added";
+				}
+				else
+				if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you must log in to add this song to playlist!");
+				}
+					
+			}
+			request.open("post", "restAddToPlaylist?playlistId=" + playlistId + "&songId=" + value, true);
+			request.send();
+		}
 		
 		//DISABLE PLAYING MORE THAN 1 SONGS
 		document.addEventListener('play', function(e){
@@ -181,7 +224,7 @@
 					        	</form>
 					        </c:if>
 					        
-							       	<button class="addToPlaylist" id="${ songsToShow.id }" value="${songsToShow.id }" onclick="openPlaylists( this.id )">&#8801 Add to playlist</button>
+							       	<button class="addToPlaylist" value="${songsToShow.id }" onclick="showDiv(this.value)">&#8801 Add to playlist</button>
 <%-- 					      		<button class="actionButton" id="shareButton" value="${ songsToShow.id }" >&#10609Share</button> --%>
 								
 								
@@ -221,6 +264,32 @@
 			</c:forEach>
 		</table>
 				
-		
+		<div id="plContainer" style="display: none;">
+			<div id="playlistsDiv">
+				<table >
+				    <button id="closeButton" onclick="closeDiv()">X</button>
+				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
+				 		<tr>
+				  			<td class="addToTd">
+				  				<a class="playlistLink" href="playlist=${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
+				  			</td>
+				  			<td>
+				  				<button class="addToPl" name="addToPl" id="${playlist.id }" value="" onclick="addToPlaylist(this.id, this.value)">Add to playlist</button>
+				  			</td class="addToTd">
+				  		</tr>
+				  	</c:forEach>
+				  	<tr>
+				  		<td class="addToTd">
+				  			<c:if test="${sessionUser!=null }">
+				  				<a href=" " id=" " class="createPlaylist">Create new playlist</button>
+				  			</c:if>
+				  			<c:if test="${sessionUser==null }">
+				  				<h4 style="color: black;">You must be logged in to add songs to playlists</h4>
+				  			</c:if>
+				  		</td>
+				  	</tr>
+			  	</table>
+			</div>
+		</div>
 	</body>
 </html>

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sisound.model.User;
 import com.sisound.model.db.ActionsDao;
+import com.sisound.model.db.PlaylistDao;
 import com.sisound.model.db.SongDao;
 import com.sisound.model.db.UserDao;
 
@@ -27,6 +28,8 @@ public class ActionsController {
 	ActionsDao actionDao;
 	@Autowired
 	UserDao userDao;
+	@Autowired
+	PlaylistDao playlistDao;
 	
 	//LIKE/UNLIKE SONG
 		@RequestMapping(value="restLikeSong", method=RequestMethod.POST)
@@ -184,6 +187,27 @@ public class ActionsController {
 							resp.setStatus(200);
 						}
 					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		//ADDING A SONG TO PLAYLIST
+		@RequestMapping(value="restAddToPlaylist", method=RequestMethod.POST)
+		@ResponseBody
+		public void addToPlaylist(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
+			User u=(User) session.getAttribute("sessionUser");
+			Long playlistId=Long.parseLong(req.getParameter("playlistId").toString());
+			Long songId=Long.parseLong(req.getParameter("songId").toString());
+			
+			if(session.isNew() || u==null){
+				resp.setStatus(401);
+			}
+			else{
+				try {
+					playlistDao.addSongToPlaylist(playlistId, songId);
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
