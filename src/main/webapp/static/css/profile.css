@@ -602,6 +602,7 @@ div.tab button.active {
 	margin-top: 2%;
 	background-color: #ffffff;
 	border-radius: 5px;
+	z-index: 1;
 }
 
 .counterTd{
@@ -638,6 +639,21 @@ div.tab button.active {
 	cursor: pointer;
 }
 
+#addButton{
+	background-color: #ffffff;
+	border-radius: 3px;
+	border: solid thin;
+	border-color: #6D6D6F;
+	color: #6D6D6F;
+	display: inline;
+}
+
+#addButton:HOVER{
+	color: rgba(92,168,214,0.9);
+	border-color: rgba(92,168,214,0.9);
+	cursor: pointer;
+}
+
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
     -webkit-appearance: none;
@@ -660,4 +676,73 @@ input[type=number] {
 input[type=number]{
 	border: none;
 	width: 50px;
+}
+
+/* ADDING TO PLAYLIST */
+#playlistsDiv{
+	position: relative;
+	background-color: #ffffff;
+	width: 400px;
+	height: 100px;
+	margin-left: 34%;
+	margin-top: 15%;
+	border-radius: 7px;
+	z-index: 10;
+}
+
+#plContainer{
+	position: fixed;
+	height: 1200px;
+	width: 1400px;
+	margin-top: -70%;
+	color: white;
+	background: rgba(255, 255, 255, 0.2);
+	z-index: 0;
+}
+
+.addToPlaylist{
+	position: absolute;
+	background-color: #ffffff;
+	border-radius: 3px;
+	border: solid thin;
+	border-color: #6D6D6F;
+	color: #6D6D6F;
+	height: 25px;
+	width: 110px;
+	margin-left: 55%;
+	margin-top: -2%;
+}
+
+.addToPlaylist:HOVER {
+	color: rgba(92,168,214,0.9);
+	border-color: rgba(92,168,214,0.9);
+	cursor: pointer;
+}
+
+.playlistLink{
+	text-decoration: none;
+	font-size: 20px;
+	font-family: Courier New;
+	font-weight: bold;
+	color: black;
+	float: right;
+}
+
+.createPlaylist{
+	position: absolute;
+	background-color: #ffffff;
+	border-radius: 3px;
+	border: solid thin;
+	border-color: #6D6D6F;
+	color: #6D6D6F;
+	height: 35px;
+	width: 140px;
+	margin-left: 30%;
+	margin-top: 5%;
+}
+
+.createPlaylist:HOVER {
+	color: rgba(92,168,214,0.9);
+	border-color: rgba(92,168,214,0.9);
+	cursor: pointer;
 }

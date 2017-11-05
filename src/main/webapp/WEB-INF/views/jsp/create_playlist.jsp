@@ -11,27 +11,27 @@
 				
 	</head>
 	<body>
-			<div class="playlistsDiv">
-				<table>
-				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
-				 		<tr>
-				  			<td>
-				  				<a href="playlist${playlist.playlistID }"><c:out value="${playlist.title }"></c:out></a>
-				  			</td>
-				  			<td>
-				  				<button class="addToPlaylist">Add to playlist</button>
-				  			</td>
-				  		</tr>
-				  	</c:forEach>
-				  	<tr>
-				  		<td>
-				  			<button class="createPlaylist">Create new playlist</button>
-				  		</td>
-				  	</tr>
-			  	</table>
-			</div>
+<!-- 			<div class="playlistsDiv"> -->
+<!-- 				<table> -->
+<%-- 				  	<c:forEach items="${sessionUser.playlists }" var="playlist"> --%>
+<!-- 				 		<tr> -->
+<!-- 				  			<td> -->
+<%-- 				  				<a href="playlist${playlist.id }"><c:out value="${playlist.title }"></c:out></a> --%>
+<!-- 				  			</td> -->
+<!-- 				  			<td> -->
+<%-- 				  				<button class="addToPlaylist" value="${playlist.id }">Add to playlist</button> --%>
+<!-- 				  			</td> -->
+<!-- 				  		</tr> -->
+<%-- 				  	</c:forEach> --%>
+<!-- 				  	<tr> -->
+<!-- 				  		<td> -->
+<!-- 				  			<button class="createPlaylist">Create new playlist</button> -->
+<!-- 				  		</td> -->
+<!-- 				  	</tr> -->
+<!-- 			  	</table> -->
+<!-- 			</div> -->
 		  
-		 	<div class="wrapper">
+		 	<div class="wrapper" >
 		  	  <form class="form-signin" action = "createPlaylist" method = POST>       
 			      <h2 class="form-signin-heading">Creating new playlist</h2>
 			      <input type="text" class="form-control" name="title" placeholder="Playlist title" required="" autofocus="" />

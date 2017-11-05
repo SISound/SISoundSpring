@@ -1,13 +1,20 @@
 @charset "ISO-8859-1";
 @import "bourbon";
+/* html{ */
+/* 	margin: 0; */
+/* 	padding: 0; */
+/* } */
 
 /* body { */
-/* 	background: #eee !important;	 */
+/* 	margin: 0; */
+/* 	padding: 0; */
+/* 	position: inherit; */
+/* 	z-index: 2; */
+/* /* 	background: #eee !important;	 */ */
 /* } */
 
 .wrapper {	
-	margin-top: 80px;
-  margin-bottom: 80px;
+	margin-left: -20%;
 }
 
 .form-signin {
@@ -49,4 +56,21 @@
 	  border-top-left-radius: 0;
 	  border-top-right-radius: 0;
 	}
+}
+
+#closer{
+	position: absolute;
+	margin-left: 60%;
+	background-color: #ffffff;
+	border-radius: 3px;
+	border: solid thin;
+	border-color: #6D6D6F;
+	color: #6D6D6F;
+	display: inline;
+}
+
+#closer:HOVER {
+	color: rgba(92,168,214,0.9);
+	border-color: rgba(92,168,214,0.9);
+	cursor: pointer;
 }

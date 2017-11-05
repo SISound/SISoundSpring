@@ -5,7 +5,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Insert title here</title>
+	<title>SISound</title>
 	<link  rel="stylesheet" type="text/css" href="<c:url value="https://www.cratemayne.com/css/foundation.css" />">
 	<link  rel="stylesheet" type="text/css" href="<c:url value="https://www.cratemayne.com/css/styles.css" />">
 	<link rel="stylesheet" type="text/css" href="<c:url value="css/playlist.css" />" />

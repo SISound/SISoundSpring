@@ -16,6 +16,9 @@
 		<link  rel="stylesheet" type="text/css" href="<c:url value="https://p.typekit.net/p.gif?s=1&k=yyw5dsj&app=typekit&ht=tk&h=www.flagstar.com&f=6846.6848.6849.6851.6852&a=1922000&sl=195&fl=122&js=1.14.8&_=1458594264430" />">
 		<link  rel="stylesheet" type="text/css" href="<c:url value="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" />">
 		<link rel="stylesheet" type="text/css" href="<c:url value="css/profile.css" />" />
+		
+		<link rel="stylesheet" type="text/css" href = "<c:url value="css/create_playlist.css" />" />
+		<link rel="stylesheet" type="text/css" href = "//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" />
 
 		<title>SISound</title>
 
@@ -135,8 +138,40 @@
 			request.open("post", "restUndislikeSong?songId=" + value, true);
 			request.send();
 		}
+		
+		//ADDING TO PLAYLIST
+		function showDiv() {
+		    var x = document.getElementById("plContainer");
+		    if (x.style.display === "none") {
+		        x.style.display = "block";
+		    } else {
+		        x.style.display = "none";
+		    }
+		}
+		
+		function showForm(){
+			var x = document.getElementById("wrapper");
+			var y=document.getElementById("playlistsDiv");
+		    if (x.style.display === "none") {
+		        x.style.display = "";
+		        y.style.display = "none";
+		    } else {
+		        x.style.display = "none";
+		    }
+		}
+		
+		function closeForm(){
+			var x = document.getElementById("wrapper");
+			var y=document.getElementById("playlistsDiv");
+		    if (x.style.display === "") {
+		        x.style.display = "none";
+		        y.style.display = "";
+		    } else {
+		        x.style.display = "";
+		    }
+		}
 	</script>
-				
+	
 	</head>
 <body>
 	<script src="<c:url value="js/musicPlayer.js" />"  type ="text/javascript"></script>
@@ -198,6 +233,7 @@
 							<td><button id="dislikeButton" value="${modelSong.id }" onclick="handleDislike()">Dislike</button></td>
 						</c:if>
 						<td class="counterTd"><input id="dislikeCount" type="number" min="0" onkeydown="return false" value="${modelSong.dislikesCount }"></input></td>
+						<td><button id="addButton" value="${modelSong.id }" onclick="showDiv()">Add to playlist</button></td>
 					</tr>
 				</table>
 			</div>
@@ -205,6 +241,39 @@
 			
 		</div>
 	</div>
+		<div id="plContainer" style="display: none;">
+			<div id="playlistsDiv">
+				<table >
+				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
+				 		<tr>
+				  			<td>
+				  				<a class="playlistLink" href="playlist${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
+				  			</td>
+				  			<td>
+				  				<button class="addToPlaylist">Add to playlist</button>
+				  			</td>
+				  		</tr>
+				  	</c:forEach>
+				  	<tr>
+				  		<td>
+				  			<button class="createPlaylist" onclick="showForm()">Create new playlist</button>
+				  		</td>
+				  	</tr>
+			  	</table>
+			</div>
+			
+			<div id="wrapper" class="wrapper" style="display: none;">
+			  <button id="closer" onclick="closeForm()">Close</button>	
+		  	  <form class="form-signin" action = "createPlaylist" method = POST>       
+			      <h2 class="form-signin-heading">Creating new playlist</h2>
+			      <input type="text" class="form-control" name="title" placeholder="Playlist title" required="" autofocus="" />
+			      <label class="checkbox">
+		          	<input type="checkbox" name="private"> Private 
+				  </label>
+				  <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>   
+			  </form>
+			</div>
+		</div>
 	
 	<div class="banner">
 <%-- 		<c:if test="${ modelUser.coverPhoto == null}"> --%>
@@ -236,8 +305,6 @@
 <!-- 		</div> -->
 	</div>
 	COMMENTS
-	
 	</div>
-	
 </body>
 </html>
