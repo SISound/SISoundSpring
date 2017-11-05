@@ -15,7 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.sisound.model.Comment;
 import com.sisound.model.Playlist;
 import com.sisound.model.Song;
 import com.sisound.model.User;
@@ -49,15 +51,17 @@ public class PlaylistController {
 		boolean checked = (priv != null && priv.length() > 0);
 		User u = (User) session.getAttribute("sessionUser");
 		
-		if(u == null) {
+		if(session.isNew() || u == null) {
 			return "redirect:/loginPage";
 		}
 				
 		try {
 				Playlist playlist = new Playlist(playlistTitle, LocalDateTime.now(), u, checked);
 				playlistDao.createPlaylist(playlist);
+				playlist.addSong(songDao.getSongById(songId), LocalDateTime.now());
 				u.addPlaylist(playlist);
-				playlistDao.addSongToPlaylist(playlistDao.getPlaylistId(playlistTitle, u.getUserID()), songId);					
+				playlistDao.addSongToPlaylist(playlistDao.getPlaylistId(playlistTitle, u.getUserID()), songId);	
+				
 				return "playlist";				
 		} 
 		catch (SQLException e) {
@@ -66,13 +70,15 @@ public class PlaylistController {
 		}
 	}
 	
-	@RequestMapping(value="playlist={x}", method=RequestMethod.GET)
-	public String songePage(@PathVariable Long x, Model model, HttpSession session){
+	@RequestMapping(value="/playlist", method=RequestMethod.GET)
+	public String songePage(Model model, HttpSession session, @RequestParam(value = "id") long id){
 		
 		try {
-			Playlist pl = playlistDao.searchPlaylistById(x);
+			Playlist pl = playlistDao.searchPlaylistById(id);
 			//TreeMap<LocalDateTime, Song> playlist = songDao.getSongsForPlaylist(x);
-			model.addAttribute("playlist", pl);
+			model.addAttribute("commentable", pl);
+//			TreeSet<Comment> comments = pl.getComments();
+//			model.addAttribute("comments", comments);
 
 //			model.addAttribute("modelUser", playlist.getUser());
 //			session.setAttribute("songProfile", song.getUrl());

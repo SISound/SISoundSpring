@@ -26,7 +26,7 @@
 		<table class="sortingTable">
 			<tr>
 				<td class="sortTd">Sort by: |</td>
-				<td> <a class="sortingLink" href="index">Default |</a> </td>
+				<td> <a class="sortingLink" href="index">Explore |</a> </td>
 				<td> <a class="sortingLink" href="index=likes">Likes |</a> </td>
 				<td> <a class="sortingLink" href="index=recent">UploadDate |</a> </td>
 			</tr>

@@ -35,7 +35,7 @@
 			
 			<c:if test="${ sessionUser == null }">
 				<a class = "headerText" href="loginPage">Login</a>
-				<a class = "headerText" href="index">Home</a>			
+				<a class = "headerText" href="index">TOP chart</a>			
 			</c:if>
 			
 			<c:if test="${ sessionUser != null }">

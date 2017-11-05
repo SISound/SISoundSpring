@@ -64,8 +64,7 @@
 	                    document.getElementById(likeCntId).value--;
 	                }
 	            }
-	            else
-	                if (this.readyState == 4 && this.status == 401) {
+	            else if (this.readyState == 4 && this.status == 401) {
 	                    alert("Sorry, you must log in to unlike this song!");
 	                }
 	        }
@@ -103,8 +102,7 @@
 					var button=document.getElementById(likedId);
 					button.innerHTML="Like";
 				}
-				else
-				if (this.readyState == 4 && this.status == 401) {
+				else if (this.readyState == 4 && this.status == 401) {
 					alert("Sorry, you must log in to dislike this song!");
 				}
 					
@@ -137,6 +135,7 @@
 		
 		//ADDING SONGS TO PLAYLIST
 		function showDiv(value) {
+			alert("are");
 		    var x = document.getElementById("plContainer");
 		    if (x.style.display === "none") {
 		        x.style.display = "block";
@@ -212,10 +211,13 @@
 					        <a class="link-title" href="track=${ songsToShow.id }"><c:out value="${ songsToShow.title }"></c:out></a>
 					        <a class="link-excerpt" href="profile${ songsToShow.user.username }"><c:out value="${ songsToShow.user.username }"></c:out></a>
 					        
+<%-- 					        <c:if test="${ songsToShow.user.username != sessionUser.username || !sessionUser.followedIds[songsToShow.user.userID] }"> --%>
+<%-- 					        	<form method = POST action="follow?user=${songsToShow.user.userID}&name=${songsToShow.user.username}"> --%>
+<!-- 					        		<button class="followButton" >Follow</button> -->
+<!-- 					        	</form> -->
+<%-- 					        </c:if> --%>
 					        <c:if test="${ songsToShow.user.username != sessionUser.username || !sessionUser.followedIds[songsToShow.user.userID] }">
-					        	<form method = POST action="follow?user=${songsToShow.user.userID}&name=${songsToShow.user.username}">
-					        		<button class="followButton" >Follow</button>
-					        	</form>
+					        		<button class="followButton" name = "${ songsToShow.user.username }" onclick="follow(this.name)" >Follow</button>
 					        </c:if>
 					        
 					        <c:if test="${ sessionUser.followedIds[songsToShow.user.userID] }">

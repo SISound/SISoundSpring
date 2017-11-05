@@ -696,7 +696,7 @@ input[type=number]{
 	position: fixed;
 	height: 1200px;
 	width: 1400px;
-	margin-top: -70%;
+	margin-top: 40%;
 	color: white;
 	background: rgba(255, 255, 255, 0.2);
 	z-index: 0;
@@ -773,6 +773,7 @@ input[type=number]{
 	color: rgba(92,168,214,1);
 	border-color: rgba(92,168,214,1);
 	cursor: pointer;
+
 }
 /* .addToTd{ */
 /* 	height: auto; */

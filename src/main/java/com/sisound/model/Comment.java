@@ -8,14 +8,14 @@ import java.util.TreeSet;
 public class Comment implements Comparable<Comment>, Actionable{
 
 	private long commentId;
-	private User user;
+	private String user;
 	private String text;
 	private LocalDateTime date;
 	private TreeSet<Comment> subcoments;
 	private Comment parentComment;
 	private HashMap<Actions, HashSet<User>> likes;
 	
-	public Comment(User user, String text, LocalDateTime date, Comment parentComment) {
+	public Comment(String user, String text, LocalDateTime date, Comment parentComment) {
 		this.user = user;
 		this.text = text;
 		this.date = date;
@@ -28,13 +28,13 @@ public class Comment implements Comparable<Comment>, Actionable{
 		this.likes.put(Actions.LIKE, new HashSet<>());
 	}
 	
-	public Comment(long commentId, User user, String text, LocalDateTime date, Comment parentComment, TreeSet<Comment> subComments) {
+	public Comment(long commentId, String user, String text, LocalDateTime date, Comment parentComment, TreeSet<Comment> subComments) {
 		this(user, text, date, parentComment);
 		this.commentId = commentId;
 		this.subcoments = subComments;
 	}
 
-	public User getUser() {
+	public String getUser() {
 		return user;
 	}
 
@@ -64,7 +64,7 @@ public class Comment implements Comparable<Comment>, Actionable{
 	
 	@Override
 	public int compareTo(Comment o) {
-		return this.date.compareTo(o.getDate());
+		return o.getDate().compareTo(this.getDate());
 	}
 
 	@Override
@@ -91,4 +91,6 @@ public class Comment implements Comparable<Comment>, Actionable{
 	public void setLikes(HashMap<Actions, HashSet<User>> likes) {
 		this.likes = likes;
 	}
+	
+
 }

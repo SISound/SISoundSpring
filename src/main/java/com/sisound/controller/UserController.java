@@ -157,7 +157,7 @@ public class UserController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return "playlist";
+		return "comments";
 	}
 	
 	//get edit profile page

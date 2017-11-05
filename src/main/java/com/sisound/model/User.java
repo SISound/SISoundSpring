@@ -268,4 +268,5 @@ public class User {
 	public void setFollowedIds(HashMap<Long, Boolean> followedIds) {
 		this.followedIds = followedIds;
 	}
+	
 }

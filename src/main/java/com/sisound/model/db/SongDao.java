@@ -114,7 +114,7 @@ public class SongDao {
 		return songs;
 	}
 	
-	public synchronized TreeMap<LocalDateTime, Song> getSongsForPlaylist(long playlistId) throws SQLException{
+	public synchronized TreeMap<LocalDateTime, Song> getSongsForPlaylist(long playlistId, User u) throws SQLException{
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("SELECT s.song_id, s.song_name, s.upload_date, s.listenings, u.user_name, mg.genre_title, s.song_url, ps.upload_date "
 			                                      + "FROM playlists_songs as ps JOIN songs as s ON ps.song_id = s.song_id "
@@ -125,7 +125,8 @@ public class SongDao {
 		ResultSet rs=stmt.executeQuery();
 		TreeMap<LocalDateTime, Song> songs=new TreeMap<>();
 		while(rs.next()){
-			songs.put(rs.getTimestamp(8).toLocalDateTime(), new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4), userDao.getUser(rs.getString(5)),
+			songs.put(rs.getTimestamp(8).toLocalDateTime(), new Song(rs.getLong(1), rs.getString(2), rs.getTimestamp(3).toLocalDateTime(), rs.getInt(4),
+					(u.getUsername() != rs.getString(5) ? u : userDao.getUser(rs.getString(5))),
 					  rs.getString(7), rs.getString(6), actionsDao.getActions(true, rs.getLong(1)), commentDao.getComments(rs.getLong(1), true)));
 		}
 		
