@@ -6,6 +6,8 @@ body {
     background-color: lightblue;
 }
 
+
+
 #ap-0, #ap-1, #ap-2, #ap-3, #ap-mix {
   box-sizing: content-box;
   display: block;
@@ -349,5 +351,5 @@ body {
 /*     border: 1px solid #ccc; */
 /*     background-color: #f3f3f3; */
 
-	margin-right: 15%;
+	margin-right: 13%;
 }

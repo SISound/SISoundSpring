@@ -16,7 +16,10 @@
 <body>
 
 	<script src="<c:url value="js/playlist.js" />"  type ="text/javascript"></script>
-	<jsp:include page="headerLogged.jsp"></jsp:include>
+	
+	<div id = "header">
+		<jsp:include page="headerLogged.jsp"></jsp:include>
+	</div>
 	
 	
 		<h3 class="heading-medium"> Playlist: ${ playlist.title }</h3>

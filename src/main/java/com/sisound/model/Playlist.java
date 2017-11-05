@@ -116,6 +116,9 @@ public class Playlist implements Comparable<Playlist>, Actionable {
 		return false;
 	}
 
+	public boolean getIsSong() {
+		return false;
+	}
 
 	@Override
 	public boolean isComment() {

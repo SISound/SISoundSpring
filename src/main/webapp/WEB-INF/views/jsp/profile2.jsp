@@ -151,10 +151,10 @@
 		<div id="Playlists" class="tabcontent">
 		  <c:forEach items="${ modelUser.playlists}" var="playlist">
 		  		<c:if test="${ playlist.isPrivate && modelUser.username == sessionUser.username}">
-		  			<a class="heading-small" href="playlist=${ playlist.id }"><c:out value="${ playlist.title }"></c:out></a><br>	
+		  			<a class="heading-small" href="playlist?id=${ playlist.id }"><c:out value="${ playlist.title }"></c:out></a><br>	
 		  		</c:if>
 		  		<c:if test="${ !playlist.isPrivate }">
-		  			<a class="heading-small" href="playlist=${ playlist.id }"><c:out value="${ playlist.title }"></c:out></a><br>	
+		  			<a class="heading-small" href="playlist?id=${ playlist.id }"><c:out value="${ playlist.title }"></c:out></a><br>	
 		  		</c:if>
 
 		  </c:forEach>

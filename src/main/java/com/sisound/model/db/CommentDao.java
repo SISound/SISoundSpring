@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.TreeSet;
@@ -22,17 +21,29 @@ public class CommentDao {
 	
 	public synchronized void insertComment(Comment comment, Actionable commented) throws SQLException{
 		Connection con = DBManager.getInstance().getConnection();
-		PreparedStatement stmt = con.prepareStatement("INSERT INTO ? user_id, comment_text, upload_date, song_id, parent_id) "
-				                                  + "VALUES (?, ?, ?, ?, ?)", Statement.RETURN_GENERATED_KEYS);
-		stmt.setString(1, commented.isSong() ? "songs_comments" : "playlists_comments");
-		stmt.setLong(2, comment.getUser().getUserID());
-		stmt.setString(3, comment.getText());
-		stmt.setTimestamp(4, Timestamp.valueOf(comment.getDate()));
-		stmt.setLong(5, commented.getId());
-		stmt.setLong(6, comment.getParentComment().getId());
-		ResultSet rs = stmt.executeQuery();
-		rs.next();
-		commented.setId(rs.getInt(1));
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO " + (commented.isSong() ? "songs_comments" : "playlists_comments")
+													+" (user_id, comment_text, upload_date, " + (commented.isSong() ? "song_id" : "playlist_id")
+													+ ") VALUES (?, ?, ?, ?)");
+		
+		stmt.setLong(1, userDao.getUser(comment.getUser()).getUserID());
+		stmt.setString(2, comment.getText());
+		stmt.setTimestamp(3, Timestamp.valueOf(comment.getDate()));
+		stmt.setLong(4, commented.getId());
+		stmt.executeUpdate();
+	}
+	
+	public synchronized void insertSubComment(Comment comment, Actionable commented, long parentId) throws SQLException{
+		Connection con = DBManager.getInstance().getConnection();
+		PreparedStatement stmt = con.prepareStatement("INSERT INTO " + (commented.isSong() ? "songs_comments" : "playlists_comments")
+													+" (user_id, comment_text, upload_date, " + (commented.isSong() ? "song_id" : "playlist_id")
+													+ ", parent_id) VALUES (?, ?, ?, ?, ?)");
+		
+		stmt.setLong(1, userDao.getUser(comment.getUser()).getUserID());
+		stmt.setString(2, comment.getText());
+		stmt.setTimestamp(3, Timestamp.valueOf(comment.getDate()));
+		stmt.setLong(4, commented.getId());
+		stmt.setLong(5, parentId);
+		stmt.executeUpdate();
 	}
 	
 	
@@ -64,7 +75,7 @@ public class CommentDao {
 		HashMap<Long, Comment> mainComments = new HashMap<>();
 		
 		while (rs.next()) {
-			mainComments.put(rs.getLong(1), new Comment(rs.getLong(1), userDao.getUser(rs.getString(2)), 
+			mainComments.put(rs.getLong(1), new Comment(rs.getLong(1), rs.getString(2), 
 					rs.getString(3), rs.getTimestamp(4).toLocalDateTime(), null, new TreeSet())); 
 		}
 		
@@ -88,7 +99,7 @@ public class CommentDao {
 		}
 		
 		while (rs.next()) {
-			mainComments.get(rs.getLong(5)).addSubcomment(new Comment(rs.getLong(1), userDao.getUser(rs.getString(2)), 
+			mainComments.get(rs.getLong(5)).addSubcomment(new Comment(rs.getLong(1), rs.getString(2), 
 					rs.getString(3), rs.getTimestamp(4).toLocalDateTime(), mainComments.get(rs.getLong(5)), new TreeSet()));
 		}
 
@@ -110,4 +121,5 @@ public class CommentDao {
 		
 		stmt.execute();
 	}
+	
 }

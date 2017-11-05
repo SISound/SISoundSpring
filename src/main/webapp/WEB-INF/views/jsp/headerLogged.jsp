@@ -34,13 +34,13 @@
 			
 			<c:if test="${ sessionUser == null }">
 				<a class = "headerText" href="loginPage">Login</a>
-				<a class = "headerText" href="index">Home</a>			
+				<a class = "headerText" href="index">TOP chart</a>			
 			</c:if>
 			
 			<c:if test="${ sessionUser != null }">
 
 				<a class = "headerTextLogged" href="index">TOP chart</a>
-				<a class = "streamHeader" href="homeButton">Stream</a>
+				<a class = "streamHeader" href="recent">Stream</a>
 				
 				<div class="dropdown">
 					<table>
