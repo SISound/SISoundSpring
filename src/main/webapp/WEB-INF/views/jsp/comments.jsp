@@ -237,6 +237,7 @@
 					</div>
 				</div>
 	        	
+<!-- 	        	subcomments -->
 	        	<c:forEach items="${ comment.subcoments }" var="subcomment">
 		        	<div class="commentreplyfield">
 		        		<img src="getPic${ subcomment.user }" class="comment-avatar">
@@ -245,8 +246,59 @@
 			                <c:out value="${ subcomment.text }"></c:out>
 			                <div class="comment-date"> <c:out value="${ subcomment.date }"></c:out> </div>
 			            </div>
-			            <button class="comment-like" id="${ comment.id }" value="${ comment.id }" onclick="showDiv(this.id)">like</button>
-		           		 <button class="comment-dislike" id="${ comment.id }" value="${ comment.id }" onclick="showDiv(this.id)">dislike</button>
+			            
+			            
+			            <!-- 		            if is song -->
+			            <c:if test="${ commentable.isSong }">
+	<!-- 		            	likes -->
+			            	<c:if test="${ sessionUser.likedSongComments[subcomment.id] }">
+								<button class="comment-like" id="l${ subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, true )">Unlike</button>
+							</c:if>
+							<c:if test="${ !sessionUser.likedSongComments[subcomment.id] }">
+								<button class="comment-like" id="l${subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, true )">Like</button>
+							</c:if>	
+							
+			            	<input id="lcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.likesCount }">
+	<!-- 		            	dislikes -->
+			            	<c:if test="${ sessionUser.dislikedSongComments[subcomment.id] }">
+								<button class="comment-dislike" id="d${ subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, true )">Undislike</button>
+							</c:if>
+							<c:if test="${ !sessionUser.dislikedSongComments[subcomment.id] }">
+								<button class="comment-dislike" id="d${subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, true )">Dislike</button>
+							</c:if>	
+			            	   
+			            	 <input class="comment-dislike" id="dcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.dislikesCount }">
+			            	   
+			            </c:if>
+			            
+	<!-- 		            if is playlist -->
+			            <c:if test="${ !commentable.isSong }">
+	<!-- 		            	likes -->
+			            	<c:if test="${ sessionUser.likedPlaylistComments[subcomment.id] }">
+								<button class="comment-like" id="l${ subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, false )">Unlike</button>
+							</c:if>
+							<c:if test="${ !sessionUser.likedPlaylistComments[subcomment.id] }">
+								<button class="comment-like" id="l${subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, false )">Like</button>
+							</c:if>	
+							
+			            	<input id="lcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.likesCount }">
+	<!-- 		            	dislikes -->
+			            	<c:if test="${ sessionUser.dislikedPlaylistComments[subcomment.id] }">
+								<button class="comment-dislike" id="d${ subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, false )">Undislike</button>
+							</c:if>
+							<c:if test="${ !sessionUser.dislikedPlaylistComments[subcomment.id] }">
+								<button class="comment-dislike" id="d${subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, false )">Dislike</button>
+							</c:if>	
+			            	   
+			            	 <input id="dcnt${subcomment.id }" type="number" min="0" onkeydown="return false" value="${subcomment.dislikesCount }">
+	
+			            </c:if>
+			            
+			            
+			            
+			            
+<%-- 			            <button class="comment-like" id="${ comment.id }" value="${ comment.id }" onclick="showDiv(this.id)">like</button> --%>
+<%-- 		           		 <button class="comment-dislike" id="${ comment.id }" value="${ comment.id }" onclick="showDiv(this.id)">dislike</button> --%>
 	       			 </div>
 	        	</c:forEach>
 			</c:forEach>     
