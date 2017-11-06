@@ -4,13 +4,31 @@ import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.TreeSet;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class User {
 
 	private long userID;
 	private String firstName;
 	private String lastName;
+	@NotNull
+	@Size(min = 3, max = 45)
+	@NotEmpty
+	@Pattern(regexp = "[^\\s]+")
 	private String username;
+	@NotNull
+	@Size(min=8)	
+//	@Pattern(regexp="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&*+=])(?=\\S+$).{8,}")
 	private String password;
+	@NotNull
+	@NotEmpty
+	@Email
+	@Pattern(regexp = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$")
 	private String email;
 	private String city;
 	private String country;
@@ -199,7 +217,7 @@ public class User {
 	}
 	
 	public void setUsername(String username) {
-		this.username = username;
+		this.username = username.trim();
 	}
 
 	public void setFirstName(String firstName) {

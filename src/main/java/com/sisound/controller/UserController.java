@@ -13,11 +13,13 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,8 +64,17 @@ public class UserController {
 
 	
 	@RequestMapping(value="registerUser", method = RequestMethod.POST)
-	public String saveUser(@ModelAttribute User u, HttpServletRequest request, HttpSession session){
+	public String saveUser(HttpServletRequest request, HttpSession session, @Valid @ModelAttribute("user") User u, BindingResult bindingResult, Model viewModel ){
 				
+		if (bindingResult.hasErrors()) {
+			viewModel.addAttribute("error", "Could not create profile. Please, enter a valid username and password!");
+			
+			User user = new User();
+			
+			viewModel.addAttribute("user", user);
+			
+            return "logReg";
+	 	}
 		try {
 			if(!userDao.usernameExists(u.getUsername()) && !userDao.emailExists(u.getEmail())){
 				userDao.insertUser(u);
@@ -74,10 +85,12 @@ public class UserController {
 			} 
 			else if(userDao.usernameExists(u.getUsername())){
 				request.setAttribute("error", "Username is already taken");
+				viewModel.addAttribute("user", new User());
 				return "logReg";
 			} 
 			else {
 				request.setAttribute("error", "E-mail already in use");
+				viewModel.addAttribute("user", new User());
 				return "logReg";
 			}
 		} catch (SQLException e) {

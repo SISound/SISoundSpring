@@ -87,7 +87,7 @@ public class PlaylistDao {
 		Connection con=DBManager.getInstance().getConnection();
 		PreparedStatement stmt=con.prepareStatement("SELECT p.playlist_id, p.playlist_name, u.user_name, p.upload_date, p.isPrivate "
 												  + "FROM playlists as p JOIN users as u ON p.user_id=u.user_id "
-												  + "WHERE p.playlist_name LIKE ?");
+												  + "WHERE p.playlist_name LIKE ? AND p.isPrivate = 0");
 		stmt.setString(1, "%" + search + "%");
 		ResultSet rs = stmt.executeQuery();
 		HashSet<Playlist> playlists=new HashSet<>();

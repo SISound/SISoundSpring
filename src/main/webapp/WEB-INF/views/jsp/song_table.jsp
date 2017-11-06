@@ -33,6 +33,7 @@
 	            if (this.readyState == 4 && this.status == 200) {
 	                var button1 = document.getElementById(id);
 	                button1.innerHTML = "Unlike";
+	                button1.style.backgroundColor  = "rgba(156,203,231,0.9)";
 					var likeCntId = "lcnt" + value;
 					var dislikeCntId = "dcnt" + value;
 	                document.getElementById(likeCntId).value++;
@@ -41,6 +42,7 @@
 	                }
 	                var button = document.getElementById(dislikeId);
 	                button.innerHTML = "Dislike";
+	                button.style.backgroundColor  = "white";
 	            }
 	            else
 	            if (this.readyState == 4 && this.status == 401) {
@@ -59,6 +61,7 @@
 	            if (this.readyState == 4 && this.status == 200) {
 	                var button = document.getElementById(id);
 	                button.innerHTML = "Like";
+	                button.style.backgroundColor  = "white";
 					var likeCntId = "lcnt" + value;
 	                if(document.getElementById(likeCntId).value > 0){
 	                    document.getElementById(likeCntId).value--;
@@ -93,6 +96,7 @@
 				if (this.readyState == 4 && this.status == 200) {
 					var button = document.getElementById(id);
 					button.innerHTML = "Undislike";
+					button.style.backgroundColor  = "rgba(156,203,231,0.9)";
 					var likeCntId = "lcnt" + value;
 					var dislikeCntId = "dcnt" + value;
 					document.getElementById(dislikeCntId).value++;
@@ -101,6 +105,7 @@
 					}
 					var button=document.getElementById(likedId);
 					button.innerHTML="Like";
+					button.style.backgroundColor  = "white";
 				}
 				else if (this.readyState == 4 && this.status == 401) {
 					alert("Sorry, you have to log in to dislike this song!");
@@ -118,6 +123,7 @@
 				if (this.readyState == 4 && this.status == 200) {
 					var button = document.getElementById(id);
 					button.innerHTML = "Dislike";
+					button.style.backgroundColor  = "white";
 					var dislikeCntId = "dcnt" + value;
 					if(document.getElementById(dislikeCntId).value > 0){
 						document.getElementById(dislikeCntId).value--;

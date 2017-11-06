@@ -36,7 +36,11 @@
 		    <label for="toggle--signup" class="text text--small text--centered">New? <b>Sign up</b></label>
 		  </form>
 		  
-				  
+			
+<%-- 		<c:if test="${register!=null}"> --%>
+<%-- 		 <label style="color: red"><c:out value="${register}"/></label> --%>
+<%-- 	  	</c:if> --%>
+	  		  
 		  <form class="form form--signup framed" action = "registerUser" method = POST>
 		  	<f:form commandName="user" >
 				<f:input type="text" placeholder="Username" class="input input--top" path="username" required=""/><br>
