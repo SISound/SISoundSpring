@@ -23,6 +23,7 @@
 						<select name="searchType" class = "searchDropdown">
 							<option value="song" selected="selected">Song</option>
 							<option value="user">User</option>
+							<option value="playlist">Playlist</option>
 						</select>
 				
 						<input id="input" type="text" placeholder="Search" name="search" class="header-input desktop-only" />

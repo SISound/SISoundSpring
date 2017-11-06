@@ -21,8 +21,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonArrayFormatVisitor;
 import com.google.gson.JsonArray;
+import com.sisound.model.Playlist;
 import com.sisound.model.Song;
 import com.sisound.model.User;
+import com.sisound.model.db.PlaylistDao;
 import com.sisound.model.db.SongDao;
 import com.sisound.model.db.UserDao;
 
@@ -34,6 +36,8 @@ public class SearchController {
 	SongDao songDao;
 	@Autowired
 	UserDao userDao;
+	@Autowired
+	PlaylistDao playlistDao;
 	
 	@RequestMapping(value="searchsong", method=RequestMethod.GET)
 	public String searchSongs(Model model,  @RequestParam(value = "value") String input){
@@ -69,6 +73,22 @@ public class SearchController {
 		}
 		
 		return "userSearch";
+	}
+	
+	@RequestMapping(value="/searchplaylist", method=RequestMethod.GET)
+	public String searchPlaylist(Model model, @RequestParam(value="value") String input){
+		try {
+			HashSet<Playlist> playlists = playlistDao.searchPlaylist(input);
+			if(playlists!=null){
+				model.addAttribute("searchedPlaylists", playlists);
+				model.addAttribute("searched", input);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "playlistSearch";
 	}
 	
 	@RequestMapping(value="search", method=RequestMethod.GET)

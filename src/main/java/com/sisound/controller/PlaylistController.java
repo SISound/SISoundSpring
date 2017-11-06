@@ -75,13 +75,8 @@ public class PlaylistController {
 		
 		try {
 			Playlist pl = playlistDao.searchPlaylistById(id);
-			//TreeMap<LocalDateTime, Song> playlist = songDao.getSongsForPlaylist(x);
 			model.addAttribute("commentable", pl);
-//			TreeSet<Comment> comments = pl.getComments();
-//			model.addAttribute("comments", comments);
 
-//			model.addAttribute("modelUser", playlist.getUser());
-//			session.setAttribute("songProfile", song.getUrl());
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "errorPage";

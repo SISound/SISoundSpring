@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
-
+import java.util.HashSet;
 import java.util.TreeSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -81,6 +81,25 @@ public class PlaylistDao {
 		ResultSet rs=stmt.executeQuery();
 		rs.next();
 		return rs.getLong(1);
+	}
+	
+	public synchronized HashSet<Playlist> searchPlaylist(String search) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT p.playlist_id, p.playlist_name, u.user_name, p.upload_date, p.isPrivate "
+												  + "FROM playlists as p JOIN users as u ON p.user_id=u.user_id "
+												  + "WHERE p.playlist_name LIKE ?");
+		stmt.setString(1, "%" + search + "%");
+		ResultSet rs = stmt.executeQuery();
+		HashSet<Playlist> playlists=new HashSet<>();
+		while(rs.next()){
+			User tmp = new User();
+			tmp.setUsername("");
+			playlists.add(new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(4).toLocalDateTime(), userDao.getUser(rs.getString(3)),
+				                actionsDao.getActions(false, rs.getLong(1)), commentDao.getComments(rs.getLong(1), false), 
+				                rs.getBoolean(5),songDao.getSongsForPlaylist(rs.getLong(1), tmp)));
+		}
+		
+		return playlists;
 	}
 	
 	public synchronized Playlist searchPlaylistById(Long id) throws SQLException{
