@@ -44,7 +44,7 @@
 	            }
 	            else
 	            if (this.readyState == 4 && this.status == 401) {
-	                alert("Sorry, you must log in to like this song!");
+	                alert("Sorry, you have to log in to like this song!");
 	            }
 	                
 	        }
@@ -65,7 +65,7 @@
 	                }
 	            }
 	            else if (this.readyState == 4 && this.status == 401) {
-	                    alert("Sorry, you must log in to unlike this song!");
+	                    alert("Sorry, you have to log in to unlike this song!");
 	                }
 	        }
 	        request.open("post", "restUnlikeSong?songId=" + value, true);
@@ -103,7 +103,7 @@
 					button.innerHTML="Like";
 				}
 				else if (this.readyState == 4 && this.status == 401) {
-					alert("Sorry, you must log in to dislike this song!");
+					alert("Sorry, you have to log in to dislike this song!");
 				}
 					
 			}
@@ -125,7 +125,7 @@
 				}
 				else
 				if (this.readyState == 4 && this.status == 401) {
-					alert("Sorry, you must log in to undislike this song!");
+					alert("Sorry, you have to log in to undislike this song!");
 				}
 					
 			}
@@ -216,15 +216,15 @@
 <!-- 					        		<button class="followButton" >Follow</button> -->
 <!-- 					        	</form> -->
 <%-- 					        </c:if> --%>
-					        <c:if test="${ songsToShow.user.username != sessionUser.username || !sessionUser.followedIds[songsToShow.user.userID] }">
-					        		<button class="followButton" name = "${ songsToShow.user.username }" onclick="follow(this.name)" >Follow</button>
-					        </c:if>
+<%-- 					        <c:if test="${ songsToShow.user.username != sessionUser.username || !sessionUser.followedIds[songsToShow.user.userID] }"> --%>
+<%-- 					        		<button class="followButton" name = "${ songsToShow.user.username }" onclick="follow(this.name)" >Follow</button> --%>
+<%-- 					        </c:if> --%>
 					        
-					        <c:if test="${ sessionUser.followedIds[songsToShow.user.userID] }">
-					        	<form method = POST action="unfollow?user=${songsToShow.user.userID}&name=${songsToShow.user.username}">
-					        		<button class="unfollowButton" >Unfollow</button>
-					        	</form>
-					        </c:if>
+<%-- 					        <c:if test="${ sessionUser.followedIds[songsToShow.user.userID] }"> --%>
+<%-- 					        	<form method = POST action="unfollow?user=${songsToShow.user.userID}&name=${songsToShow.user.username}"> --%>
+<!-- 					        		<button class="unfollowButton" >Unfollow</button> -->
+<!-- 					        	</form> -->
+<%-- 					        </c:if> --%>
 					        
 							       	<button class="addToPlaylist" value="${songsToShow.id }" onclick="showDiv(this.value)">&#8801 Add to playlist</button>
 <%-- 					      		<button class="actionButton" id="shareButton" value="${ songsToShow.id }" >&#10609Share</button> --%>
@@ -234,12 +234,12 @@
 								
 <!-- 									like/unlike -->
 									<c:if test="${ sessionUser.likedSongs[songsToShow.id] }">
-										<button class="actionButtonClicked" id="l${ songsToShow.id }" value="${songsToShow.id }" onclick="handleLike( this.id )">Unlike</button>
+										<button class="likeButtonClicked" id="l${ songsToShow.id }" value="${songsToShow.id }" onclick="handleLike( this.id )">Unlike</button>
 									</c:if>
 									<c:if test="${ !sessionUser.likedSongs[songsToShow.id] }">
-										<button class="actionButton" id="l${songsToShow.id }" value="${songsToShow.id }" onclick="handleLike( this.id )">Like</button>
+										<button class="likeButton" id="l${songsToShow.id }" value="${songsToShow.id }" onclick="handleLike( this.id )">Like</button>
 									</c:if>
-									<input id="lcnt${songsToShow.id }" type="number" min="0" onkeydown="return false" value="${ songsToShow.likesCount }">
+									<input class="likeCounter" id="lcnt${songsToShow.id }" type="number" min="0" onkeydown="return false" value="${ songsToShow.likesCount }">
 									
 <!-- 									dislike/undislike -->
 									<c:if test="${sessionUser.dislikedSongs[songsToShow.id]}">
@@ -248,7 +248,7 @@
 									<c:if test="${!sessionUser.dislikedSongs[songsToShow.id]}">
 										<button class="actionButton" id="d${songsToShow.id }" value="${songsToShow.id }" onclick="handleDislike( this.id )">Dislike</button>
 									</c:if>
-									<input id="dcnt${songsToShow.id }" type="number" min="0" onkeydown="return false" value="${modelSong.dislikesCount }">
+									<input class="dislikeCounter" id="dcnt${songsToShow.id }" type="number" min="0" onkeydown="return false" value="${songsToShow.dislikesCount }">
 
 									<button class="actionButton" >&#128172Comment</button>
 								</div>

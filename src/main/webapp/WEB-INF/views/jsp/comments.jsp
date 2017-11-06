@@ -20,6 +20,128 @@
 		        x.style.display = "none";
 		    }
 		}
+		
+		//like/unlike
+	    function handleLike(id, isSong){
+	        var button = document.getElementById(id);
+	        var value=button.value;
+	        var title = button.innerHTML;
+	        if(title =="Like"){
+	            likeComment(value, id, isSong);
+	        }
+	        else{
+	            unlikeComment(value, id, isSong);
+	        }
+	    }
+	
+	    function likeComment(value, id, isSong) {
+	        var request = new XMLHttpRequest();
+	        var dislikeId = "d" + value;
+
+	        request.onreadystatechange = function() {
+	            //when response is received
+	            if (this.readyState == 4 && this.status == 200) {
+	                var button1 = document.getElementById(id);
+	                button1.innerHTML = "Unlike";
+					var likeCntId = "lcnt" + value;
+					var dislikeCntId = "dcnt" + value;
+	                document.getElementById(likeCntId).value++;
+	                if(document.getElementById(dislikeCntId).value>0){
+	                    document.getElementById(dislikeCntId).value--;
+	                }
+	                var button = document.getElementById(dislikeId);
+	                button.innerHTML = "Dislike";
+	            }
+	            else
+	            if (this.readyState == 4 && this.status == 401) {
+	                alert("Sorry, you have to log in to like this song!");
+	            }
+	                
+	        }
+	        request.open("post", "restLikeComment?commentId=" + value + "&isSong=" + isSong, true);
+	        request.send();
+	    }
+	    
+	    function unlikeComment(value, id, isSong) {
+	        var request = new XMLHttpRequest();
+	        request.onreadystatechange = function() {
+	            //when response is received
+	            if (this.readyState == 4 && this.status == 200) {
+	                var button = document.getElementById(id);
+	                button.innerHTML = "Like";
+					var likeCntId = "lcnt" + value;
+	                if(document.getElementById(likeCntId).value > 0){
+	                    document.getElementById(likeCntId).value--;
+	                }
+	            }
+	            else if (this.readyState == 4 && this.status == 401) {
+	                    alert("Sorry, you have to log in to unlike this song!");
+	                }
+	        }
+	        request.open("post", "restUnlikeComment?commentId=" + value + "&isSong=" + isSong, true);
+	        request.send();
+	    }
+		
+		//dislike/undislike
+		function handleDislike(id, isSong) {
+			var button = document.getElementById(id);
+			var value = button.value;
+			var title = button.innerHTML;
+			if(title =="Dislike"){
+				dislikeComment(value, id, isSong);
+			}
+			else{
+				undislikeComment(value, id, isSong);
+			}
+		}
+		
+		function dislikeComment(value, id, isSong) {
+			var request = new XMLHttpRequest();
+			var likedId = "l" + value;
+			
+			request.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById(id);
+					button.innerHTML = "Undislike";
+					var likeCntId = "lcnt" + value;
+					var dislikeCntId = "dcnt" + value;
+					document.getElementById(dislikeCntId).value++;
+					if(document.getElementById(likeCntId).value > 0){
+						document.getElementById(likeCntId).value--;
+					}
+					var button=document.getElementById(likedId);
+					button.innerHTML="Like";
+				}
+				else if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you have to log in to dislike this song!");
+				}
+					
+			}
+			 request.open("post", "restDislikeComment?commentId=" + value + "&isSong=" + isSong, true);
+			request.send();
+		}
+		
+		function undislikeComment(value, id, isSong){
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				//when response is received
+				if (this.readyState == 4 && this.status == 200) {
+					var button = document.getElementById(id);
+					button.innerHTML = "Dislike";
+					var dislikeCntId = "dcnt" + value;
+					if(document.getElementById(dislikeCntId).value > 0){
+						document.getElementById(dislikeCntId).value--;
+					}
+				}
+				else
+				if (this.readyState == 4 && this.status == 401) {
+					alert("Sorry, you have to log in to undislike this song!");
+				}
+					
+			}
+			request.open("post", "restUndislikeComment?commentId=" + value + "&isSong=" + isSong, true);
+			request.send();
+		}
 	</script>	
 	
 	<body>
@@ -50,7 +172,53 @@
 		                <div class="comment-date"> <c:out value="${ comment.date }"></c:out> </div>
 		            </div>
 		            <button class="comment-reply" id="${ comment.id }" value="${ comment.id }" onclick="showDiv(this.id)">reply</button>
-<!-- 		            <a onclick="showDiv() class="comment-reply"></a> -->
+		            
+<!-- 		            if is song -->
+		            <c:if test="${ commentable.isSong }">
+<!-- 		            	likes -->
+		            	<c:if test="${ sessionUser.likedSongComments[comment.id] }">
+							<button class="comment-like" id="l${ comment.id }" value="${comment.id }" onclick="handleLike( this.id, true )">Unlike</button>
+						</c:if>
+						<c:if test="${ !sessionUser.likedSongComments[comment.id] }">
+							<button class="comment-like" id="l${comment.id }" value="${comment.id }" onclick="handleLike( this.id, true )">Like</button>
+						</c:if>	
+						
+		            	<input id="lcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.likesCount }">
+<!-- 		            	dislikes -->
+		            	<c:if test="${ sessionUser.dislikedSongComments[comment.id] }">
+							<button class="comment-dislike" id="d${ comment.id }" value="${comment.id }" onclick="handleDislike( this.id, true )">Undislike</button>
+						</c:if>
+						<c:if test="${ !sessionUser.dislikedSongComments[comment.id] }">
+							<button class="comment-dislike" id="d${comment.id }" value="${comment.id }" onclick="handleDislike( this.id, true )">Dislike</button>
+						</c:if>	
+		            	   
+		            	 <input class="comment-dislike" id="dcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.dislikesCount }">
+		            	   
+		            </c:if>
+		            
+<!-- 		            if is playlist -->
+		            <c:if test="${ !commentable.isSong }">
+<!-- 		            	likes -->
+		            	<c:if test="${ sessionUser.likedPlaylistComments[comment.id] }">
+							<button class="comment-like" id="l${ comment.id }" value="${comment.id }" onclick="handleLike( this.id, false )">Unlike</button>
+						</c:if>
+						<c:if test="${ !sessionUser.likedPlaylistComments[comment.id] }">
+							<button class="comment-like" id="l${comment.id }" value="${comment.id }" onclick="handleLike( this.id, false )">Like</button>
+						</c:if>	
+						
+		            	<input id="lcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.likesCount }">
+<!-- 		            	dislikes -->
+		            	<c:if test="${ sessionUser.dislikedPlaylistComments[comment.id] }">
+							<button class="comment-dislike" id="d${ comment.id }" value="${comment.id }" onclick="handleDislike( this.id, false )">Undislike</button>
+						</c:if>
+						<c:if test="${ !sessionUser.dislikedPlaylistComments[comment.id] }">
+							<button class="comment-dislike" id="d${comment.id }" value="${comment.id }" onclick="handleDislike( this.id, false )">Dislike</button>
+						</c:if>	
+		            	   
+		            	 <input id="dcnt${comment.id }" type="number" min="0" onkeydown="return false" value="${comment.dislikesCount }">
+
+		            </c:if>
+		           
 	        	</div>
 	        	
 	      		<div  id="r${ comment.id }" style="display: none;" class="wrapper">
@@ -69,6 +237,7 @@
 					</div>
 				</div>
 	        	
+<!-- 	        	subcomments -->
 	        	<c:forEach items="${ comment.subcoments }" var="subcomment">
 		        	<div class="commentreplyfield">
 		        		<img src="getPic${ subcomment.user }" class="comment-avatar">
@@ -77,6 +246,59 @@
 			                <c:out value="${ subcomment.text }"></c:out>
 			                <div class="comment-date"> <c:out value="${ subcomment.date }"></c:out> </div>
 			            </div>
+			            
+			            
+			            <!-- 		            if is song -->
+			            <c:if test="${ commentable.isSong }">
+	<!-- 		            	likes -->
+			            	<c:if test="${ sessionUser.likedSongComments[subcomment.id] }">
+								<button class="comment-like" id="l${ subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, true )">Unlike</button>
+							</c:if>
+							<c:if test="${ !sessionUser.likedSongComments[subcomment.id] }">
+								<button class="comment-like" id="l${subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, true )">Like</button>
+							</c:if>	
+							
+			            	<input id="lcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.likesCount }">
+	<!-- 		            	dislikes -->
+			            	<c:if test="${ sessionUser.dislikedSongComments[subcomment.id] }">
+								<button class="comment-dislike" id="d${ subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, true )">Undislike</button>
+							</c:if>
+							<c:if test="${ !sessionUser.dislikedSongComments[subcomment.id] }">
+								<button class="comment-dislike" id="d${subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, true )">Dislike</button>
+							</c:if>	
+			            	   
+			            	 <input class="comment-dislike" id="dcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.dislikesCount }">
+			            	   
+			            </c:if>
+			            
+	<!-- 		            if is playlist -->
+			            <c:if test="${ !commentable.isSong }">
+	<!-- 		            	likes -->
+			            	<c:if test="${ sessionUser.likedPlaylistComments[subcomment.id] }">
+								<button class="comment-like" id="l${ subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, false )">Unlike</button>
+							</c:if>
+							<c:if test="${ !sessionUser.likedPlaylistComments[subcomment.id] }">
+								<button class="comment-like" id="l${subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, false )">Like</button>
+							</c:if>	
+							
+			            	<input id="lcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.likesCount }">
+	<!-- 		            	dislikes -->
+			            	<c:if test="${ sessionUser.dislikedPlaylistComments[subcomment.id] }">
+								<button class="comment-dislike" id="d${ subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, false )">Undislike</button>
+							</c:if>
+							<c:if test="${ !sessionUser.dislikedPlaylistComments[subcomment.id] }">
+								<button class="comment-dislike" id="d${subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, false )">Dislike</button>
+							</c:if>	
+			            	   
+			            	 <input id="dcnt${subcomment.id }" type="number" min="0" onkeydown="return false" value="${subcomment.dislikesCount }">
+	
+			            </c:if>
+			            
+			            
+			            
+			            
+<%-- 			            <button class="comment-like" id="${ comment.id }" value="${ comment.id }" onclick="showDiv(this.id)">like</button> --%>
+<%-- 		           		 <button class="comment-dislike" id="${ comment.id }" value="${ comment.id }" onclick="showDiv(this.id)">dislike</button> --%>
 	       			 </div>
 	        	</c:forEach>
 			</c:forEach>     

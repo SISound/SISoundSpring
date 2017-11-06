@@ -1,10 +1,7 @@
 package com.sisound.model;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.TreeSet;
 
 public class User {
@@ -26,6 +23,10 @@ public class User {
 	private HashMap<Long, Boolean> followedIds;
 	private HashMap<Long, Boolean> likedSongs;
 	private HashMap<Long, Boolean> dislikedSongs;
+	private HashMap<Long, Boolean> likedSongComments;
+	private HashMap<Long, Boolean> dislikedSongComments;
+	private HashMap<Long, Boolean> likedPlaylistComments;
+	private HashMap<Long, Boolean> dislikedPlaylistComments;
 		
 	public User(){}
 	//constructor for registering user
@@ -267,6 +268,102 @@ public class User {
 	
 	public void setFollowedIds(HashMap<Long, Boolean> followedIds) {
 		this.followedIds = followedIds;
+	}
+	
+	public HashMap<Long, Boolean> getDislikedPlaylistComments() {
+		return dislikedPlaylistComments;
+	}
+	
+	public HashMap<Long, Boolean> getDislikedSongComments() {
+		return dislikedSongComments;
+	}
+	
+	public HashMap<Long, Boolean> getLikedPlaylistComments() {
+		return likedPlaylistComments;
+	}
+	
+	public HashMap<Long, Boolean> getLikedSongComments() {
+		return likedSongComments;
+	}
+	
+	public void setDislikedPlaylistComments(HashMap<Long, Boolean> dislikedPlaylistComments) {
+		this.dislikedPlaylistComments = dislikedPlaylistComments;
+	}
+	
+	public void setDislikedSongComments(HashMap<Long, Boolean> dislikedSongComments) {
+		this.dislikedSongComments = dislikedSongComments;
+	}
+	
+	public void setLikedPlaylistComments(HashMap<Long, Boolean> likedPlaylistComments) {
+		this.likedPlaylistComments = likedPlaylistComments;
+	}
+	
+	public void setLikedSongComments(HashMap<Long, Boolean> likedSongComments) {
+		this.likedSongComments = likedSongComments;
+	}
+	
+	public void addLikeSongComment(long songId) {
+		this.likedSongComments.put(songId, true);
+	}
+	
+	public void removeLikeSongComment(long songId) {
+		this.likedSongComments.put(songId, false);
+	}
+	
+	public void addDislikeSongComment(long songId) {
+		this.dislikedSongComments.put(songId, true);
+	}
+	
+	public void removeDislikeSongComment(long songId) {
+		this.dislikedSongComments.put(songId, false);
+	}
+	
+	public void addLikePlaylistComment(long songId) {
+		this.likedPlaylistComments.put(songId, true);
+	}
+	
+	public void removeLikePlaylistComment(long songId) {
+		this.likedPlaylistComments.put(songId, false);
+	}
+	
+	public void addDislikePlaylistComment(long songId) {
+		this.dislikedPlaylistComments.put(songId, true);
+	}
+	
+	public void removeDislikePlaylistComment(long songId) {
+		this.dislikedPlaylistComments.put(songId, false);
+	}
+	
+	public void removeCommentDislike(boolean isSong, long songCommentId) {
+		if(isSong) {
+			removeDislikeSongComment(songCommentId);
+		} else {
+			removeDislikePlaylistComment(songCommentId);
+		}	
+	}
+	
+	public void removeCommentLike(boolean isSong, long songCommentId) {
+		if(isSong) {
+			removeLikeSongComment(songCommentId);
+		} else {
+			removeLikePlaylistComment(songCommentId);
+		}	
+	}
+	
+	public void addCommentDislike(boolean isSong, long songCommentId) {
+		if(isSong) {
+			addDislikeSongComment(songCommentId);
+		} else {
+			addDislikePlaylistComment(songCommentId);
+		}	
+	}
+	
+	public void addCommentLike(boolean isSong, long songCommentId) {
+		if(isSong) {
+			addLikeSongComment(songCommentId);
+		} else {
+			addLikePlaylistComment(songCommentId);
+		}	
 	}
 	
 }

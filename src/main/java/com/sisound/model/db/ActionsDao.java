@@ -164,6 +164,41 @@ public class ActionsDao {
 		return actions;
 	}
 	
+	public synchronized HashMap<Actions, HashSet<String>> getCommentActions(boolean isSong, long id) throws SQLException {
+		
+		//creating the result map
+		HashMap<Actions, HashSet<String>> actions;
+		actions = new HashMap<>();
+		for (Actions act : Actions.values()) {
+			actions.put(act, new HashSet());
+		}
+		
+		Connection con = DBManager.getInstance().getConnection();
+
+		PreparedStatement stmt = null;
+		ResultSet rs=null;
+
+			//getting comment likes
+			stmt = con.prepareStatement("SELECT u.user_name FROM " + (isSong ? "song_comment_likes" : "playlist_comment_likes") + " as cl JOIN users as u ON cl.user_id = u.user_id WHERE cl.comment_id=?");
+			stmt.setLong(1, id);
+			
+		    rs = stmt.executeQuery();
+			while (rs.next()) {
+				actions.get(Actions.LIKE).add(rs.getString(1));
+			}
+			
+			//getting comment dislikes
+			stmt = con.prepareStatement("SELECT u.user_name FROM " + (isSong ? "song_comment_dislikes" : "playlist_comment_dislikes") + " as cl JOIN users as u ON cl.user_id = u.user_id WHERE cl.comment_id=?");
+			stmt.setLong(1, id);
+			rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				actions.get(Actions.DISLIKE).add(rs.getString(1));
+			}
+					
+		return actions;
+	}
+	
 	public synchronized HashMap<Actions, HashSet<String>> getCommentsLikes(long commentID) throws SQLException{
 		HashMap<Actions, HashSet<String>> commentLikes=new HashMap<>();
 		commentLikes.put(Actions.LIKE, new HashSet<>());
@@ -284,7 +319,6 @@ public class ActionsDao {
 		PreparedStatement stmt = con.prepareStatement("SELECT song_id, user_id FROM "
 													+ (isLike ? "songs_likes" : "songs_dislikes") +" WHERE user_id = ?");
 
-//		stmt.setString(1, isLike ? "songs_likes" : "songs_dislikes");
 		stmt.setLong(1, id);
 		ResultSet rs = stmt.executeQuery();
 		
@@ -297,5 +331,81 @@ public class ActionsDao {
 		return likedSongs;
 	}
 	
+	public synchronized  HashMap<Long, Boolean> getSongCommentsAction(long id, boolean isLike) throws SQLException {
+		Connection con = DBManager.getInstance().getConnection();
+		
+		PreparedStatement stmt = con.prepareStatement("SELECT comment_id, user_id FROM "
+													+ (isLike ? "song_comment_likes" : "song_comment_dislikes") +" WHERE user_id = ?");
 
+		stmt.setLong(1, id);
+		ResultSet rs = stmt.executeQuery();
+		
+		HashMap<Long, Boolean> likedSongsComments = new HashMap<>();
+		
+		while(rs.next()){
+			likedSongsComments.put(rs.getLong("comment_id"), true);
+		}
+		
+		return likedSongsComments;
+	}
+	
+	public synchronized  HashMap<Long, Boolean> getPlaylistCommentsAction(long id, boolean isLike) throws SQLException {
+		Connection con = DBManager.getInstance().getConnection();
+		
+		PreparedStatement stmt = con.prepareStatement("SELECT comment_id, user_id FROM "
+													+ (isLike ? "playlist_comment_likes" : "playlist_comment_dislikes") +" WHERE user_id = ?");
+
+		stmt.setLong(1, id);
+		ResultSet rs = stmt.executeQuery();
+		
+		HashMap<Long, Boolean> likedPlaylistComments = new HashMap<>();
+		
+		while(rs.next()){
+			likedPlaylistComments.put(rs.getLong("comment_id"), true);
+		}
+		
+		return likedPlaylistComments;
+	}
+
+	public synchronized void removeDislikeComment(boolean isSongComment, long actionableId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		
+		PreparedStatement stmt = con.prepareStatement("DELETE FROM " +  
+												(isSongComment? "song_comment_dislikes":"playlist_comment_dislikes") +
+												" WHERE comment_id=? AND user_id=?");
+		
+		stmt.setLong(1, actionableId);
+		stmt.setLong(2, userId);
+		stmt.executeUpdate();
+	}
+	
+	public synchronized void removeLikeComment(boolean isSongComment, long actionableId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		
+		PreparedStatement stmt = con.prepareStatement("DELETE FROM " +  
+												(isSongComment? "song_comment_likes":"playlist_comment_likes") +
+												" WHERE comment_id=? AND user_id=?");
+		
+		stmt.setLong(1, actionableId);
+		stmt.setLong(2, userId);
+		stmt.executeUpdate();
+	}
+	
+	public synchronized void likeComment(boolean isSongComment, long song_id, long user_id) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("INSERT INTO " + (isSongComment? "song_comment_likes":"playlist_comment_likes") + " (user_id, comment_id) VALUES (?, ?)");
+		
+		stmt.setLong(1, user_id);
+		stmt.setLong(2, song_id);
+		stmt.execute();
+	}
+	
+	public synchronized void dislikeComment(boolean isSongComment, long song_id, long user_id) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("INSERT INTO " + (isSongComment? "song_comment_dislikes":"playlist_comment_dislikes") + " (user_id, comment_id) VALUES (?, ?)");
+		
+		stmt.setLong(1, user_id);
+		stmt.setLong(2, song_id);
+		stmt.execute();
+	}
 }
