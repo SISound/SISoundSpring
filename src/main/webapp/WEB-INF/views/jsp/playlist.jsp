@@ -52,6 +52,7 @@
 		</c:if>
 		
 		<jsp:include page="comments.jsp"></jsp:include>
+		<jsp:include page="footer.jsp"></jsp:include>
 
 </body>
 </html>

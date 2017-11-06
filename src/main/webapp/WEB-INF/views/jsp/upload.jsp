@@ -143,5 +143,6 @@
 			    </fieldset>
 			    <input type="submit" value="Upload!" id="submit" />
 			</form>
+			<jsp:include page="footer.jsp"></jsp:include>
 	</body>
 </html>

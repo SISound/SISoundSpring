@@ -3,15 +3,9 @@ package com.sisound.controller;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.TreeSet;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -25,7 +19,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,16 +45,6 @@ public class UserController {
 	CountryDao countryDao;
 	@Autowired
 	ActionsDao actionDao;
-	
-
-	//register
-//	@RequestMapping(value="regPage", method = RequestMethod.GET)
-//	public String addUser(Model m){
-//		User u = new User();
-//		m.addAttribute("user", u);
-//		return "register";
-//	}
-
 	
 	@RequestMapping(value="registerUser", method = RequestMethod.POST)
 	public String saveUser(HttpServletRequest request, HttpSession session, @Valid @ModelAttribute("user") User u, BindingResult bindingResult, Model viewModel ){
@@ -107,7 +90,6 @@ public class UserController {
 		return "logReg";
 	}
 	
-	//TODO CHECK LOGIN
 	@RequestMapping(value="loginUser", method=RequestMethod.POST)
 	public String loginUser(HttpSession session, HttpServletRequest request, Model model){
 
@@ -122,9 +104,6 @@ public class UserController {
 				System.out.println(u.getUsername());
 				session.setAttribute("sessionUser", u);
 				session.setAttribute("logged", true);
-
-//				session.setAttribute("likedSongs", u.getLikedSongs());
-//				session.setAttribute("dislikedSongs", u.getDislikedSongs());
 									
 				return "redirect:/index";
 			}
@@ -133,8 +112,6 @@ public class UserController {
 				return "logReg";
 			}
 		} catch (SQLException e) {
-//			request.setAttribute("error", "database problem : " + e.getMessage());
-			System.out.println(e.getMessage());
 			return "errorPage";
 		}
 	}
@@ -143,15 +120,11 @@ public class UserController {
 		//profile
 		@RequestMapping(value="profile{x}", method=RequestMethod.GET)
 		public String profilePage(@PathVariable String x, Model model, HttpSession session){
-			
-			User currentUser = (User)session.getAttribute("sessionUser");
 		
 			try {
 				User newUser = userDao.getUser(x);
-				model.addAttribute("modelUser", newUser);
-				
+				model.addAttribute("modelUser", newUser);				
 			} catch (SQLException e) {
-				// TODO create error page
 				return "errorPage";
 			}
 
@@ -161,14 +134,12 @@ public class UserController {
 	//back to main page
 	@RequestMapping(value="homeButton", method=RequestMethod.GET)
 	public String backToMain(Model model, HttpSession session){		
-//		return "redirect:/index";
 		LinkedHashSet<Song> sortedByLikes;
 		try {
 			sortedByLikes = songDao.getTop10();
 			model.addAttribute("songsToShow", sortedByLikes);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return "errorPage";
 		}
 		return "comments";
 	}
@@ -183,7 +154,6 @@ public class UserController {
 		try {
 			m.addAttribute("countries", countryDao.getCountries());
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return "errorPage";
 		}
 		
@@ -222,7 +192,6 @@ public class UserController {
 				return "logReg";
 			}
 		} catch (SQLException | IllegalStateException | IOException e) {
-			e.printStackTrace();
 			return "errorPage";
 		}		
 	}
@@ -236,61 +205,11 @@ public class UserController {
 
 		}
 		
-//		//FOLLOW USER
-//		@RequestMapping(value="followUser", method=RequestMethod.POST)
-//		@ResponseBody
-//		public void followUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
-//			User fwr=(User)session.getAttribute("sessionUser");
-//			if(fwr==null){
-//				resp.setStatus(401);
-//			}
-//			else{
-//				try {
-//					
-//					String followed=(String)request.getParameter("followed");
-//					System.out.println(followed);
-//					User fwd=userDao.getUser(followed);
-//					userDao.followUser(fwr.getUserID(), fwd.getUserID());
-//					//fwr.getFollowedIds().add(fwd.getUserID());
-//					
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				resp.setStatus(200);
-//			}
-//		}
-//		
-//		//UNFOLLOW USER
-//		@RequestMapping(value="unfollowUser", method=RequestMethod.POST)
-//		@ResponseBody
-//		public void unfollowUser(HttpServletRequest request, HttpServletResponse resp, HttpSession session){
-//			User fwr=(User)session.getAttribute("sessionUser");
-//			String followed=(String)request.getParameter("followed");
-//			if(fwr==null){
-//				resp.setStatus(401);
-//			}
-//			else{
-//				try {
-//					User fwd=userDao.getUser(followed);
-//					if(!userDao.getFollowedIds(fwr).contains(fwd.getUserID())){
-//						System.out.println("NE MOJE DA SE OTSLEDVA");
-//					}
-//					userDao.unfollowUser(fwr.getUserID(), fwd.getUserID());
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				resp.setStatus(200);
-//			}
-//		}
-		
 		@RequestMapping(value="/likesong", method=RequestMethod.POST)
 		public String likeSong(HttpServletRequest request, HttpSession session, @RequestParam(value = "song") long id /*, @RequestParam(value = "page") String page*/){
 			
 			User u = (User)session.getAttribute("sessionUser");
 			String requestURL = request.getRequestURL().toString();
-//			String url = request.getHeader();
 			String[] str = requestURL.split("/");
 			
 			System.out.println(str[str.length - 1]);
@@ -332,7 +251,6 @@ public class UserController {
 				u.removeLike(id);
 				
 				return "redirect:/index";
-//				return "index";
 			}
 		}
 		

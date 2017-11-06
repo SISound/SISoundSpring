@@ -17,6 +17,6 @@
 		<span class="searching"><c:out value="Results for searching songs, containing ${ searched }:"></c:out></span>
 	
 		<jsp:include page="song_table.jsp"></jsp:include>
-	
+<%-- 		<jsp:include page="footer.jsp"></jsp:include> --%>
 	</body>
 </html>	

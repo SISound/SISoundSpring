@@ -141,7 +141,7 @@
 		
 		//ADDING SONGS TO PLAYLIST
 		function showDiv(value) {
-		    var x = document.getElementById("playlistsDiv");
+		    var x = document.getElementById("playlistContainer");
 		    if (x.style.display === "none") {
 		        x.style.display = "block";
 		    }
@@ -157,7 +157,7 @@
 		}
 		
 		function closeDiv(){
-			var x = document.getElementById("playlistsDiv");
+			var x = document.getElementById("playlistContainer");
 		    if (x.style.display === "block") {
 		        x.style.display = "none";
 		    }
@@ -197,6 +197,34 @@
 	
 	<body>
 
+
+		<div id="playlistContainer" style="display: none;">
+			<div id="playlistsDiv" >
+				<table >
+				    <button id="closeButton" onclick="closeDiv()">X</button>
+				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
+				 		<tr>
+				  			<td class="addToTd">
+				  				<a class="playlistLink" href="playlist=${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
+				  			</td>
+				  			<td>
+				  				<button class="addToPl" name="addToPl" id="${playlist.id }" value="" onclick="addToPlaylist(this.id, this.value)">Add to playlist</button>
+				  			</td class="addToTd">
+				  		</tr>
+				  	</c:forEach>
+				  	<tr>
+				  		<td class="addToTd">
+				  			<c:if test="${sessionUser!=null }">
+				  				<a href=" " id=" " class="createPlaylist">Create new playlist</button>
+				  			</c:if>
+				  			<c:if test="${sessionUser==null }">
+				  				<h4 style="color: black;">You must be logged in to add songs to playlists</h4>
+				  			</c:if>
+				  		</td>
+				  	</tr>
+			  	</table>
+			</div>
+		</div>
 		
 		<table>
 			<c:forEach items="${ songsToShow }" var="songsToShow">
@@ -271,31 +299,31 @@
 		</table>
 				
 <!-- 		<div  style="display: none;"> -->
-			<div id="playlistsDiv" style="display: none;">
-				<table >
-				    <button id="closeButton" onclick="closeDiv()">X</button>
-				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
-				 		<tr>
-				  			<td class="addToTd">
-				  				<a class="playlistLink" href="playlist=${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
-				  			</td>
-				  			<td>
-				  				<button class="addToPl" name="addToPl" id="${playlist.id }" value="" onclick="addToPlaylist(this.id, this.value)">Add to playlist</button>
-				  			</td class="addToTd">
-				  		</tr>
-				  	</c:forEach>
-				  	<tr>
-				  		<td class="addToTd">
-				  			<c:if test="${sessionUser!=null }">
-				  				<a href=" " id=" " class="createPlaylist">Create new playlist</button>
-				  			</c:if>
-				  			<c:if test="${sessionUser==null }">
-				  				<h4 style="color: black;">You must be logged in to add songs to playlists</h4>
-				  			</c:if>
-				  		</td>
-				  	</tr>
-			  	</table>
-			</div>
+<!-- 			<div id="playlistsDiv" > -->
+<!-- 				<table > -->
+<!-- 				    <button id="closeButton" onclick="closeDiv()">X</button> -->
+<%-- 				  	<c:forEach items="${sessionUser.playlists }" var="playlist"> --%>
+<!-- 				 		<tr> -->
+<!-- 				  			<td class="addToTd"> -->
+<%-- 				  				<a class="playlistLink" href="playlist=${playlist.id }"><c:out value="${playlist.title }"></c:out></a> --%>
+<!-- 				  			</td> -->
+<!-- 				  			<td> -->
+<%-- 				  				<button class="addToPl" name="addToPl" id="${playlist.id }" value="" onclick="addToPlaylist(this.id, this.value)">Add to playlist</button> --%>
+<!-- 				  			</td class="addToTd"> -->
+<!-- 				  		</tr> -->
+<%-- 				  	</c:forEach> --%>
+<!-- 				  	<tr> -->
+<!-- 				  		<td class="addToTd"> -->
+<%-- 				  			<c:if test="${sessionUser!=null }"> --%>
+<!-- 				  				<a href=" " id=" " class="createPlaylist">Create new playlist</button> -->
+<%-- 				  			</c:if> --%>
+<%-- 				  			<c:if test="${sessionUser==null }"> --%>
+<!-- 				  				<h4 style="color: black;">You must be logged in to add songs to playlists</h4> -->
+<%-- 				  			</c:if> --%>
+<!-- 				  		</td> -->
+<!-- 				  	</tr> -->
+<!-- 			  	</table> -->
+<!-- 			</div> -->
 <!-- 		</div> -->
 	</body>
 </html>

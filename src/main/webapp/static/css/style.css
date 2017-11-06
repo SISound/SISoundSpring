@@ -19,12 +19,17 @@
 /* 	z-index: 1; */
 /* } */
 
-footer{
-	background-color: #524A49;
-	height: 50px;
-	opacity: 0.9;
-	margin-top: 70%;
-	z-index: 1;
+.footer{
+	background-color: rgba(92,168,214,1);
+/* 	height: 50px; */
+/* 	opacity: 0.9; */
+	margin-top: 10%;
+/* 	z-index: 1; */
+	position: inherit;
+}
+
+.footer-text{
+	text-align: center;
 }
 
 /*-----------------------------------------------*/
@@ -717,21 +722,21 @@ footer#controls {
 
 /* ADDING TO PLAYLIST */
 #playlistsDiv{
-	position: fixed;
+	position: absolute;
 	background-color: #ffffff;
 	width: 400px;
 	max-width: 400px;
 	height: auto;
 	white-space: nowrap;
-	margin-left: 40%;
-	margin-top:-240%;
+	margin-left: 35%;
+	margin-top: 25%;
 	border: solid thin black;
 	border-radius: 7px;
 	z-index: 7;
 }
 
-#plContainer{
-	position: absolute;
+#playlistContainer{
+	position: fixed;
 	height: 100%;
 	width: 100%;
 	color: white;

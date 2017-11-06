@@ -2,8 +2,6 @@ package com.sisound.controller;
 
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.sisound.model.Comment;
 import com.sisound.model.Playlist;
-import com.sisound.model.Song;
 import com.sisound.model.User;
 import com.sisound.model.db.PlaylistDao;
 import com.sisound.model.db.SongDao;
@@ -65,7 +61,6 @@ public class PlaylistController {
 				return "playlist";				
 		} 
 		catch (SQLException e) {
-			System.out.println(e.getMessage());
 			return "errorPage";
 		}
 	}
@@ -78,7 +73,6 @@ public class PlaylistController {
 			model.addAttribute("commentable", pl);
 
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return "errorPage";
 		}
 				

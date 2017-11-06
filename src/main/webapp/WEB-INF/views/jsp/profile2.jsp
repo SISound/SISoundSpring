@@ -167,6 +167,7 @@
 
 	
 		<script src="<c:url value="js/profile.js" />"  type ="text/javascript"></script>
+<%-- 		<jsp:include page="footer.jsp"></jsp:include> --%>
 		
 		
 </body>

@@ -13,11 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.sisound.model.Comment;
-import com.sisound.model.Playlist;
 import com.sisound.model.User;
 import com.sisound.model.db.CommentDao;
 import com.sisound.model.db.PlaylistDao;
@@ -61,7 +58,6 @@ public class CommentController {
 			return "errorPage";
 		} 
 		catch (SQLException e) {
-			System.out.println(e.getMessage());
 			return "errorPage";
 		}
 	}
@@ -88,7 +84,6 @@ public class CommentController {
 			return "errorPage";
 		} 
 		catch (SQLException e) {
-			System.out.println(e.getMessage());
 			return "errorPage";
 		}
 	}

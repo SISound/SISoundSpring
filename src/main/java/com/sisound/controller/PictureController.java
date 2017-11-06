@@ -5,22 +5,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.sisound.WebInitializer;
 import com.sisound.model.User;
 import com.sisound.model.db.UserDao;
 
@@ -39,22 +34,10 @@ public class PictureController {
 		try {
 			Files.copy(file.toPath(), resp.getOutputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
+			resp.setStatus(503);
 		}
 	}
 	
-//	@RequestMapping(value="getPicProfile", method=RequestMethod.GET)
-//	public void getProfilePic(HttpServletResponse resp, HttpSession session){
-//
-//		try {
-//			File file=new File((String)session.getAttribute("avatar"));
-//			Files.copy(file.toPath(), resp.getOutputStream());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		System.out.println("opa");	
-//	}
 	
 	@RequestMapping(value="getPic{username}", method=RequestMethod.GET)
 	@ResponseBody
@@ -63,14 +46,10 @@ public class PictureController {
 			User u=userDao.getUser(username);
 	
 			File file=new File(u.getProfilPicture());
-	//		System.out.println(url);
 			Files.copy(file.toPath(), resp.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e){
-			e.printStackTrace();
-		}
+		} catch (IOException | SQLException e) {
+			resp.setStatus(503);
+		} 
 	}
 	
 	@RequestMapping(value="getCover{username}", method=RequestMethod.GET)
@@ -81,25 +60,10 @@ public class PictureController {
 			System.out.println(u.getCoverPhoto());
 			System.out.println(u.getCoverPhoto());
 			File file=new File(u.getCoverPhoto());
-//		System.out.println(url);
 			Files.copy(file.toPath(), resp.getOutputStream());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e){
-			e.printStackTrace();
-		}
+		} catch (IOException | SQLException e) {
+			resp.setStatus(503);
+		} 
 	}
 }
 	
-//	@RequestMapping(value="getPicCover", method=RequestMethod.GET)
-//	public void getCoverPic(HttpServletResponse resp, HttpSession session){
-//
-//		try {
-//			File file=new File((String)session.getAttribute("cover"));
-//			Files.copy(file.toPath(), resp.getOutputStream());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}

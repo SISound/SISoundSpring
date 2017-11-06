@@ -183,7 +183,7 @@
 							<button class="comment-like" id="l${comment.id }" value="${comment.id }" onclick="handleLike( this.id, true )">Like</button>
 						</c:if>	
 						
-		            	<input id="lcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.likesCount }">
+		            	<input class="comment-like-number" id="lcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.likesCount }">
 <!-- 		            	dislikes -->
 		            	<c:if test="${ sessionUser.dislikedSongComments[comment.id] }">
 							<button class="comment-dislike" id="d${ comment.id }" value="${comment.id }" onclick="handleDislike( this.id, true )">Undislike</button>
@@ -192,7 +192,7 @@
 							<button class="comment-dislike" id="d${comment.id }" value="${comment.id }" onclick="handleDislike( this.id, true )">Dislike</button>
 						</c:if>	
 		            	   
-		            	 <input class="comment-dislike" id="dcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.dislikesCount }">
+		            	 <input class="comment-dislike-number" id="dcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.dislikesCount }">
 		            	   
 		            </c:if>
 		            
@@ -206,7 +206,7 @@
 							<button class="comment-like" id="l${comment.id }" value="${comment.id }" onclick="handleLike( this.id, false )">Like</button>
 						</c:if>	
 						
-		            	<input id="lcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.likesCount }">
+		            	<input class="comment-like-number" id="lcnt${ comment.id }" type="number" min="0" onkeydown="return false" value="${ comment.likesCount }">
 <!-- 		            	dislikes -->
 		            	<c:if test="${ sessionUser.dislikedPlaylistComments[comment.id] }">
 							<button class="comment-dislike" id="d${ comment.id }" value="${comment.id }" onclick="handleDislike( this.id, false )">Undislike</button>
@@ -215,7 +215,7 @@
 							<button class="comment-dislike" id="d${comment.id }" value="${comment.id }" onclick="handleDislike( this.id, false )">Dislike</button>
 						</c:if>	
 		            	   
-		            	 <input id="dcnt${comment.id }" type="number" min="0" onkeydown="return false" value="${comment.dislikesCount }">
+		            	 <input class="comment-dislike-number" id="dcnt${comment.id }" type="number" min="0" onkeydown="return false" value="${comment.dislikesCount }">
 
 		            </c:if>
 		           

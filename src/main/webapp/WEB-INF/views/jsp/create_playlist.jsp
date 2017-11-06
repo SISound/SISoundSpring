@@ -24,5 +24,6 @@
 				  <button class="btn btn-lg btn-primary btn-block" type="submit">Create</button>   
 			  </form>
 			</div>
+			<jsp:include page="footer.jsp"></jsp:include>
 	</body>
 </html>

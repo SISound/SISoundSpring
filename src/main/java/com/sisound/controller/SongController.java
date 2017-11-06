@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.Map;
 
 import javax.servlet.annotation.MultipartConfig;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sisound.WebInitializer;
-import com.sisound.model.Comment;
 import com.sisound.model.Song;
 import com.sisound.model.User;
 import com.sisound.model.db.ActionsDao;
@@ -50,8 +48,7 @@ public class SongController {
 			Map<String, Long> genres=genresDao.getAllGenres();
 			model.addAttribute("genres", genres);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return "errorPage";
 		}
 		return "upload";
 	}
@@ -70,17 +67,8 @@ public class SongController {
 				songDao.uploadSong(song);
 				file.transferTo(f);
 				
-//				HashSet<Song> songs=songDao.getAllSongs();
-//				model.addAttribute("songs", songs);
-			} catch (IllegalStateException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (IllegalStateException | IOException | SQLException e) {
+				return "errorPage";
 			}
 		
 		return "redirect:/profile" + u.getUsername();
@@ -96,25 +84,10 @@ public class SongController {
 		try {
 			Files.copy(file.toPath(), resp.getOutputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			resp.setStatus(503);
 		}
 	}
-	
-//	//SEND TO FANCY PLAYER
-//	@RequestMapping(value="getMusic", method=RequestMethod.GET)
-//	@ResponseBody
-//	public void getMusic(HttpServletRequest req, HttpServletResponse resp){
-//		String url=(String) req.getParameter("url");
-//		File file=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + url);
-//		try {
-//			Files.copy(file.toPath(), resp.getOutputStream());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	}
-	
+		
 	//LIKE SONG
 	@RequestMapping(value="likeSong", method=RequestMethod.POST)
 	@ResponseBody
@@ -132,8 +105,7 @@ public class SongController {
 					actionDao.likeSong(songId, u.getUserID());
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				resp.setStatus(503);
 			}
 			resp.setStatus(200);
 		}
@@ -159,8 +131,7 @@ public class SongController {
 					resp.setStatus(405);
 				}
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				resp.setStatus(503);
 			}
 		}
 	}
@@ -172,9 +143,8 @@ public class SongController {
 		try {
 			Song song = songDao.getSongById(x);
 			model.addAttribute("commentable", song);
-
 			model.addAttribute("modelUser", song.getUser());
-//			session.setAttribute("songProfile", song.getUrl());
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "errorPage";

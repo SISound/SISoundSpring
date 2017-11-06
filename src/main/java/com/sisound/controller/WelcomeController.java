@@ -1,10 +1,8 @@
 package com.sisound.controller;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
@@ -15,7 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.sisound.model.Song;
 import com.sisound.model.User;
@@ -39,8 +36,6 @@ public class WelcomeController {
 	
 	@RequestMapping(value="/index{x}")
 	public String welcome(HttpSession session, Model model, @PathVariable String x){
-//		Object o = session.getAttribute("logged");
-//		boolean logged =  (o != null && ((boolean) o ));
 		
 		HashSet<Song> songs;
 		try {
@@ -65,7 +60,6 @@ public class WelcomeController {
 			return "main3";
 			
 		} catch (SQLException e) {
-			e.printStackTrace();
 			return "errorPage";
 		}
 		

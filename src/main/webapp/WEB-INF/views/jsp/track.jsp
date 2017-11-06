@@ -22,7 +22,7 @@
 		<script type="text/javascript">
 	
 		//LIKE AND UNLIKE A SONG
-		function handleLike(){
+		function handleLikeSong(){
 			var button = document.getElementById("likeButton");
 			var value=button.value;
 			var title = button.innerHTML;
@@ -79,7 +79,7 @@
 		}
 		
 		//DISLIKE AND UNDISLIKE A SONG
-		function handleDislike() {
+		function handleDislikeSong() {
 			var button=document.getElementById("dislikeButton");
 			var value=button.value;
 			var title=button.innerHTML;
@@ -221,18 +221,18 @@
 					<tr>
 					
 						<c:if test="${ sessionUser.likedSongs[commentable.id] }">
-							<td><button id="likeButton" value="${commentable.id }" onclick="handleLike()">Unlike</button></td>
+							<td><button id="likeButton" value="${commentable.id }" onclick="handleLikeSong()">Unlike</button></td>
 						</c:if>
 						<c:if test="${ !sessionUser.likedSongs[commentable.id] }">
-							<td><button id="likeButton" value="${commentable.id }" onclick="handleLike()">Like</button></td>
+							<td><button id="likeButton" value="${commentable.id }" onclick="handleLikeSong()">Like</button></td>
 						</c:if>
 <%-- 						<button style="background-color: green" id="likebutton" value="${modelSong.id }" onclick="handleLike()">Like</button> --%>
 						<td class="counterTd"><input id="likeCount" type="number" min="0" onkeydown="return false" value="${commentable.likesCount }"></input></td>
 						<c:if test="${sessionUser.dislikedSongs[commentable.id]}">
-							<td><button id="dislikeButton" value="${commentable.id }" onclick="handleDislike()">Undislike</button></td>
+							<td><button id="dislikeButton" value="${commentable.id }" onclick="handleDislikeSong()">Undislike</button></td>
 						</c:if>
 						<c:if test="${!sessionUser.dislikedSongs[commentable.id]}">
-							<td><button id="dislikeButton" value="${commentable.id }" onclick="handleDislike()">Dislike</button></td>
+							<td><button id="dislikeButton" value="${commentable.id }" onclick="handleDislikeSong()">Dislike</button></td>
 						</c:if>
 						<td class="counterTd"><input id="dislikeCount" type="number" min="0" onkeydown="return false" value="${commentable.dislikesCount }"></input></td>
 												
@@ -269,5 +269,6 @@
 		<jsp:include page="comments.jsp"></jsp:include>
 	
 	</div>
+	<jsp:include page="footer.jsp"></jsp:include>
 </body>
 </html>

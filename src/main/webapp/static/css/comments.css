@@ -144,12 +144,12 @@ input[type=number]{
 
 .comment-like-number {
     position: absolute;
-    top: 1;
-    right:14%;
+    top: 0;
+    right:15%;
 }
 
 .comment-dislike-number {
     position: absolute;
-    top: 1;
-    right:8%;
+    top: 0;
+    right:9%;
 }

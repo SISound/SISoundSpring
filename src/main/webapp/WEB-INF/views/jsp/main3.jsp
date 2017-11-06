@@ -9,16 +9,7 @@
 		<link rel="stylesheet" type="text/css" href="<c:url value="css/style.css"/>" />
 		<title>SISound</title>
 		
-		<script type="text/javascript">
-		function myFunction() {
-		    var x = document.getElementById("addToPlaylist");
-		    if (x.style.display === "none") {
-		        x.style.display = "block";
-		    } else {
-		        x.style.display = "none";
-		    }
-		}
-		</script>
+
 	</head>
 	<body>
 		<jsp:include page="headerLogged.jsp"></jsp:include>
@@ -34,6 +25,6 @@
 		
 <%-- 		<jsp:include page="main2.jsp"></jsp:include> --%>
 		<jsp:include page="song_table.jsp"></jsp:include>
-		
+		<jsp:include page="footer.jsp"></jsp:include>
 	</body>
 </html>

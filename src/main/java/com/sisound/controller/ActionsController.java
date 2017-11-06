@@ -58,8 +58,7 @@ public class ActionsController {
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -81,8 +80,7 @@ public class ActionsController {
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -108,8 +106,7 @@ public class ActionsController {
 					}
 					
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -134,8 +131,7 @@ public class ActionsController {
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -164,8 +160,7 @@ public class ActionsController {
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -189,8 +184,7 @@ public class ActionsController {
 						}
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -210,8 +204,7 @@ public class ActionsController {
 				try {
 					playlistDao.addSongToPlaylist(playlistId, songId);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -240,8 +233,7 @@ public class ActionsController {
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -269,8 +261,7 @@ public class ActionsController {
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -293,8 +284,7 @@ public class ActionsController {
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}
@@ -318,8 +308,7 @@ public class ActionsController {
 						resp.setStatus(200);
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					resp.setStatus(503);
 				}
 			}
 		}

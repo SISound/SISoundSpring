@@ -1,0 +1,16 @@
+@charset "ISO-8859-1";
+
+.footer{
+	background-color: rgba(92,168,214,1);
+/* 	height: 50px; */
+/* 	opacity: 0.9; */
+	margin-top: 10%;
+/* 	margin-bottom: 0%; */
+/* 	z-index: 1; */
+	position: inherit;
+}
+
+.footer-text{
+	text-align: center;
+}
+

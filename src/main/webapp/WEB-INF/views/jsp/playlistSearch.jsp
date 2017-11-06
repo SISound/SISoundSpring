@@ -41,5 +41,6 @@
 				<br><br><br><br><br>
 			</c:forEach>
 		</table>
+<%-- 		<jsp:include page="footer.jsp"></jsp:include> --%>
 </body>
 </html>
