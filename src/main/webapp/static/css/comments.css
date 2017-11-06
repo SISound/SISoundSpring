@@ -51,11 +51,20 @@ body {
 
 .comment-reply {
     position: absolute;
+    top: 65%;
+    right: 0;
+}
+
+.comment-like {
+    position: absolute;
+    top: 0;
+    right:8%;
+}
+
+.comment-dislike {
+    position: absolute;
     top: 0;
     right: 0;
-/*     width: 15px; */
-/*     height: 15px; */
-/*     background: url("https://htmlacademy.ru/assets/course14/reply.png") no-repeat 0 0; */
 }
 
 *{

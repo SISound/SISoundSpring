@@ -76,7 +76,12 @@ public class UserDao {
 		u.setFollowers(getFollowers(u));
 		u.setFollowedIds(getFollowedIds(u));
 		u.setLikedSongs(actionDao.getSongsAction(u.getUserID(), true));
-//		u.setDislikedSongs(actionDao.getSongsAction(u.getUserID(), false));
+		u.setDislikedSongs(actionDao.getSongsAction(u.getUserID(), false));
+		
+		u.setLikedSongComments(actionDao.getSongCommentsAction(u.getUserID(), true));
+		u.setDislikedSongComments(actionDao.getSongCommentsAction(u.getUserID(), false));
+		u.setLikedPlaylistComments(actionDao.getPlaylistCommentsAction(u.getUserID(),true));
+		u.setDislikedPlaylistComments(actionDao.getPlaylistCommentsAction(u.getUserID(), false));
 		
 		return u;
 	}

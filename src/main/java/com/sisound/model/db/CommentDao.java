@@ -18,6 +18,8 @@ public class CommentDao {
 
 	@Autowired
 	public UserDao userDao;
+	@Autowired
+	public ActionsDao actionDao;
 	
 	public synchronized void insertComment(Comment comment, Actionable commented) throws SQLException{
 		Connection con = DBManager.getInstance().getConnection();
@@ -47,60 +49,46 @@ public class CommentDao {
 	}
 	
 	
-	//TODO getComments from song/playlist
 	//OK
 	public synchronized TreeSet<Comment> getComments(long id, boolean isSong) throws SQLException {
 		Connection con = DBManager.getInstance().getConnection();
 		PreparedStatement stmt = null;
 		ResultSet rs=null;
-		if(isSong){
-			stmt=con.prepareStatement("SELECT sc.comment_id, u.user_name, sc.comment_text, sc.upload_date, sc.parent_id FROM songs_comments as sc "
-							   + "JOIN users as u "
-			                   + "ON sc.user_id=u.user_id "
-			                   + "WHERE sc.song_id = ? "
+
+		stmt=con.prepareStatement("SELECT c.comment_id, u.user_name, c.comment_text, c.upload_date, c.parent_id FROM " + (isSong ? "songs_comments" : "playlists_comments") + " as c "
+								+ "JOIN users as u "
+			                   + "ON c.user_id = u.user_id "
+			                   + "WHERE " + (isSong ? "c.song_id" : "c.playlist_id") + " = ? "
 			                   + "AND parent_id IS NULL");
-			stmt.setLong(1, id);
-			rs = stmt.executeQuery();
-		}
-		else{
-			stmt=con.prepareStatement("SELECT pc.comment_id, u.user_name, pc.comment_text, pc.upload_date, pc.parent_id FROM playlists_comments as pc "
-					           + "JOIN users as u "
-	                           + "ON pc.user_id=u.user_id "
-	                           + "WHERE pc.playlist_id = ? "
-	                           + "AND pc.parent_id IS NULL");
-	        stmt.setLong(1, id);
-	        rs = stmt.executeQuery();
-		}
+		stmt.setLong(1, id);
+		rs = stmt.executeQuery();
+		
 		
 		HashMap<Long, Comment> mainComments = new HashMap<>();
 		
+		Comment c = null;
 		while (rs.next()) {
-			mainComments.put(rs.getLong(1), new Comment(rs.getLong(1), rs.getString(2), 
-					rs.getString(3), rs.getTimestamp(4).toLocalDateTime(), null, new TreeSet())); 
+			c = new Comment(rs.getLong(1), rs.getString(2), 
+					rs.getString(3), rs.getTimestamp(4).toLocalDateTime(), null, new TreeSet());
+			
+			c.setActions(actionDao.getCommentActions(isSong, rs.getLong(1)));
+			mainComments.put(rs.getLong(1), c); 
 		}
 		
-		if(isSong){
-			stmt = con.prepareStatement("SELECT sc.comment_id, u.user_name, sc.comment_text, sc.upload_date, sc.parent_id FROM songs_comments as sc "
-					                  + "JOIN users as u "
-					                  + "ON sc.user_id=u.user_id "
-					                  + "WHERE sc.song_id = ? "
-					                  + "AND parent_id IS NOT NULL");
-			stmt.setLong(1, id);
-			rs = stmt.executeQuery();
-		}
-		else{
-			stmt = con.prepareStatement("SELECT pc.comment_id, u.user_name, pc.comment_text, pc.upload_date, pc.parent_id FROM playlists_comments as pc "
-	                                  + "JOIN users as u "
-	                                  + "ON pc.user_id=u.user_id "
-	                                  + "WHERE pc.playlist_id = ? "
-	                                  + "AND pc.parent_id IS NOT NULL");
-            stmt.setLong(1, id);
-            rs = stmt.executeQuery();
-		}
+
+		stmt = con.prepareStatement("SELECT c.comment_id, u.user_name, c.comment_text, c.upload_date, c.parent_id FROM " + (isSong ? "songs_comments" : "playlists_comments") + " as c "
+				                  + "JOIN users as u "
+				                  + "ON c.user_id = u.user_id "
+				                  + "WHERE " + (isSong ? "c.song_id" : "c.playlist_id") + " = ? "
+				                  + "AND parent_id IS NOT NULL");
+		stmt.setLong(1, id);
+		rs = stmt.executeQuery();
 		
 		while (rs.next()) {
-			mainComments.get(rs.getLong(5)).addSubcomment(new Comment(rs.getLong(1), rs.getString(2), 
-					rs.getString(3), rs.getTimestamp(4).toLocalDateTime(), mainComments.get(rs.getLong(5)), new TreeSet()));
+			c = new Comment(rs.getLong(1), rs.getString(2), 
+					rs.getString(3), rs.getTimestamp(4).toLocalDateTime(), mainComments.get(rs.getLong(5)), new TreeSet());
+			c.setActions(actionDao.getCommentActions(isSong, rs.getLong(1)));
+			mainComments.get(rs.getLong(5)).addSubcomment(c);
 		}
 
 		
@@ -122,4 +110,27 @@ public class CommentDao {
 		stmt.execute();
 	}
 	
+	public synchronized boolean isCommentLiked(boolean isSong, long songId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT count(*) FROM " + (isSong ? "song_comment_likes" : "playlist_comment_likes") + " WHERE comment_id=? AND user_id=?");
+		stmt.setLong(1, songId);
+		stmt.setLong(2, userId);
+		ResultSet rs=stmt.executeQuery();
+		rs.next();
+		int count=rs.getInt(1);
+		System.out.println(count);
+		return count>0;
+	}
+	
+	public synchronized boolean isCommentDisliked(boolean isSong, long songId, long userId) throws SQLException{
+		Connection con=DBManager.getInstance().getConnection();
+		PreparedStatement stmt=con.prepareStatement("SELECT count(*) FROM " + (isSong ? "song_comment_dislikes" : "playlist_comment_dislikes") + " WHERE comment_id=? AND user_id=?");
+		stmt.setLong(1, songId);
+		stmt.setLong(2, userId);
+		ResultSet rs=stmt.executeQuery();
+		rs.next();
+		int count=rs.getInt(1);
+		return count>0;
+	}
+
 }

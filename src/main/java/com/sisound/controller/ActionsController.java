@@ -10,11 +10,13 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sisound.model.User;
 import com.sisound.model.db.ActionsDao;
+import com.sisound.model.db.CommentDao;
 import com.sisound.model.db.PlaylistDao;
 import com.sisound.model.db.SongDao;
 import com.sisound.model.db.UserDao;
@@ -30,6 +32,8 @@ public class ActionsController {
 	UserDao userDao;
 	@Autowired
 	PlaylistDao playlistDao;
+	@Autowired
+	CommentDao commentDao;
 	
 	//LIKE/UNLIKE SONG
 		@RequestMapping(value="restLikeSong", method=RequestMethod.POST)
@@ -46,12 +50,10 @@ public class ActionsController {
 					if(!songDao.isSongLiked(songId, u.getUserID())){
 						if(songDao.isSongDisliked(songId, u.getUserID())){
 							actionDao.removeDislike(true, songId, u.getUserID());
-						}
-						actionDao.likeSong(songId, u.getUserID());
-						if(u.getDislikedSongs().containsKey(songId)) {
-							actionDao.removeDislike(true, songId, u.getUserID());
 							u.removeDislike(songId);
 						}
+						actionDao.likeSong(songId, u.getUserID());
+						
 						u.addLike(songId);
 						resp.setStatus(200);
 					}
@@ -66,7 +68,6 @@ public class ActionsController {
 		@ResponseBody
 		public void unlikeSong(HttpServletRequest req, HttpServletResponse resp, HttpSession session){
 			User u=(User) session.getAttribute("sessionUser");
-			System.out.println(u.toString());
 			long songId=Long.parseLong(req.getParameter("songId").toString());
 			
 			if(session.isNew() || u==null){
@@ -208,6 +209,114 @@ public class ActionsController {
 			else{
 				try {
 					playlistDao.addSongToPlaylist(playlistId, songId);
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		//like comment
+		@RequestMapping(value="restLikeComment", method=RequestMethod.POST)
+		@ResponseBody
+		public void likeSongComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session,  @RequestParam(value = "isSong") boolean isSong){
+			User u = (User) session.getAttribute("sessionUser");
+			long songCommentId = Long.parseLong(req.getParameter("commentId").toString());
+					
+			if(session.isNew() || u == null){
+				resp.setStatus(401);
+				System.out.println("ne vliza");
+			}
+			else{
+				try {
+					if(!commentDao.isCommentLiked(isSong, songCommentId, u.getUserID())){
+						if(commentDao.isCommentDisliked(isSong, songCommentId, u.getUserID())){
+							actionDao.removeDislikeComment(isSong, songCommentId, u.getUserID());
+							u.removeCommentDislike(isSong, songCommentId);
+						}
+						actionDao.likeComment(isSong, songCommentId, u.getUserID());
+
+						u.addCommentLike(isSong, songCommentId);
+						resp.setStatus(200);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		//dislike comment
+		@RequestMapping(value="restDislikeComment", method=RequestMethod.POST)
+		@ResponseBody
+		public void dislikeSongComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session,  @RequestParam(value = "isSong") boolean isSong){
+			User u = (User) session.getAttribute("sessionUser");
+			long songCommentId = Long.parseLong(req.getParameter("commentId").toString());
+			
+			if(session.isNew() || u == null){
+				resp.setStatus(401);
+			}
+			else{
+				try {
+					if(!commentDao.isCommentDisliked(isSong, songCommentId, u.getUserID())){
+						if(commentDao.isCommentLiked(isSong, songCommentId, u.getUserID())){
+							actionDao.removeLikeComment(isSong, songCommentId, u.getUserID());
+							u.removeCommentLike(isSong, songCommentId);
+						}
+						actionDao.dislikeComment(isSong, songCommentId, u.getUserID());
+
+						u.addCommentDislike(isSong, songCommentId);
+						resp.setStatus(200);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		//unlike comment
+		@RequestMapping(value="restUnlikeComment", method=RequestMethod.POST)
+		@ResponseBody
+		public void unlikeComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session,  @RequestParam(value = "isSong") boolean isSong){
+			User u = (User) session.getAttribute("sessionUser");
+			long songCommentId = Long.parseLong(req.getParameter("commentId").toString());
+			
+			if(session.isNew() || u == null){
+				resp.setStatus(401);
+			} 
+			else {
+				try {
+					if(commentDao.isCommentLiked(isSong, songCommentId, u.getUserID())){
+						actionDao.removeLikeComment(isSong, songCommentId, u.getUserID());
+						u.removeCommentLike(isSong, songCommentId);
+						resp.setStatus(200);
+					}
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		//unlike comment
+		@RequestMapping(value="restUndislikeComment", method=RequestMethod.POST)
+		@ResponseBody
+		public void undislikeComment(HttpServletRequest req, HttpServletResponse resp, HttpSession session,  @RequestParam(value = "isSong") boolean isSong){
+			User u = (User) session.getAttribute("sessionUser");
+			long songCommentId = Long.parseLong(req.getParameter("commentId").toString());
+			
+			if(session.isNew() || u == null){
+				resp.setStatus(401);
+			} 
+			else {
+				try {
+					if(commentDao.isCommentDisliked(isSong, songCommentId, u.getUserID())){
+						
+						actionDao.removeDislikeComment(isSong, songCommentId, u.getUserID());
+						u.removeCommentDislike(isSong, songCommentId);
+						resp.setStatus(200);
+					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

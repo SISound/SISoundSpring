@@ -13,7 +13,7 @@ public class Comment implements Comparable<Comment>, Actionable{
 	private LocalDateTime date;
 	private TreeSet<Comment> subcoments;
 	private Comment parentComment;
-	private HashMap<Actions, HashSet<User>> likes;
+	private HashMap<Actions, HashSet<String>> likes;
 	
 	public Comment(String user, String text, LocalDateTime date, Comment parentComment) {
 		this.user = user;
@@ -88,9 +88,21 @@ public class Comment implements Comparable<Comment>, Actionable{
 		this.commentId = id;
 	}
 	
-	public void setLikes(HashMap<Actions, HashSet<User>> likes) {
+	public void setActions(HashMap<Actions, HashSet<String>> likes) {
 		this.likes = likes;
 	}
 	
+	public int getLikesCount() {
+		System.out.println(this.commentId);
+		System.out.println(this.commentId);
+		System.out.println(likes.get(Actions.LIKE).size());
+		System.out.println(likes.get(Actions.LIKE).size());
+		System.out.println(likes.get(Actions.LIKE).size());
+		return likes.get(Actions.LIKE).size();
+	}
+	
+	public int getDislikesCount() {
+		return likes.get(Actions.DISLIKE).size();
+	}
 
 }
