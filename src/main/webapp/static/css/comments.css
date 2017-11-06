@@ -58,7 +58,7 @@ body {
 .comment-like {
     position: absolute;
     top: 0;
-    right:8%;
+    right:20%;
 }
 
 .comment-dislike {
@@ -116,4 +116,40 @@ button{
   background-color:#0e7ec7;
   color:#fff;
   float:right;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+input[type=number] {
+    border: none;
+    color: transparent;
+    text-shadow: 0 0 0 gray;
+    text-align: center;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+input[type=number]{
+	border: none;
+	width: 50px;
+}
+
+.comment-like-number {
+    position: absolute;
+    top: 1;
+    right:14%;
+}
+
+.comment-dislike-number {
+    position: absolute;
+    top: 1;
+    right:8%;
 }

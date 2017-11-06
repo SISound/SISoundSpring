@@ -139,9 +139,9 @@
 		//ADDING TO PLAYLIST
 		function showDiv() {
 		    var x = document.getElementById("plContainer");
-		    alert("are");
 		    if (x.style.display === "none") {
-		        x.style.display = "block";
+		    	 alert("are");
+		        x.style.display = "";
 		    }
 		}
 		
@@ -219,6 +219,7 @@
 				<h5 class="heading-smallTP"> Uploaded: <c:out value="${ commentable.uploadDateOnly }"></c:out> </h5><br>
 				<table class="actionsTable">
 					<tr>
+					
 						<c:if test="${ sessionUser.likedSongs[commentable.id] }">
 							<td><button id="likeButton" value="${commentable.id }" onclick="handleLike()">Unlike</button></td>
 						</c:if>
@@ -234,10 +235,7 @@
 							<td><button id="dislikeButton" value="${commentable.id }" onclick="handleDislike()">Dislike</button></td>
 						</c:if>
 						<td class="counterTd"><input id="dislikeCount" type="number" min="0" onkeydown="return false" value="${commentable.dislikesCount }"></input></td>
-						
-						<c:if test="${sessionUser!=null }">
-							<td><button id="addButton" value="${commentable.id }" onclick="showDiv()">Add to playlist</button></td>
-						</c:if>
+												
 					</tr>
 				</table>
 			</div>

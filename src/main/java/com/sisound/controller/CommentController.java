@@ -42,6 +42,9 @@ public class CommentController {
 		
 		User u = (User) session.getAttribute("sessionUser");
 		String text = req.getParameter("commentText");
+		if(!(text.trim().length() > 0)) {
+			return (isSong ? "redirect:/track=" : "redirect:/playlist?id=") + id;
+		}
 		
 		if(session.isNew() || u==null){
 			return "logReg";

@@ -135,8 +135,7 @@
 		
 		//ADDING SONGS TO PLAYLIST
 		function showDiv(value) {
-			alert("are");
-		    var x = document.getElementById("plContainer");
+		    var x = document.getElementById("playlistsDiv");
 		    if (x.style.display === "none") {
 		        x.style.display = "block";
 		    }
@@ -152,7 +151,7 @@
 		}
 		
 		function closeDiv(){
-			var x = document.getElementById("plContainer");
+			var x = document.getElementById("playlistsDiv");
 		    if (x.style.display === "block") {
 		        x.style.display = "none";
 		    }
@@ -266,8 +265,8 @@
 			</c:forEach>
 		</table>
 				
-		<div id="plContainer" style="display: none;">
-			<div id="playlistsDiv">
+<!-- 		<div  style="display: none;"> -->
+			<div id="playlistsDiv" style="display: none;">
 				<table >
 				    <button id="closeButton" onclick="closeDiv()">X</button>
 				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
@@ -292,6 +291,6 @@
 				  	</tr>
 			  	</table>
 			</div>
-		</div>
+<!-- 		</div> -->
 	</body>
 </html>

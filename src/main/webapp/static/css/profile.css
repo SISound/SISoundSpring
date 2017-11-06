@@ -598,7 +598,7 @@ div.tab button.active {
 /*ACTIONS TABLE*/
 .actionsTable{
 	position: absolute;
-	margin-left: 33.5%;
+	margin-left: 28.5%;
 	margin-top: 2%;
 	background-color: #ffffff;
 	border-radius: 5px;
@@ -693,13 +693,13 @@ input[type=number]{
 }
 
 #plContainer{
-	position: fixed;
-	height: 1200px;
-	width: 1400px;
+	position: absolute;
+	height: 1000px;
+	width: 1000px;
 	margin-top: 40%;
 	color: white;
 	background: rgba(255, 255, 255, 0.2);
-	z-index: 0;
+	z-index: 5;
 }
 
 .addToPlaylist{

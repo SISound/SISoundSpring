@@ -222,37 +222,37 @@ public class SongDao {
 	}
 	
 	//deleting song method
-	public synchronized void deleteSong(Song song) throws SQLException {
+	public synchronized void deleteSong(long songId) throws SQLException {
 		Connection con=DBManager.getInstance().getConnection();
 		con.setAutoCommit(false);
 		
 		try {
 			//delete comment-likes
 
-			for (Comment comment : commentDao.getComments(song.getId(), true)) {
+			for (Comment comment : commentDao.getComments(songId, true)) {
 				actionsDao.deleteCommentLikes(comment.getId());
 			}
 			
 			//delete comments
-			commentDao.deleteComments(song.getId(), true);
+			commentDao.deleteComments(songId, true);
 		
 			//delete likes
-			actionsDao.deleteLikes(true, song.getId());
+			actionsDao.deleteLikes(true, songId);
 		
 			//delete dislikes
-			actionsDao.deleteDislikes(true, song.getId());
+			actionsDao.deleteDislikes(true, songId);
 			
 			//delete shares
-			actionsDao.deleteShares(true, song.getId());
+			actionsDao.deleteShares(true, songId);
 			
 			//delete from playlist_songs
 			PreparedStatement stmt=con.prepareStatement("DELETE FROM playlists_songs WHERE song_id = ?");
-			stmt.setLong(1, song.getId());
+			stmt.setLong(1, songId);
 			stmt.execute();
 			
 			//delete song
 			stmt=con.prepareStatement("DELETE FROM songs WHERE song_id = ?");
-			stmt.setLong(1, song.getId());
+			stmt.setLong(1, songId);
 			stmt.execute();
 			
 			con.commit();

@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.sisound.WebInitializer;
+import com.sisound.model.Comment;
 import com.sisound.model.Song;
 import com.sisound.model.User;
 import com.sisound.model.db.ActionsDao;
@@ -58,19 +59,19 @@ public class SongController {
 	//SAVING THE SELECTED SONG
 	@RequestMapping(value="saveSong", method=RequestMethod.POST)
 	public String saveSong(HttpSession session, Model model, @RequestParam("song") MultipartFile file, HttpServletRequest req, HttpServletResponse resp){
-		User u=(User) session.getAttribute("sessionUser");
+		User u = (User) session.getAttribute("sessionUser");
 		File f=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + file.getOriginalFilename());
 		String genre=(String) req.getParameter("genre");
 		System.out.println("THE GENRE IS" + genre);
 		
 			try {
+				
+				Song song = new Song(file.getOriginalFilename(), u, genre, file.getOriginalFilename(), LocalDateTime.now());
+				songDao.uploadSong(song);
 				file.transferTo(f);
 				
-				Song song=new Song(file.getOriginalFilename(), u, genre, file.getOriginalFilename(), LocalDateTime.now());
-				songDao.uploadSong(song);
-				
-				HashSet<Song> songs=songDao.getAllSongs();
-				model.addAttribute("songs", songs);
+//				HashSet<Song> songs=songDao.getAllSongs();
+//				model.addAttribute("songs", songs);
 			} catch (IllegalStateException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -82,7 +83,7 @@ public class SongController {
 				e.printStackTrace();
 			}
 		
-		return "profile2";
+		return "redirect:/profile" + u.getUsername();
 	}
 	
 	//SEND SONG TO PLAYER
@@ -182,18 +183,22 @@ public class SongController {
 		return "track";
 	}
 	
-//	@RequestMapping(value="getSongProfile", method=RequestMethod.GET)
-//	public void getSongForProfile(HttpServletResponse resp, HttpSession session){
-//
-//		try {
-//			File file=new File((String)session.getAttribute("songProfile"));
-//			Files.copy(file.toPath(), resp.getOutputStream());
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		System.out.println("opa");
-//		
-////		return "redirect:track={x}";
-//	}
+	@RequestMapping(value="deleteSong", method=RequestMethod.POST)
+	public String addComment(HttpSession session, @RequestParam(value = "id") long id){
+		
+		User u = (User) session.getAttribute("sessionUser");
+		
+		if(session.isNew() || u==null){
+			return "logReg";
+		}
+		
+		try {
+			songDao.deleteSong(id);
+			return "redirect:/profile" + u.getUsername();				
+		} 
+		catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return "errorPage";
+		}
+	}
 }

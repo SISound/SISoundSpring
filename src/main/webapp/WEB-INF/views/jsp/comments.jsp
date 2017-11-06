@@ -11,7 +11,7 @@
 	
 	<script type="text/javascript">
 		//reply comment
-		function showDiv(id) {
+		function showCommentDiv(id) {
 			var newid = "r" + id;
 		    var x = document.getElementById(newid);
 		    if (x.style.display === "none") {
@@ -171,7 +171,7 @@
 		                <c:out value="${ comment.text }"></c:out>
 		                <div class="comment-date"> <c:out value="${ comment.date }"></c:out> </div>
 		            </div>
-		            <button class="comment-reply" id="${ comment.id }" value="${ comment.id }" onclick="showDiv(this.id)">reply</button>
+		            <button class="comment-reply" id="${ comment.id }" value="${ comment.id }" onclick="showCommentDiv(this.id)">reply</button>
 		            
 <!-- 		            if is song -->
 		            <c:if test="${ commentable.isSong }">
@@ -258,7 +258,8 @@
 								<button class="comment-like" id="l${subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, true )">Like</button>
 							</c:if>	
 							
-			            	<input id="lcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.likesCount }">
+			            	<input  class="comment-like-number" id="lcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.likesCount }">
+	
 	<!-- 		            	dislikes -->
 			            	<c:if test="${ sessionUser.dislikedSongComments[subcomment.id] }">
 								<button class="comment-dislike" id="d${ subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, true )">Undislike</button>
@@ -267,7 +268,7 @@
 								<button class="comment-dislike" id="d${subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, true )">Dislike</button>
 							</c:if>	
 			            	   
-			            	 <input class="comment-dislike" id="dcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.dislikesCount }">
+			            	 <input class="comment-dislike-number" id="dcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.dislikesCount }">
 			            	   
 			            </c:if>
 			            
@@ -281,7 +282,7 @@
 								<button class="comment-like" id="l${subcomment.id }" value="${subcomment.id }" onclick="handleLike( this.id, false )">Like</button>
 							</c:if>	
 							
-			            	<input id="lcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.likesCount }">
+			            	<input class="comment-like-number" id="lcnt${ subcomment.id }" type="number" min="0" onkeydown="return false" value="${ subcomment.likesCount }">
 	<!-- 		            	dislikes -->
 			            	<c:if test="${ sessionUser.dislikedPlaylistComments[subcomment.id] }">
 								<button class="comment-dislike" id="d${ subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, false )">Undislike</button>
@@ -290,7 +291,7 @@
 								<button class="comment-dislike" id="d${subcomment.id }" value="${subcomment.id }" onclick="handleDislike( this.id, false )">Dislike</button>
 							</c:if>	
 			            	   
-			            	 <input id="dcnt${subcomment.id }" type="number" min="0" onkeydown="return false" value="${subcomment.dislikesCount }">
+			            	 <input class="comment-dislike-number" id="dcnt${subcomment.id }" type="number" min="0" onkeydown="return false" value="${subcomment.dislikesCount }">
 	
 			            </c:if>
 			            

@@ -11,6 +11,7 @@
 				
 	</head>
 	<body>
+		<jsp:include page="headerLogged.jsp"></jsp:include>
 		 	<div class="wrapper" >
 		  	  <form class="form-signin" action = "createPlaylist${songId }" method = POST>       
 			      <h2 class="form-signin-heading">Creating new playlist</h2>

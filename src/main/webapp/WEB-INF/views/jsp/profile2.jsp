@@ -141,6 +141,7 @@
 			<div id="Songs" class="tabcontent">
 			  <c:forEach items="${ modelUser.songs}" var="song">
 			  		<a class="heading-small" href="track=${ song.id }"><c:out value="${ song.title }"></c:out></a><br>
+			  		
 			  </c:forEach>
 			</div>
 					
