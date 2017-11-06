@@ -233,12 +233,12 @@
 								
 <!-- 									like/unlike -->
 									<c:if test="${ sessionUser.likedSongs[songsToShow.id] }">
-										<button class="actionButtonClicked" id="l${ songsToShow.id }" value="${songsToShow.id }" onclick="handleLike( this.id )">Unlike</button>
+										<button class="likeButtonClicked" id="l${ songsToShow.id }" value="${songsToShow.id }" onclick="handleLike( this.id )">Unlike</button>
 									</c:if>
 									<c:if test="${ !sessionUser.likedSongs[songsToShow.id] }">
-										<button class="actionButton" id="l${songsToShow.id }" value="${songsToShow.id }" onclick="handleLike( this.id )">Like</button>
+										<button class="likeButton" id="l${songsToShow.id }" value="${songsToShow.id }" onclick="handleLike( this.id )">Like</button>
 									</c:if>
-									<input id="lcnt${songsToShow.id }" type="number" min="0" onkeydown="return false" value="${ songsToShow.likesCount }">
+									<input class="likeCounter" id="lcnt${songsToShow.id }" type="number" min="0" onkeydown="return false" value="${ songsToShow.likesCount }">
 									
 <!-- 									dislike/undislike -->
 									<c:if test="${sessionUser.dislikedSongs[songsToShow.id]}">
@@ -247,9 +247,8 @@
 									<c:if test="${!sessionUser.dislikedSongs[songsToShow.id]}">
 										<button class="actionButton" id="d${songsToShow.id }" value="${songsToShow.id }" onclick="handleDislike( this.id )">Dislike</button>
 									</c:if>
-									<input id="dcnt${songsToShow.id }" type="number" min="0" onkeydown="return false" value="${songsToShow.dislikesCount }">
+									<input class="dislikeCounter" id="dcnt${songsToShow.id }" type="number" min="0" onkeydown="return false" value="${songsToShow.dislikesCount }">
 
-									<button class="actionButton" >&#128172Comment</button>
 								</div>
 					        		
 					      </div>

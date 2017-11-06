@@ -14,7 +14,9 @@
 /* } */
 
 .wrapper {	
+	position: inherit;
 	margin-left: -20%;
+	margin-top: 20%;
 }
 
 .form-signin {

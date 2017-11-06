@@ -95,8 +95,8 @@ public class PlaylistDao {
 			User tmp = new User();
 			tmp.setUsername("");
 			playlists.add(new Playlist(rs.getLong(1), rs.getString(2), rs.getTimestamp(4).toLocalDateTime(), userDao.getUser(rs.getString(3)),
-				                actionsDao.getActions(false, rs.getLong(1)), commentDao.getComments(rs.getLong(1), false), 
-				                rs.getBoolean(5),songDao.getSongsForPlaylist(rs.getLong(1), tmp)));
+	                actionsDao.getActions(false, rs.getLong(1)), commentDao.getComments(rs.getLong(1), false), 
+	                rs.getBoolean(5),songDao.getSongsForPlaylist(rs.getLong(1), tmp)));
 		}
 		
 		return playlists;

@@ -495,11 +495,47 @@ nav.archive-links a.link-excerpt {
 
 .likeDiv{
 	position: absolute;
-	margin-left: 90%;
-	margin-top: 0.5%;
+	margin-left: 85%;
+	margin-top: 3%;
 }
 
+.likeCounter{
+	width: 50px;
+	margin-left: 60px;
+}
+
+.dislikeCounter{
+	width: 50px;
+	margin-left: 70px;
+}
+
+.likeButton{
+	position: absolute;
+	background-color: #ffffff;
+	border-radius: 3px;
+	border: solid thin;
+	border-color: #6D6D6F;
+	color: #6D6D6F;
+	height: 20px;
+}
+
+.likeButtonClicked{
+	position: absolute;
+	background-color: rgba(181,215,236,0.9);
+	border-radius: 3px;
+	border: solid thin;
+	border-color: #6D6D6F;
+	color: #6D6D6F;
+	height: 20px;
+}
+
+.likeButton:HOVER{
+	color: rgba(92,168,214,0.9);
+	border-color: rgba(92,168,214,0.9);
+	cursor: pointer;
+}
 .actionButton{
+	position: absolute;
 	background-color: #ffffff;
 	border-radius: 3px;
 	border: solid thin;
@@ -775,4 +811,28 @@ footer#controls {
 	color: rgba(92,168,214,1);
 	border-color: rgba(92,168,214,1);
 	cursor: pointer;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+input[type=number] {
+    border: none;
+    color: transparent;
+    text-shadow: 0 0 0 gray;
+    text-align: center;
+
+    &:focus {
+        outline: none;
+    }
+}
+
+input[type=number]{
+	border: none;
+	width: 25px;
 }
