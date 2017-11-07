@@ -46,7 +46,8 @@
 					var likeCntId = "lcnt" + value;
 					var dislikeCntId = "dcnt" + value;
 	                document.getElementById(likeCntId).value++;
-	                if(document.getElementById(dislikeCntId).value>0){
+	                var button2 = document.getElementById(dislikeId);
+	                if(button2.innerHTML == "Undislike"){
 	                    document.getElementById(dislikeCntId).value--;
 	                }
 	                var button = document.getElementById(dislikeId);
@@ -106,7 +107,8 @@
 					var likeCntId = "lcnt" + value;
 					var dislikeCntId = "dcnt" + value;
 					document.getElementById(dislikeCntId).value++;
-					if(document.getElementById(likeCntId).value > 0){
+					var button2 = document.getElementById(likeId);
+					if(button2.innerHTML == "Unlike"){
 						document.getElementById(likeCntId).value--;
 					}
 					var button=document.getElementById(likedId);

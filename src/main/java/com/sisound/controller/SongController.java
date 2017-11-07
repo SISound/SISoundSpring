@@ -59,7 +59,6 @@ public class SongController {
 		User u = (User) session.getAttribute("sessionUser");
 		File f=new File(WebInitializer.LOCATION + File.separator + "songs" + File.separator + file.getOriginalFilename());
 		String genre=(String) req.getParameter("genre");
-		System.out.println("THE GENRE IS" + genre);
 		
 			try {
 				

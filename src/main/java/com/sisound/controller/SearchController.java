@@ -37,7 +37,6 @@ public class SearchController {
 		
 		try {
 			HashSet<Song> songs= songDao.searchSongByName(input);
-			System.out.println(songs.size());
 			if(songs!=null){
 				model.addAttribute("songsToShow", songs);
 				model.addAttribute("searched", input);

@@ -57,8 +57,9 @@ public class PlaylistController {
 				playlist.addSong(songDao.getSongById(songId), LocalDateTime.now());
 				u.addPlaylist(playlist);
 				playlistDao.addSongToPlaylist(playlistDao.getPlaylistId(playlistTitle, u.getUserID()), songId);	
+				u.addPlaylist(playlist);
 				
-				return "playlist";				
+				return "redirect:/playlist?id=" + playlist.getId();				
 		} 
 		catch (SQLException e) {
 			return "errorPage";

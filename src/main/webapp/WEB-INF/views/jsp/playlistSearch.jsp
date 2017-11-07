@@ -27,7 +27,7 @@
 								<div class="main-image"><img src="img/defaultProfile.png" alt="Camera" style="width:60px;height:60px;">
 						        </div>
 				 			</c:if>
-						        <a class="link-title" href="playlist=${playlist.id }"><c:out value="${ playlist.title }"></c:out></a>
+						        <a class="link-title" href="playlist?id=${playlist.id }"><c:out value="${ playlist.title }"></c:out></a>
 						        <a class="link-excerpt" href="profile${playlist.user.username }"><c:out value="${playlist.user.username }"></c:out></a>
 <%-- 					        <c:if test="${ user.username != sessionUser.username}"> --%>
 <%-- 					        		<button class="followButton" id="followButton" value="${ song.user.username }" onclick="followUnfollow(this.value)">Follow</button> --%>

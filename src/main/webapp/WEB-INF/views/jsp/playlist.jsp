@@ -22,8 +22,9 @@
 	</div>
 	
 	
-		<h3 class="heading-medium"> Playlist: ${ commentable.title }</h3>
+<%-- 		<h3 class="heading-medium"> Playlist: ${ commentable.title }</h3> --%>
 		
+		<br><br><br>
 		<c:if test="${fn:length(commentable.songs) eq 0}">
   				<h3 class="heading-medium"> No songs yet in the playlist</h3>
 		</c:if>

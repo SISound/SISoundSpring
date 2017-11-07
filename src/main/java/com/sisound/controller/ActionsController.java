@@ -147,19 +147,23 @@ public class ActionsController {
 			}
 			else{
 				try {
-					HashMap<Long, Boolean> followed=userDao.getFollowedIds(u);
-					if(followed.size()>0){
-						if(followed.containsKey(followedId) && !followed.get(followedId)){
-							userDao.followUser(u.getUserID(), followedId);
-							u.addFollowing(followedId);
-							resp.setStatus(200);
-						}
+					userDao.followUser(u.getUserID(), followedId);
+					u.addFollowing(followedId);
+					resp.setStatus(200);
+//					HashMap<Long, Boolean> followed=userDao.getFollowedIds(u);
+//					if(followed.size()>0){
+//						if(followed.containsKey(followedId) && !followed.get(followedId)){
+//							userDao.followUser(u.getUserID(), followedId);
+//							u.addFollowing(followedId);
+//							resp.setStatus(200);
+//						}
 					}
-					else{
-						userDao.followUser(u.getUserID(), followedId);
-						resp.setStatus(200);
-					}
-				} catch (SQLException e) {
+//					else{
+//						userDao.followUser(u.getUserID(), followedId);
+//						
+//						resp.setStatus(200);
+//					}
+				 catch (SQLException e) {
 					resp.setStatus(503);
 				}
 			}
@@ -202,6 +206,7 @@ public class ActionsController {
 			}
 			else{
 				try {
+					u.addSongToPlaylist(playlistId, songDao.getSongById(songId));
 					playlistDao.addSongToPlaylist(playlistId, songId);
 				} catch (SQLException e) {
 					resp.setStatus(503);

@@ -37,7 +37,8 @@
 					var likeCntId = "lcnt" + value;
 					var dislikeCntId = "dcnt" + value;
 	                document.getElementById(likeCntId).value++;
-	                if(document.getElementById(dislikeCntId).value>0){
+	                var button2 = document.getElementById(dislikeId);
+	                if(button2.innerHTML == "Undislike"){
 	                    document.getElementById(dislikeCntId).value--;
 	                }
 	                var button = document.getElementById(dislikeId);
@@ -100,7 +101,8 @@
 					var likeCntId = "lcnt" + value;
 					var dislikeCntId = "dcnt" + value;
 					document.getElementById(dislikeCntId).value++;
-					if(document.getElementById(likeCntId).value > 0){
+					var button2 = document.getElementById(likeId);
+					if(button2.innerHTML == "Unlike"){
 						document.getElementById(likeCntId).value--;
 					}
 					var button=document.getElementById(likedId);
@@ -205,7 +207,7 @@
 				  	<c:forEach items="${sessionUser.playlists }" var="playlist">
 				 		<tr>
 				  			<td class="addToTd">
-				  				<a class="playlistLink" href="playlist=${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
+				  				<a class="playlistLink" href="playlist?id=${playlist.id }"><c:out value="${playlist.title }"></c:out></a>
 				  			</td>
 				  			<td>
 				  				<button class="addToPl" name="addToPl" id="${playlist.id }" value="" onclick="addToPlaylist(this.id, this.value)">Add to playlist</button>

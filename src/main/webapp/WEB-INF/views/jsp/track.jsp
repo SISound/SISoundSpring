@@ -41,8 +41,9 @@
 				if (this.readyState == 4 && this.status == 200) {
 					var button = document.getElementById("likeButton");
 					button.innerHTML = "Unlike";
+					var button2 = document.getElementById("dislikeButton");
 					document.getElementById("likeCount").value++;
-					if(document.getElementById("dislikeCount").value>0){
+					if(button2.innerHTML == "Undislike"){
 						document.getElementById("dislikeCount").value--;
 					}
 					var button = document.getElementById("dislikeButton");
@@ -99,7 +100,8 @@
 					var button = document.getElementById("dislikeButton");
 					button.innerHTML = "Undislike";
 					document.getElementById("dislikeCount").value++;
-					if(document.getElementById("likeCount").value>0){
+					var button2 = document.getElementById("likeButton");
+					if(button2.innerHTML == "Unlike"){
 						document.getElementById("likeCount").value--;
 					}
 					var button=document.getElementById("likeButton");

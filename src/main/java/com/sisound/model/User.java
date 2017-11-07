@@ -1,5 +1,6 @@
 package com.sisound.model;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.LinkedHashSet;
 import java.util.TreeSet;
@@ -46,18 +47,24 @@ public class User {
 	private HashMap<Long, Boolean> likedPlaylistComments;
 	private HashMap<Long, Boolean> dislikedPlaylistComments;
 		
-	public User(){}
-	//constructor for registering user
-	public User(String username, String password, String email) {
-		this.username = username;
-		this.password = password;
-		this.email = email;
+	public User(){
 		this.songs=new TreeSet();
 		this.playlists=new TreeSet();
 		this.followers=new LinkedHashSet();
 		this.followedIds = new HashMap<>();
 		this.likedSongs = new HashMap<>();
 		this.dislikedSongs = new HashMap<>();
+		this.likedPlaylistComments = new HashMap<>();
+		this.dislikedPlaylistComments = new HashMap<>();
+		this.likedPlaylistComments = new HashMap<>();
+		this.dislikedPlaylistComments = new HashMap<>();
+	}
+	//constructor for registering user
+	public User(String username, String password, String email) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.email = email;
 	}
 	
 	public User(long userID, String firstName, String lastName, String username, String password, String email,
@@ -384,4 +391,12 @@ public class User {
 		}	
 	}
 	
+	public void addSongToPlaylist (long plId, Song song){
+		for (Playlist playlist : playlists) {
+			if(playlist.getId() == plId) {
+				playlist.addSong(song, LocalDateTime.now());
+				return;
+			}
+		}
+	}
 }
